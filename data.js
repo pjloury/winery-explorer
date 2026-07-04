@@ -401,7 +401,7 @@ const WINERIES = [
     founded: 1990, founder: "Agustin & Valeria Huneeus (Chilean wine dynasty)",
     address: "1601 Silverado Trail, Rutherford, CA 94573", lat: 38.4780, lng: -122.4170,
     website: "https://www.quintessa.com",
-    owner: "Huneeus family (Quintessa/Huneeus Vintners)", group: "Independent (Huneeus family)",
+    owner: "Huneeus family (Quintessa/Huneeus Vintners)", group: "Huneeus Vintners",
     priceRange: [75, 300], tastingFee: "$150–$250, by appointment",
     tours: "Yes — estate drive and tastings in glass hilltop pavilions overlooking the vines",
     vibeTags: ["Modern", "Grand", "Intimate"],
@@ -425,7 +425,7 @@ const WINERIES = [
   {
     slug: "hall", name: "HALL Wines", valley: "Napa", ava: "St. Helena",
     founded: 2003, founder: "Craig & Kathryn Walt Hall (she was U.S. Ambassador to Austria)",
-    address: "401 St. Helena Hwy S, St. Helena, CA 94574", lat: 38.4900, lng: -122.4700,
+    address: "401 St. Helena Hwy S, St. Helena, CA 94574", lat: 38.4890, lng: -122.4531,
     website: "https://www.hallwines.com",
     owner: "Craig & Kathryn Hall", group: "Independent (Hall family)",
     priceRange: [35, 350], tastingFee: "$60–$175",
@@ -476,7 +476,7 @@ const WINERIES = [
   {
     slug: "cuvaison", name: "Cuvaison Estate Wines", valley: "Napa", ava: "Los Carneros",
     founded: 1969, founder: "Silicon Valley engineers Thomas Cottrell & Thomas Parkhill",
-    address: "1221 Duhig Rd, Napa, CA 94559", lat: 38.2550, lng: -122.3450,
+    address: "1221 Duhig Rd, Napa, CA 94559", lat: 38.2464, lng: -122.3566,
     website: "https://www.cuvaison.com",
     owner: "Schmidheiny family (Switzerland), owners since 1979", group: "Independent (Schmidheiny family)",
     priceRange: [28, 90], tastingFee: "$40–$75",
@@ -501,7 +501,7 @@ const WINERIES = [
   {
     slug: "trinchero", name: "Trinchero Napa Valley", valley: "Napa", ava: "St. Helena",
     founded: 1948, founder: "The Trinchero family (Mario & Mary Trinchero, from NYC via Asti, Italy)",
-    address: "3070 St. Helena Hwy N, St. Helena, CA 94574", lat: 38.5250, lng: -122.4780,
+    address: "3070 St. Helena Hwy N, St. Helena, CA 94574", lat: 38.5264, lng: -122.4974,
     website: "https://www.trincheronapavalley.com",
     owner: "Trinchero Family Estates (3rd/4th generation)", group: "Trinchero Family Estates",
     priceRange: [30, 175], tastingFee: "$45–$95",
@@ -526,7 +526,7 @@ const WINERIES = [
   {
     slug: "davis-estates", name: "Davis Estates", valley: "Napa", ava: "Calistoga",
     founded: 2011, founder: "Mike & Sandy Davis (tech executive turned vintner)",
-    address: "4060 Silverado Trail N, Calistoga, CA 94515", lat: 38.5900, lng: -122.5650,
+    address: "4060 Silverado Trail N, Calistoga, CA 94515", lat: 38.5688, lng: -122.5157,
     website: "https://www.davisestates.com",
     owner: "Mike & Sandy Davis", group: "Independent (Davis family)",
     priceRange: [60, 250], tastingFee: "$95–$200, by appointment",
@@ -551,7 +551,7 @@ const WINERIES = [
   {
     slug: "melka-estates", name: "Melka Estates", valley: "Napa", ava: "St. Helena",
     founded: 1996, founder: "Philippe Melka (Bordeaux-born star winemaker) & Cherie Melka",
-    address: "St. Helena, CA (tasting by appointment)", lat: 38.5050, lng: -122.4700,
+    address: "2900 Silverado Trail N, St. Helena, CA 94574 (by appointment)", lat: 38.5121, lng: -122.4563,
     website: "https://www.melkaestates.com",
     owner: "Philippe & Cherie Melka", group: "Independent (Melka family)",
     priceRange: [95, 400], tastingFee: "$150+, strictly by appointment",
@@ -575,10 +575,10 @@ const WINERIES = [
 
   {
     slug: "progeny", name: "Progeny Winery", valley: "Napa", ava: "Mount Veeder",
-    founded: 2007, founder: "The Baker family",
-    address: "Mount Veeder, Napa, CA (by appointment)", lat: 38.3700, lng: -122.4000,
+    founded: 2006, founder: "Paul & Betty Woolls (Betty O'Shaughnessy of O'Shaughnessy Estate)",
+    address: "1032 Mount Veeder Rd, Napa, CA 94558 (by appointment)", lat: 38.3371, lng: -122.3743,
     website: "https://www.progenywinery.com",
-    owner: "Baker family", group: "Independent (Baker family)",
+    owner: "Paul & Betty Woolls", group: "Independent (Woolls family)",
     priceRange: [75, 225], tastingFee: "$100+, strictly by appointment",
     tours: "Private appointment-only visits to the glass pavilion on Mount Veeder",
     vibeTags: ["Modern", "Intimate"],
@@ -588,7 +588,7 @@ const WINERIES = [
       { name: "Progeny Reserve Cabernet Sauvignon", why: "Structured Mount Veeder mountain Cabernet — the estate's reason for being." }
     ],
     history: [
-      { y: 2007, t: "The family establishes the Mount Veeder estate, naming it 'Progeny' for the generations it's meant to serve." },
+      { y: 2006, t: "Paul and Betty Woolls buy a 32-acre former cattle ranch atop Mount Veeder and name it 'Progeny' for the generations it's meant to serve." },
       { y: 2015, t: "Signum's glass-and-steel tasting pavilion opens among the oaks — one of the purest 'grasses + oaks, glass + steel' statements in the book." }
     ],
     storyTags: ["architecture"],
@@ -623,7 +623,7 @@ const WINERIES = [
   {
     slug: "hourglass", name: "Hourglass", valley: "Napa", ava: "Calistoga",
     founded: 1997, founder: "Jeff Smith (son of 1970s Napa retailer Ned Smith)",
-    address: "1104 Adams St #103, St. Helena / estate on Silverado Trail, Calistoga", lat: 38.5750, lng: -122.5600,
+    address: "1104 Adams St #103, St. Helena / estate on Silverado Trail, Calistoga", lat: 38.5059, lng: -122.4698,
     website: "https://www.hourglasswines.com",
     owner: "Jeff Smith & partners", group: "Independent (Smith family)",
     priceRange: [60, 250], tastingFee: "$125+, by appointment",
@@ -648,7 +648,7 @@ const WINERIES = [
   {
     slug: "dana-estates", name: "Dana Estates", valley: "Napa", ava: "Rutherford",
     founded: 2005, founder: "Hi Sang Lee (Korean fine-wine importer, Nara Cellars)",
-    address: "3155 St. Helena Hwy N, Rutherford, CA 94573", lat: 38.4700, lng: -122.4400,
+    address: "1500 Whitehall Lane, St. Helena, CA 94574 (Rutherford bench)", lat: 38.4770, lng: -122.4382,
     website: "https://www.danaestates.com",
     owner: "Hi Sang Lee family", group: "Independent (Lee family)",
     priceRange: [150, 600], tastingFee: "Largely private / allocation customers",
@@ -673,7 +673,7 @@ const WINERIES = [
   {
     slug: "darioush", name: "Darioush", valley: "Napa", ava: "Napa Valley (Silverado Trail south)",
     founded: 1997, founder: "Darioush & Shahpar Khaledi (Iranian-American grocery magnate)",
-    address: "4240 Silverado Trail, Napa, CA 94558", lat: 38.3450, lng: -122.2950,
+    address: "4240 Silverado Trail, Napa, CA 94558", lat: 38.3675, lng: -122.2946,
     website: "https://www.darioush.com",
     owner: "Khaledi family", group: "Independent (Khaledi family)",
     priceRange: [48, 195], tastingFee: "$75–$250",
@@ -697,7 +697,7 @@ const WINERIES = [
   {
     slug: "clos-du-val", name: "Clos du Val", valley: "Napa", ava: "Stags Leap District",
     founded: 1972, founder: "John Goelet (American shipping heir) & Bordeaux winemaker Bernard Portet",
-    address: "5330 Silverado Trail, Napa, CA 94558", lat: 38.3750, lng: -122.3050,
+    address: "5330 Silverado Trail, Napa, CA 94558", lat: 38.3872, lng: -122.3127,
     website: "https://www.closduval.com",
     owner: "Goelet Wine Estates (3rd generation)", group: "Independent (Goelet family)",
     priceRange: [40, 200], tastingFee: "$60–$125",
@@ -746,7 +746,7 @@ const WINERIES = [
   {
     slug: "v-sattui", name: "V. Sattui Winery", valley: "Napa", ava: "St. Helena",
     founded: 1885, founder: "Vittorio Sattui (Genoese immigrant, San Francisco); revived by great-grandson Dario Sattui",
-    address: "1111 White Ln, St. Helena, CA 94574", lat: 38.4895, lng: -122.4735,
+    address: "1111 White Ln, St. Helena, CA 94574", lat: 38.4889, lng: -122.4486,
     website: "https://www.vsattui.com",
     owner: "Sattui family (Dario Sattui)", group: "Independent (Sattui family)",
     priceRange: [20, 95], tastingFee: "$30–$60; walk-ins welcome",
@@ -767,6 +767,489 @@ const WINERIES = [
     awards: ["Routinely among the most-awarded wineries at California state & county fairs", "Sells 100% direct — no stores, no restaurants, since 1976"],
     funFact: "You cannot buy V. Sattui in any shop or restaurant anywhere — a deliberate choice since 1976 that made the picnic grounds a pilgrimage."
   },
+  {
+    slug: "almacerro", name: "Almacerro", valley: "Napa", ava: "Howell Mountain",
+    founded: 2016, founder: "Frank Scherkenbach",
+    address: "1181 Las Posadas Rd, Angwin, CA 94508", lat: 38.5757, lng: -122.4500,
+    website: "https://www.almacerro.com",
+    owner: "Frank Scherkenbach (Scherkenbach family)", group: "Independent (Scherkenbach family)",
+    priceRange: [175, 250], tastingFee: "By inquiry only",
+    tours: "No public tasting room — private visits by appointment/inquiry only",
+    vibeTags: ["Cult", "Intimate", "Scenic"],
+    vibe: "A remote 41-acre homestead perched at 1,780 feet on Howell Mountain, with just 11 acres of vineyard tucked into the forest. Two hand-made mountain reds a year, no formula, no crowds — a purist's cult estate.",
+    wines: [
+      { name: "Cabernet Sauvignon Howell Mountain", why: "The estate's flagship — a dense, structured Howell Mountain Cabernet built by consulting winemaker Françoise Peschon." },
+      { name: "Estate Red Blend", why: "A vintage-driven proprietary blend from the same high-elevation blocks, made only when the year warrants." }
+    ],
+    history: [
+      { y: 1986, t: "Howell Mountain pioneer Bill Smith acquires the property and farms it from his homestead until 2016." },
+      { y: 2016, t: "Frank Scherkenbach buys the 41-acre estate after four decades of visiting Napa, becoming only its second steward." },
+      { y: 2017, t: "Almacerro's first vintage is produced, with Françoise Peschon consulting and Mike Wolf farming the vineyard." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 (2024, #94)", "94 points, Wine Spectator (Cabernet Howell Mountain 2021)"],
+    funFact: "Frank Scherkenbach is only the second vintner ever to steward the land, following Bill Smith — the La Jota founder who helped establish the Howell Mountain AVA."
+  },
+
+  {
+    slug: "annulus", name: "Annulus", valley: "Napa", ava: "Napa Valley",
+    founded: 2019, founder: "Luke Evnin & Deann Wright (biomedical-science entrepreneurs)",
+    address: "588 Zinfandel Ln, St. Helena, CA 94574 (tastings at Wheeler Farms)", lat: 38.4900, lng: -122.4458,
+    website: "https://www.annuluscellars.com",
+    owner: "Luke Evnin & Deann Wright", group: "Independent (Evnin & Wright family)",
+    priceRange: [175, 250], tastingFee: "$150 per person; $250+ for lunch/dinner pairings, by appointment",
+    tours: "No dedicated winery — appointment-only tastings hosted at Wheeler Farms in St. Helena",
+    vibeTags: ["Cult", "Modern", "Intimate"],
+    vibe: "A new-wave collector's project sourcing from some of Napa's grandest vineyards — Beckstoffer Las Piedras, Vine Hill Ranch and 1520 — with a scientist's precision. Tiny production, sky-high scores, appointment-only.",
+    wines: [
+      { name: "Cabernet Sauvignon Napa Valley, Vine Hill Ranch Vineyard", why: "The single-vineyard flagship from Oakville's storied Vine Hill Ranch, blended with the help of Michel Rolland." },
+      { name: "Cabernet Sauvignon Napa Valley", why: "The estate's multi-vineyard Napa Cabernet, drawn from its trio of benchmark sites." },
+      { name: "Cabernet Sauvignon Beckstoffer Las Piedras Vineyard", why: "A powerful Rutherford single-vineyard bottling from one of the Beckstoffer heritage sites." }
+    ],
+    history: [
+      { y: 2019, t: "Luke Evnin and Deann Wright — both from biomedical-science and venture backgrounds — launch the Annulus label." },
+      { y: 2021, t: "The inaugural vintage is crafted by cult winemaker Nigel Kinsman with Bordeaux enologist Michel Rolland consulting on the blends." },
+      { y: 2024, t: "Annulus debuts its first wines to the public and lands on the Wine Spectator Top 100." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 (2024, #99)", "96 points, Wine Spectator (Vine Hill Ranch Cabernet 2021)"],
+    funFact: "Both founders came to wine from science and venture capital funding cancer and autoimmune research — and enlisted Michel Rolland to help blend their very first vintage."
+  },
+
+  {
+    slug: "barnett", name: "Barnett Vineyards", valley: "Napa", ava: "Spring Mountain District",
+    founded: 1983, founder: "Fiona & Hal Barnett",
+    address: "4070 Spring Mountain Rd, St. Helena, CA 94574", lat: 38.5246, lng: -122.5513,
+    website: "https://www.barnettvineyards.com",
+    owner: "Barnett family", group: "Independent (Barnett family)",
+    priceRange: [45, 225], tastingFee: "$75–$100, by reservation",
+    tours: "Yes — reservation-only seated tastings on a dramatic mountaintop terrace",
+    vibeTags: ["Scenic", "Intimate", "Family-run"],
+    vibe: "A 40-acre family estate clinging to the top of Spring Mountain at roughly 2,000 feet, where the terrace looks clear across Napa Valley. The famous 'Rattlesnake Hill' block is so steep it must be worked entirely by hand.",
+    wines: [
+      { name: "Merlot Spring Mountain District", why: "A structured, mineral mountain Merlot that earned a place on the Wine Spectator Top 100." },
+      { name: "Rattlesnake Hill Cabernet Sauvignon", why: "The estate's flagship, from the vertiginous hilltop block that gives the vineyard its name." },
+      { name: "Spring Mountain District Cabernet Sauvignon", why: "The classic estate Cabernet that launched the winery in 1989." }
+    ],
+    history: [
+      { y: 1983, t: "Fiona and Hal Barnett, smitten with Napa on weekend visits, buy a 40-acre property atop Spring Mountain." },
+      { y: 1989, t: "The first harvest yields 232 cases of Spring Mountain Cabernet." },
+      { y: 2025, t: "The 2022 Merlot Spring Mountain District lands on the Wine Spectator Top 100." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 (2025, #77)", "94 points, Wine Spectator (Merlot Spring Mountain 2022)"],
+    funFact: "The Rattlesnake Hill block sits on a roughly 60% grade — too steep for any machine, so every vine is tended and picked by hand."
+  },
+
+  {
+    slug: "beaulieu", name: "Beaulieu Vineyard (BV)", valley: "Napa", ava: "Rutherford",
+    founded: 1900, founder: "Georges & Fernande de Latour (French immigrants)",
+    address: "1960 St. Helena Hwy, Rutherford, CA 94573", lat: 38.4601, lng: -122.4234,
+    website: "https://www.bvwines.com",
+    owner: "Treasury Wine Estates (Australia)", group: "Treasury Wine Estates",
+    priceRange: [20, 200], tastingFee: "$40–$95, by reservation",
+    tours: "Yes — tastings in the newly restored 1885 stone winery and hospitality center (reopened 2025); reservations recommended",
+    vibeTags: ["Historic", "Classic", "Grand"],
+    vibe: "A 125-year Rutherford institution and the cradle of the 'Rutherford Dust' Cabernet legend. Georges de Latour's estate and the wines of winemaker André Tchelistcheff set the standard for California Cabernet, and the restored 1885 winery reopened its doors in 2025.",
+    wines: [
+      { name: "Georges de Latour Private Reserve Cabernet Sauvignon", why: "Napa Valley's first 'cult' Cabernet — a benchmark Rutherford wine made continuously since the 1936 vintage." },
+      { name: "Tapestry Reserve", why: "A polished Rutherford Bordeaux-style red blend from the estate's reserve program." },
+      { name: "Rutherford Cabernet Sauvignon", why: "The classic, widely poured expression of Beaulieu's home appellation." }
+    ],
+    history: [
+      { y: 1900, t: "Georges and Fernande de Latour found Beaulieu — 'beautiful place' — in Rutherford." },
+      { y: 1938, t: "Russian-born André Tchelistcheff joins as winemaker and revolutionizes California winemaking, having launched the Georges de Latour Private Reserve with the 1936 vintage." },
+      { y: 1969, t: "The de Latour heirs sell Beaulieu to Heublein, beginning decades of corporate ownership." },
+      { y: 2016, t: "Australia's Treasury Wine Estates acquires the brand; the restored 1885 winery reopens to the public in 2025." }
+    ],
+    storyTags: ["consolidated"],
+    awards: ["Wine Spectator Top 100 (2024, #2)", "95 points, Wine Spectator (Georges de Latour Private Reserve 2021)", "Its wines were poured at White House functions for decades"],
+    funFact: "Beaulieu survived Prohibition by making sacramental wine for the Catholic Church, one of the few Napa wineries to operate continuously through the dry years."
+  },
+
+  {
+    slug: "burgess", name: "Burgess Cellars", valley: "Napa", ava: "Napa Valley",
+    founded: 1972, founder: "Tom Burgess (former Air Force pilot)",
+    address: "2921 Silverado Trail, Napa, CA 94558", lat: 38.5570, lng: -122.4743,
+    website: "https://www.burgesscellars.com",
+    owner: "Lawrence Wine Estates (Gaylon Lawrence Jr.)", group: "Lawrence Wine Estates",
+    priceRange: [50, 175], tastingFee: "By reservation via Tock",
+    tours: "Yes — reservation-only tastings at the Silverado Trail estate (closed Tuesdays)",
+    vibeTags: ["Historic", "Modern", "Scenic"],
+    vibe: "One of Napa's oldest continuously operating wineries, founded in 1972 on a historic Howell Mountain site and reborn under Lawrence Wine Estates with regenerative farming and winemaker Meghan Zobeck. Deep roots, a fresh chapter.",
+    wines: [
+      { name: "Cabernet Sauvignon Napa Valley Promiscua", why: "A multi-site Napa Cabernet blended from the estate's Quartz Creek, Sorenson's and Clos Abeille vineyards." },
+      { name: "Howell Mountain Cabernet Sauvignon", why: "A dense mountain Cabernet from the winery's high-elevation home ground." }
+    ],
+    history: [
+      { y: 1972, t: "Tom Burgess, a former Air Force pilot, buys the old Souverain Cellars site — where Lee Stewart had trained future legends Mike Grgich and Warren Winiarski." },
+      { y: 2020, t: "After nearly 50 years of family ownership, Steve Burgess sells to Gaylon Lawrence Jr.'s Lawrence Wine Estates." },
+      { y: 2023, t: "Burgess opens a new tasting room on the Silverado Trail under winemaker Meghan Zobeck." }
+    ],
+    storyTags: ["consolidated", "site-reuse"],
+    awards: ["Wine Spectator Top 100 (2024, #73)", "93 points, Wine Spectator (Promiscua Cabernet 2021)"],
+    funFact: "The winery occupies the former Souverain Cellars, where founder Lee Stewart mentored both Mike Grgich (later of Judgment of Paris fame) and Stag's Leap's Warren Winiarski."
+  },
+
+  {
+    slug: "caterwaul", name: "Caterwaul", valley: "Napa", ava: "Napa Valley",
+    founded: 2014, founder: "Matt Hardin (6th-gen Napa farmer) & Thomas Rivers Brown (winemaker)",
+    address: "929 Main St, St. Helena, CA 94574 (Royal We Wines tasting room)", lat: 38.5018, lng: -122.4651,
+    website: "https://www.caterwaulwines.com",
+    owner: "Matt Hardin & Thomas Rivers Brown", group: "Independent (Hardin & Brown)",
+    priceRange: [55, 150], tastingFee: "By reservation at Royal We Wines",
+    tours: "No estate winery — tastings at the Royal We Wines collective tasting room in St. Helena (opened 2025)",
+    vibeTags: ["Cult", "Casual", "Intimate"],
+    vibe: "A friendship-born project between sixth-generation Napa farmer Matt Hardin and 100-point winemaker Thomas Rivers Brown, making small-lot Cabernet at prices that don't require a second mortgage. Poured at the buzzy new Royal We collective on Main Street.",
+    wines: [
+      { name: "Cabernet Sauvignon Napa Valley", why: "The core bottling — a polished, expressive Napa Cabernet from a winemaker famous for far pricier labels." },
+      { name: "Single-Vineyard Cabernet Sauvignon", why: "Limited site-specific releases showcasing Brown's cult-winemaker touch." }
+    ],
+    history: [
+      { y: 2014, t: "Vineyard manager Matt Hardin and winemaker Thomas Rivers Brown found Caterwaul out of a long working friendship." },
+      { y: 2025, t: "The friends open Royal We Wines, a collective St. Helena tasting room pouring Caterwaul alongside other Brown-made labels." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 (2025, #51)", "92 points, Wine Spectator (Cabernet Napa Valley 2023)"],
+    funFact: "Co-founder Thomas Rivers Brown has earned more than sixty 100-point scores across his winemaking projects — 'caterwaul,' fittingly, means a shrill, cat-like howl."
+  },
+
+  {
+    slug: "chimney-rock", name: "Chimney Rock Winery", valley: "Napa", ava: "Stags Leap District",
+    founded: 1980, founder: "Sheldon 'Hack' & Stella Wilson",
+    address: "5350 Silverado Trail, Napa, CA 94558", lat: 38.3905, lng: -122.3136,
+    website: "https://www.chimneyrock.com",
+    owner: "Terlato family (Terlato Wine Group)", group: "Terlato Wine Group",
+    priceRange: [40, 225], tastingFee: "$60–$195, by reservation (some walk-ins)",
+    tours: "Yes — reservation-recommended tastings daily 10–5, with select walk-in experiences",
+    vibeTags: ["Scenic", "Grand", "Classic"],
+    vibe: "Gleaming white, gable-roofed Cape Dutch buildings set against the Stags Leap palisades — one of the most photogenic estates in Napa. The Cabernets are the polished, plush embodiment of Stags Leap District terroir.",
+    wines: [
+      { name: "Cabernet Sauvignon Stags Leap District", why: "The estate flagship — a supple, perfumed expression of the district that put Chimney Rock on the map." },
+      { name: "Elevage", why: "A refined Bordeaux-style red blend, the winery's signature reserve cuvée." },
+      { name: "Tomahawk Cabernet Sauvignon", why: "A limited, powerful single-block Cabernet from the estate's best fruit." }
+    ],
+    history: [
+      { y: 1980, t: "Sheldon 'Hack' and Stella Wilson found Chimney Rock on the site of a former golf course in the Stags Leap District." },
+      { y: 2000, t: "The Terlato family partners with the Wilsons, taking full ownership in 2004." },
+      { y: 2024, t: "The 2021 Cabernet Stags Leap District reaches #5 on the Wine Spectator Top 100." }
+    ],
+    storyTags: ["consolidated"],
+    awards: ["Wine Spectator Top 100 (2024, #5)", "94 points, Wine Spectator (Cabernet Stags Leap District 2021)"],
+    funFact: "The estate sits on a former golf course — Hack Wilson bought the Chimney Rock Golf Course and tore out nine of its holes to plant Cabernet."
+  },
+
+  {
+    slug: "etude", name: "Etude Wines", valley: "Napa", ava: "Carneros",
+    founded: 1982, founder: "Tony Soter (winemaker)",
+    address: "1250 Cuttings Wharf Road, Napa, CA 94559", lat: 38.2441, lng: -122.3159,
+    website: "https://www.etudewines.com",
+    owner: "Treasury Wine Estates", group: "Treasury Wine Estates",
+    priceRange: [30, 110], tastingFee: "$45–$75, by appointment",
+    tours: "Yes — seated tastings at the Carneros estate winery, reservations recommended.",
+    vibeTags: ["Modern", "Scenic", "Casual"],
+    vibe: "A cool-climate specialist set among the marshy Carneros flats, Etude pairs a serious, understated winery with sweeping views toward San Pablo Bay. The focus is precision — Pinot Noir from volcanic soils and Cabernet from warmer up-valley sites.",
+    wines: [
+      { name: "Rutherford Cabernet Sauvignon", why: "Built from classic Rutherford 'dust' fruit, this powerful, structured Cabernet is the estate's benchmark red." },
+      { name: "Grace Benoist Ranch Pinot Noir", why: "The flagship Carneros bottling that made Etude's name for elegant, cool-climate Pinot Noir." }
+    ],
+    history: [
+      { y: 1982, t: "Winemaker Tony Soter founds Etude, chasing world-class Pinot Noir in cool Carneros." },
+      { y: 2000, t: "Soter sells the brand, which is later absorbed into what becomes Treasury Wine Estates." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 — No. 84 (2025), 2021 Rutherford Cabernet Sauvignon", "Long-standing critical acclaim for its Carneros Pinot Noir program"],
+    funFact: "Though Etude is rooted in Carneros Pinot Noir, its Top 100 wine is a Cabernet Sauvignon grown 40 miles north on Rutherford's famed benchland."
+  },
+
+  {
+    slug: "faust", name: "Faust", valley: "Napa", ava: "St. Helena",
+    founded: 2002, founder: "Agustin & Valeria Huneeus",
+    address: "2867 St. Helena Highway, St. Helena, CA 94574", lat: 38.5191, lng: -122.4908,
+    website: "https://faustwines.com",
+    owner: "Huneeus family", group: "Huneeus Vintners",
+    priceRange: [65, 175], tastingFee: "$75–$150, by appointment",
+    tours: "Yes — tastings at the Faust Haus in St. Helena, by appointment.",
+    vibeTags: ["Luxe", "Modern", "Grand"],
+    vibe: "Faust taunts and delights from a dramatic matte-black 1878 Victorian — the Faust Haus — on the highway north of St. Helena. Named for Goethe's ambitious antihero, the brand leans into theatrical, gothic-glamour hospitality.",
+    wines: [
+      { name: "Faust Cabernet Sauvignon Napa Valley", why: "The signature Cabernet, drawing on volcanic Coombsville fruit for a plush, polished Napa Valley red." },
+      { name: "The Pact Cabernet Sauvignon", why: "A single-vineyard Coombsville bottling that showcases the estate's cool, structured hillside fruit." }
+    ],
+    history: [
+      { y: 1998, t: "The Huneeus family buys 130 acres in Coombsville, a former dairy, and plants Cabernet." },
+      { y: 2002, t: "Faust is established as its own brand within the family's Huneeus Vintners portfolio." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 — No. 4 (2024), 2021 Faust Cabernet Sauvignon Napa Valley", "Consistent 90+ scores for its Coombsville-sourced Cabernet"],
+    funFact: "The Faust Haus tasting room is a striking blacked-out Victorian, a nod to the winery's namesake — the scholar who bargained with the devil."
+  },
+
+  {
+    slug: "freemark-abbey", name: "Freemark Abbey", valley: "Napa", ava: "St. Helena",
+    founded: 1886, founder: "Josephine Tychson",
+    address: "3022 St. Helena Highway North, St. Helena, CA 94574", lat: 38.5246, lng: -122.4972,
+    website: "https://www.freemarkabbey.com",
+    owner: "Jackson family", group: "Jackson Family Wines",
+    priceRange: [30, 175], tastingFee: "$40–$90, reservations recommended",
+    tours: "Yes — seated tastings in the historic stone winery just north of St. Helena.",
+    vibeTags: ["Historic", "Classic", "Scenic"],
+    vibe: "One of Napa's most storied names, Freemark Abbey occupies a handsome 19th-century stone building at Lodi Lane. The mood is unhurried and traditional, steeped in the estate's Judgment of Paris legacy.",
+    wines: [
+      { name: "Cabernet Bosché", why: "The estate's flagship, a single-vineyard Rutherford Cabernet from John Bosché's benchland vines since the 1970s." },
+      { name: "Chardonnay", why: "Heir to the 1972 Chardonnay that placed among the top whites at the 1976 Judgment of Paris." }
+    ],
+    history: [
+      { y: 1886, t: "Widow Josephine Tychson builds the winery, becoming one of Napa's first female winery owners." },
+      { y: 1939, t: "Charles Freeman, Mark Foster and Abbey Ahern buy the property and coin the name 'Freemark Abbey.'" },
+      { y: 1976, t: "Both its Cabernet and Chardonnay are poured at the Judgment of Paris — the only winery represented by a red and a white." }
+    ],
+    storyTags: ["judgment-of-paris"],
+    awards: ["Wine Spectator Top 100 — No. 100 (2025), 2022 Cabernet Bosché", "Judgment of Paris 1976 — the only entrant with both a red and a white wine"],
+    funFact: "Freemark Abbey is the only winery to have shown both a red and a white at the 1976 Judgment of Paris, and its '72 Chardonnay finished ahead of white Burgundies."
+  },
+
+  {
+    slug: "massican", name: "Massican", valley: "Napa", ava: "Napa Valley",
+    founded: 2009, founder: "Dan Petroski",
+    address: "St. Helena, CA 94574 (no public tasting room)", lat: 38.5007, lng: -122.4637,
+    website: "https://www.massican.com",
+    owner: "E&J Gallo Winery (acquired 2023)", group: "E&J Gallo Winery",
+    priceRange: [28, 65], tastingFee: "No public tasting room",
+    tours: "No — Massican has no public tasting room; wines are sold direct and through restaurants and shops.",
+    vibeTags: ["Cult", "Modern"],
+    vibe: "A cult label devoted to Mediterranean-style white wines in a valley obsessed with Cabernet. Founder Dan Petroski built Massican into Napa's most talked-about white-wine house, inspired by the whites of northeast Italy.",
+    wines: [
+      { name: "Annia", why: "A Napa Valley white blend of Ribolla Gialla, Tocai Friulano and Chardonnay — bright, saline and Italian in spirit." },
+      { name: "Sauvignon Blanc", why: "A crisp, mineral Napa Valley white that helped establish Massican's reputation for serious whites." }
+    ],
+    history: [
+      { y: 2009, t: "Dan Petroski founds Massican, naming it for Monte Massico in his family's native Campania." },
+      { y: 2023, t: "Gallo acquires Massican; Petroski stays on as winemaker." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 — No. 32 (2025, 92 pts) and No. 72 (2024, 91 pts), Annia", "Widely cited as Napa's leading white-wine specialist"],
+    funFact: "Massican is named for Monte Massico, a mountain range in the Campania region where Petroski's great-grandparents were born."
+  },
+
+  {
+    slug: "newfound", name: "Newfound Wines", valley: "Napa", ava: "St. Helena",
+    founded: 2016, founder: "Matt Naumann & Audra Chapman",
+    address: "1200 Oak Avenue, St. Helena, CA 94574", lat: 38.5031, lng: -122.4687,
+    website: "https://www.newfoundwines.com",
+    owner: "Matt Naumann & Audra Chapman", group: "Independent (Naumann & Chapman)",
+    priceRange: [30, 60], tastingFee: "By appointment",
+    tours: "Yes — private tastings by appointment at a house one block off Main Street in St. Helena.",
+    vibeTags: ["Intimate", "Family-run", "Casual"],
+    vibe: "A tiny, personal project run by a husband-and-wife team, Newfound favors Rhône and Mediterranean varieties sourced from cool, characterful sites well beyond Napa. Tastings are intimate and hands-on, often led by the owners themselves.",
+    wines: [
+      { name: "Gravels", why: "A California red blend led by Grenache with Carignane and Mourvèdre, named for the gravelly soils of its source vineyards." },
+      { name: "Syrah", why: "A cool-climate, savory Syrah reflecting the winery's Rhône-leaning, restrained house style." }
+    ],
+    history: [
+      { y: 2016, t: "Matt Naumann and Audra Chapman launch Newfound, later buying a 40-acre ranch in the Sierra Foothills." },
+      { y: 2025, t: "The 2022 'Gravels' red blend lands at No. 60 on Wine Spectator's Top 100 of 2025." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 — No. 60 (2025, 92 pts), 2022 Gravels", "Praised by Jancis Robinson's team as a distinctive small-lot producer"],
+    funFact: "Though tasted in St. Helena, Newfound's Gravels is a California-appellation blend built largely from Grenache grown up in Mendocino County."
+  },
+
+  {
+    slug: "paula-kornell", name: "Paula Kornell", valley: "Napa", ava: "St. Helena",
+    founded: 2019, founder: "Paula Kornell",
+    address: "2963 St. Helena Highway North, St. Helena, CA 94574", lat: 38.5219, lng: -122.4947,
+    website: "https://www.paulakornell.com",
+    owner: "Paula Kornell", group: "Independent (Paula Kornell)",
+    priceRange: [22, 65], tastingFee: "By appointment",
+    tours: "Yes — sparkling wine tastings in St. Helena, by appointment.",
+    vibeTags: ["Family-run", "Classic", "Intimate"],
+    vibe: "Paula Kornell revives a Napa sparkling-wine dynasty under her own name, four generations after her father Hanns pioneered méthode champenoise in the valley. The wines are traditional in method but warm and personal in spirit.",
+    wines: [
+      { name: "Brut", why: "A crisp, approachable California sparkler — apple, strawberry and spiced-nut notes — and a rare value among Top 100 wines." },
+      { name: "Blanc de Noirs", why: "The debut bottling that launched the label, a richer traditional-method sparkling wine." }
+    ],
+    history: [
+      { y: 1958, t: "Paula's father Hanns Kornell establishes Hanns Kornell Champagne Cellars, a Napa sparkling-wine pioneer." },
+      { y: 2019, t: "Paula launches Paula Kornell Sparkling Wine with the 2017 Blanc de Noirs, reviving the family legacy." }
+    ],
+    storyTags: ["resurrected"],
+    awards: ["Wine Spectator Top 100 — No. 69 (2025), Brut (the only U.S. sparkling wine on the list, $22)", "Wine Enthusiast Top Wines — No. 5 (2020), California Brut"],
+    funFact: "At $22, Paula Kornell's Brut was the only American sparkling wine — and one of the least expensive bottles — on Wine Spectator's 2025 Top 100."
+  },
+
+  {
+    slug: "pine-ridge", name: "Pine Ridge Vineyards", valley: "Napa", ava: "Stags Leap District",
+    founded: 1978, founder: "Gary Andrus",
+    address: "5901 Silverado Trail, Napa, CA 94558", lat: 38.4077, lng: -122.3313,
+    website: "https://www.pineridgevineyards.com",
+    owner: "Crimson Wine Group", group: "Crimson Wine Group",
+    priceRange: [15, 150], tastingFee: "$45–$95, reservations recommended",
+    tours: "Yes — estate tastings and a scenic vineyard 'wine hike' on the Stags Leap District property.",
+    vibeTags: ["Scenic", "Classic", "Casual"],
+    vibe: "Perched on the Silverado Trail in the heart of the Stags Leap District, Pine Ridge combines serious estate Cabernet with a famously friendly, crowd-pleasing white blend. The hillside vineyards and cave make for a scenic, approachable visit.",
+    wines: [
+      { name: "Chenin Blanc + Viognier", why: "A bright, floral, well-under-$20 crowd favorite that repeatedly lands on value-wine and Top 100 lists." },
+      { name: "Stags Leap District Cabernet Sauvignon", why: "The estate's flagship red, showcasing the plush, structured character of its home appellation." }
+    ],
+    history: [
+      { y: 1978, t: "Gary Andrus founds Pine Ridge Vineyards in the Stags Leap District." },
+      { y: 1991, t: "Pine Ridge is acquired by what becomes the Crimson Wine Group, now headquartered at the estate." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 — No. 27 (2025, 90 pts), 2024 Chenin Blanc + Viognier", "Named a top wine under $20 by Food & Wine"],
+    funFact: "The Chenin Blanc + Viognier sells for around $15 yet reaches roughly 200,000 cases a year — a runaway value hit for a Stags Leap Cabernet house."
+  },
+
+  {
+    slug: "rutherford-hill", name: "Rutherford Hill Winery", valley: "Napa", ava: "Rutherford",
+    founded: 1976, founder: "Jaeger family–led partnership",
+    address: "200 Rutherford Hill Road, Rutherford, CA 94573", lat: 38.4934, lng: -122.4080,
+    website: "https://www.rutherfordhill.com",
+    owner: "Terlato family", group: "Terlato Wine Group",
+    priceRange: [25, 150], tastingFee: "$45–$95, reservations recommended",
+    tours: "Yes — cave tours available by reservation.",
+    vibeTags: ["Classic", "Scenic", "Historic"],
+    vibe: "Perched on a hillside a mile east of the Silverado Trail, Rutherford Hill offers sweeping valley views and a beloved oak-shaded picnic grove. Its cool, cathedral-like aging caves — among the largest in Napa — make for an atmospheric tasting.",
+    wines: [
+      { name: "Merlot Napa Valley", why: "The flagship that helped pioneer California Merlot, offering plush plum and cocoa at a friendly price." },
+      { name: "Cabernet Sauvignon Napa Valley", why: "A rounded, approachable Cabernet that anchors the estate's red lineup." },
+      { name: "Zinfandel Napa Valley", why: "A ripe, spice-driven bottling rounding out the classic Napa portfolio." }
+    ],
+    history: [
+      { y: 1972, t: "The hillside winery is built as Souverain of Rutherford under Pillsbury ownership." },
+      { y: 1976, t: "A partnership led by the Jaeger family buys the property, renames it Rutherford Hill, and bets early on Merlot." },
+      { y: 1996, t: "The Terlato family acquires the winery, focusing it on quality-driven Merlot and Cabernet." }
+    ],
+    storyTags: [],
+    awards: ["Merlot Napa Valley 2021 — 93 pts, #25 on Wine Spectator's Top 100 of 2024", "Recognized as a pioneer of California Merlot"],
+    funFact: "Rutherford Hill's aging caves stretch nearly a mile through the hillside, one of the most extensive cave systems in the Napa Valley."
+  },
+
+  {
+    slug: "st-supery", name: "St. Supéry Estate Vineyards", valley: "Napa", ava: "Rutherford",
+    founded: 1982, founder: "Robert Skalli",
+    address: "8440 St. Helena Highway, Rutherford, CA 94573", lat: 38.4529, lng: -122.4173,
+    website: "https://www.stsupery.com",
+    owner: "Chanel, Inc. (Wertheimer family)", group: "Chanel (Wertheimer family)",
+    priceRange: [25, 175], tastingFee: "$40–$95, by appointment",
+    tours: "Yes — reservation required.",
+    vibeTags: ["Modern", "Scenic", "Casual"],
+    vibe: "A polished, art-filled estate on Highway 29 in Rutherford, St. Supéry pairs relaxed hospitality with serious estate-grown winemaking. Every bottle comes entirely from its own Rutherford and Dollarhide vineyards.",
+    wines: [
+      { name: "Sauvignon Blanc Dollarhide", why: "A vibrant, single-estate Sauvignon Blanc from the cool Dollarhide ranch, bursting with citrus and stone fruit." },
+      { name: "Élu Estate Red Blend", why: "The estate's flagship Bordeaux-style blend, layered and age-worthy." },
+      { name: "Cabernet Sauvignon Rutherford Estate", why: "A structured Rutherford Cabernet showing the AVA's signature dusty tannins." }
+    ],
+    history: [
+      { y: 1982, t: "Robert Skalli purchases the 1,500-acre Dollarhide ranch in the hills northeast of the valley." },
+      { y: 1989, t: "The Rutherford winery opens to the public as St. Supéry Estate Vineyards & Winery." },
+      { y: 2015, t: "Chanel, Inc., owned by the Wertheimer family, acquires the fully estate-grown winery." }
+    ],
+    storyTags: [],
+    awards: ["Sauvignon Blanc Dollarhide Cold Concrete Fermented 2022 — 94 pts, #27 on Wine Spectator's Top 100 of 2024", "100% estate-grown across 500+ vineyard acres"],
+    funFact: "St. Supéry is owned by Chanel — the same Wertheimer family behind the Paris fashion house — which also owns Bordeaux's Château Rauzan-Ségla and Canon."
+  },
+
+  {
+    slug: "sullivan", name: "Sullivan Rutherford Estate", valley: "Napa", ava: "Rutherford",
+    founded: 1972, founder: "James O'Neil Sullivan",
+    address: "1090 Galleron Road, St. Helena, CA 94574", lat: 38.4759, lng: -122.4286,
+    website: "https://sullivanwine.com",
+    owner: "Torres-Padilla family", group: "Independent (Torres-Padilla family)",
+    priceRange: [75, 300], tastingFee: "$75–$150, by appointment",
+    tours: "Yes — reservation required.",
+    vibeTags: ["Intimate", "Modern", "Luxe"],
+    vibe: "Tucked among lush gardens on Galleron Road in the heart of Rutherford, Sullivan is a boutique estate reborn under new ownership. Tastings are intimate and unhurried, set amid 26 acres of estate vineyard.",
+    wines: [
+      { name: "Cabernet Sauvignon Rutherford Coeur de Vigne", why: "The estate's signature Cabernet — 'heart of the vine' — a polished expression of Rutherford's dusty tannins." },
+      { name: "Merlot Rutherford Estate", why: "A supple, plush Merlot honoring the estate's long Rutherford heritage." },
+      { name: "Cabernet Sauvignon Rutherford Estate", why: "The powerful, age-worthy top estate red from the historic vineyard." }
+    ],
+    history: [
+      { y: 1972, t: "Rutherford pioneer James O'Neil Sullivan founds the estate during Napa's boutique-winery boom." },
+      { y: 1978, t: "Vines are first planted on the 26-acre estate on the advice of legendary winemaker André Tchelistcheff." },
+      { y: 2018, t: "Entrepreneur Juan Pablo Torres-Padilla's family takes ownership and reinvests heavily in the vineyards." }
+    ],
+    storyTags: [],
+    awards: ["Cabernet Sauvignon Rutherford Coeur de Vigne 2021 — No. 75 on Wine Spectator's Top 100 of 2024 (94 pts)", "Recognized for estate-grown Rutherford Merlot and Cabernet"],
+    funFact: "Sullivan broke ground on a new winery and hospitality center in 2025, slated to open in mid-2026."
+  },
+
+  {
+    slug: "turley", name: "Turley Wine Cellars", valley: "Napa", ava: "St. Helena",
+    founded: 1993, founder: "Larry Turley",
+    address: "3358 St. Helena Highway, St. Helena, CA 94574", lat: 38.5387, lng: -122.5078,
+    website: "https://www.turleywinecellars.com",
+    owner: "Turley family", group: "Independent (Turley family)",
+    priceRange: [20, 100], tastingFee: "$25–$40, by appointment",
+    tours: "Tastings by appointment at the St. Helena winery.",
+    vibeTags: ["Cult", "Rustic", "Historic"],
+    vibe: "Housed in the historic former Frog's Leap winery north of St. Helena, Turley is a temple to old-vine Zinfandel and Petite Sirah. Tastings are relaxed and unpretentious, celebrating gnarled century-old vineyards from across California.",
+    wines: [
+      { name: "Zinfandel California Juvenile", why: "Turley's fruit-forward introductory Zin, drawn from younger vines across its heritage vineyards — a benchmark value." },
+      { name: "Zinfandel Hayne Vineyard", why: "A profound single-vineyard Zin from ancient St. Helena vines, one of Turley's most coveted bottlings." },
+      { name: "Petite Syrah", why: "A dark, brooding old-vine Petite Sirah showing the estate's flair for heritage varieties." }
+    ],
+    history: [
+      { y: 1993, t: "Former ER physician Larry Turley founds the winery in the historic red-barn winery he had co-founded as Frog's Leap." },
+      { y: 1994, t: "Frog's Leap relocates to Rutherford, leaving Turley the St. Helena site to pursue old-vine Zinfandel." },
+      { y: 2000, t: "Turley expands with vineyard holdings and tasting rooms in Amador County and Paso Robles." }
+    ],
+    storyTags: ["site-reuse"],
+    awards: ["Zinfandel California Juvenile 2022 — 93 pts, #14 on Wine Spectator's Top 100 of 2024", "Renowned steward of pre-Prohibition old-vine vineyards"],
+    funFact: "Turley has made wine from more than 50 vineyards, many with vines dating to the late 1800s, before Prohibition."
+  },
+
+  {
+    slug: "vhr", name: "VHR — Vine Hill Ranch", valley: "Napa", ava: "Oakville",
+    founded: 2008, founder: "Bruce & Heather Phillips",
+    address: "P.O. Box 46, Oakville, CA 94562", lat: 38.4340, lng: -122.4280,
+    website: "https://vinehillranch.com",
+    owner: "Phillips family", group: "Independent (Phillips family)",
+    priceRange: [200, 300], tastingFee: "No public tasting room",
+    tours: "No public tasting room — wines are sold via the winery mailing list.",
+    vibeTags: ["Cult", "Scenic"],
+    vibe: "A revered 70-acre vineyard on the western, Mayacamas-facing edge of Oakville that has grown grapes since 1959. In 2008 the Phillips family began holding back a little fruit for their own coveted, allocation-only VHR Cabernet.",
+    wines: [
+      { name: "Cabernet Sauvignon Oakville", why: "A single-vineyard Oakville Cabernet from seven select blocks, layered with dark berry preserves and mineral depth." }
+    ],
+    history: [
+      { y: 1959, t: "Bob Phillips begins farming winegrapes on Vine Hill Ranch in western Oakville." },
+      { y: 2008, t: "Bruce and Heather Phillips launch the estate VHR Cabernet, keeping back fruit from their best blocks." },
+      { y: 2024, t: "The 2021 Oakville Cabernet earns 98 points and No. 97 on Wine Spectator's Top 100 of 2024." }
+    ],
+    storyTags: [],
+    awards: ["Cabernet Sauvignon Oakville 2021 — 98 pts, No. 97 on Wine Spectator's Top 100 of 2024", "Consistently 96–98 pts from Wine Spectator"],
+    funFact: "Vine Hill Ranch fruit feeds more than a dozen winery partners, eight of whom bottle single-vineyard wines from the property."
+  },
+
+  {
+    slug: "aubert", name: "Aubert Wines", valley: "Napa", ava: "Calistoga",
+    founded: 2000, founder: "Mark & Teresa Aubert",
+    address: "333 Silverado Trail, Calistoga, CA 94515", lat: 38.5744, lng: -122.5446,
+    website: "https://www.aubertwines.com",
+    owner: "Aubert family", group: "Independent (Aubert family)",
+    priceRange: [90, 175], tastingFee: "No public tasting — allocation members only",
+    tours: "No public tasting room — visits are for active mailing-list members only.",
+    vibeTags: ["Cult", "Luxe"],
+    vibe: "Mark Aubert's namesake label is one of California's most sought-after names for opulent, richly textured Chardonnay and Pinot Noir. Bottles are strictly allocation-only, sourced from a roster of elite Sonoma Coast and Napa vineyards.",
+    wines: [
+      { name: "Chardonnay Sonoma Coast UV-SL Vineyard", why: "A profound, saline Chardonnay from a vineyard just six miles off the Pacific, ranked among the world's best." },
+      { name: "Chardonnay Lauren Vineyard", why: "A rich, layered Chardonnay from Aubert's own estate site." },
+      { name: "Pinot Noir UV-SL Vineyard", why: "A silky, coastal Pinot Noir from the same acclaimed far-western Sonoma Coast planting." }
+    ],
+    history: [
+      { y: 1989, t: "Mark Aubert begins his winemaking career at Peter Michael under the mentorship of Helen Turley." },
+      { y: 2000, t: "Mark and Teresa Aubert found their namesake label, focused on Chardonnay and Pinot Noir." },
+      { y: 2010, t: "Aubert and vineyard manager Ulises Valdez Sr. plant the UV-SL Vineyard on the far Sonoma Coast." }
+    ],
+    storyTags: [],
+    awards: ["Chardonnay Sonoma Coast UV-SL Vineyard 2023 — 96 pts, #2 on Wine Spectator's Top 100 of 2025 (the only white in the Top 10)", "Consistently 95+ pts across its Chardonnay lineup"],
+    funFact: "The UV-SL Vineyard is named for the late vineyard manager Ulises Valdez Sr. (UV) and his home estate on Stoetz Lane (SL)."
+  },
+
+
 
   // ───────────────────────── SONOMA COUNTY ─────────────────────────
   {
@@ -1121,9 +1604,9 @@ const WINERIES = [
   {
     slug: "rams-gate", name: "Ram's Gate Winery", valley: "Sonoma", ava: "Los Carneros (Sonoma side)",
     founded: 2011, founder: "Partners incl. Jeff O'Neill, on the old Roche winery site",
-    address: "28700 Arnold Dr, Sonoma, CA 95476", lat: 38.2250, lng: -122.4550,
+    address: "28700 Arnold Dr, Sonoma, CA 95476", lat: 38.1742, lng: -122.4505,
     website: "https://www.ramsgatewinery.com",
-    owner: "Private partnership", group: "Independent (partnership)",
+    owner: "O'Neill Vintners & Distillers (Jeff O'Neill, sole owner since 2024)", group: "O'Neill Vintners & Distillers",
     priceRange: [45, 120], tastingFee: "$65–$150 (food pairings)",
     tours: "Yes — seated food-and-wine tastings around the open-hearth great room and terraces",
     vibeTags: ["Modern", "Showpiece"],
@@ -1145,9 +1628,9 @@ const WINERIES = [
   {
     slug: "macrostie", name: "MacRostie Winery & Vineyards", valley: "Sonoma", ava: "Russian River Valley",
     founded: 1987, founder: "Steve MacRostie",
-    address: "4605 Westside Rd, Healdsburg, CA 95448", lat: 38.5650, lng: -122.8850,
+    address: "4605 Westside Rd, Healdsburg, CA 95448", lat: 38.5546, lng: -122.8734,
     website: "https://www.macrostiewinery.com",
-    owner: "MacRostie family", group: "Independent (MacRostie family)",
+    owner: "Distinguished Vineyards & Wine Partners (founder Steve MacRostie still active)", group: "Distinguished Vineyards & Wine Partners",
     priceRange: [25, 68], tastingFee: "$40–$70",
     tours: "Yes — seated tastings in the glass Estate House with 360° vineyard views; walk-ins when space allows",
     vibeTags: ["Modern", "Casual"],
@@ -1170,7 +1653,7 @@ const WINERIES = [
   {
     slug: "occidental", name: "Occidental Wines", valley: "Sonoma", ava: "Sonoma Coast (Freestone-Occidental)",
     founded: 2011, founder: "Steve Kistler (of Kistler Vineyards fame)",
-    address: "Bodega Hwy, Freestone/Occidental, CA (by appointment)", lat: 38.3600, lng: -122.9500,
+    address: "14715 Bodega Hwy, Bodega, CA 94922 (by appointment)", lat: 38.3598, lng: -122.9311,
     website: "https://www.occidentalwines.com",
     owner: "Steve Kistler & daughters", group: "Independent (Kistler family)",
     priceRange: [70, 150], tastingFee: "By appointment only",
@@ -1194,7 +1677,7 @@ const WINERIES = [
   {
     slug: "hamel", name: "Hamel Family Wines", valley: "Sonoma", ava: "Sonoma Valley / Moon Mountain",
     founded: 2006, founder: "George Hamel Jr. & family",
-    address: "15401 Sonoma Hwy, Sonoma, CA 95476", lat: 38.3150, lng: -122.4750,
+    address: "15401 Sonoma Hwy, Sonoma, CA 95476", lat: 38.3427, lng: -122.4968,
     website: "https://www.hamelfamilywines.com",
     owner: "Hamel family", group: "Independent (Hamel family)",
     priceRange: [60, 250], tastingFee: "$95–$200, by appointment",
@@ -1218,7 +1701,7 @@ const WINERIES = [
   {
     slug: "donum", name: "The Donum Estate", valley: "Sonoma", ava: "Los Carneros (Sonoma side)",
     founded: 2001, founder: "Anne Moller-Racke (spun out of Buena Vista's Carneros estate)",
-    address: "24500 Ramal Rd, Sonoma, CA 95476", lat: 38.2300, lng: -122.4200,
+    address: "24500 Ramal Rd, Sonoma, CA 95476", lat: 38.2305, lng: -122.4017,
     website: "https://www.thedonumestate.com",
     owner: "Allan & Mei Warburg (Winside/Bestseller fashion fortune)", group: "Independent (Warburg family)",
     priceRange: [90, 200], tastingFee: "$150–$300, strictly by appointment",
@@ -1243,7 +1726,7 @@ const WINERIES = [
   {
     slug: "williams-selyem", name: "Williams Selyem", valley: "Sonoma", ava: "Russian River Valley",
     founded: 1981, founder: "Burt Williams (pressman) & Ed Selyem (wine-shop clerk) — garage winemakers",
-    address: "7227 Westside Rd, Healdsburg, CA 95448", lat: 38.5450, lng: -122.8700,
+    address: "7227 Westside Rd, Healdsburg, CA 95448", lat: 38.5209, lng: -122.8708,
     website: "https://www.williamsselyem.com",
     owner: "John & Kathe Dyson (since 1998)", group: "Independent (Dyson family)",
     priceRange: [45, 165], tastingFee: "List members / by appointment",
@@ -1269,9 +1752,9 @@ const WINERIES = [
   {
     slug: "kistler", name: "Kistler Vineyards", valley: "Sonoma", ava: "Russian River Valley",
     founded: 1978, founder: "Steve Kistler & Mark Bixler",
-    address: "Trenton Roadhouse, 4707 Trenton-Healdsburg Rd, Forestville, CA 95436", lat: 38.4950, lng: -122.8650,
+    address: "7095 Trenton Healdsburg Rd, Forestville, CA 95436", lat: 38.4890, lng: -122.8552,
     website: "https://www.kistlervineyards.com",
-    owner: "Kistler family & Bill Price (Price Family Vineyards)", group: "Independent (Kistler/Price)",
+    owner: "Bill Price / Price Family Estates (majority since 2008)", group: "Independent (Price family)",
     priceRange: [90, 200], tastingFee: "$150+, by appointment (allocation-list priority)",
     tours: "Appointment-only tastings at the Trenton Roadhouse",
     vibeTags: ["Classic", "Intimate"],
@@ -1295,7 +1778,7 @@ const WINERIES = [
   {
     slug: "medlock-ames", name: "Medlock Ames", valley: "Sonoma", ava: "Alexander Valley (Bell Mountain)",
     founded: 1998, founder: "Christopher Medlock James & Ames Morison (college friends)",
-    address: "3487 Alexander Valley Rd, Healdsburg, CA 95448", lat: 38.6550, lng: -122.8200,
+    address: "3487 Alexander Valley Rd, Healdsburg, CA 95448", lat: 38.6664, lng: -122.8201,
     website: "https://www.medlockames.com",
     owner: "Christopher James & Ames Morison", group: "Independent (James & Morison)",
     priceRange: [30, 95], tastingFee: "$40–$85",
@@ -1320,7 +1803,7 @@ const WINERIES = [
   {
     slug: "la-crema-saralee", name: "La Crema Estate at Saralee's Vineyard", valley: "Sonoma", ava: "Russian River Valley",
     founded: 1979, founder: "La Crema founded 1979; estate home is Richard's Grove & Saralee's Vineyard",
-    address: "3575 Slusser Rd, Windsor, CA 95492", lat: 38.4850, lng: -122.7950,
+    address: "3575 Slusser Rd, Windsor, CA 95492", lat: 38.4982, lng: -122.8114,
     website: "https://www.lacrema.com",
     owner: "Jackson Family Wines (since 1993)", group: "Jackson Family Wines",
     priceRange: [25, 70], tastingFee: "$35–$65",
@@ -1340,7 +1823,361 @@ const WINERIES = [
     storyTags: ["architecture", "site-reuse", "consolidated"],
     awards: ["Featured in 'The New Architecture of Wine'"],
     funFact: "Saralee Kunde was such a legendary Sonoma host that the barn came with its own parade float storage — the estate kept her hospitality tradition, minus the float."
-  }
+  },
+
+  {
+    slug: "aperture", name: "Aperture Cellars", valley: "Sonoma", ava: "Alexander Valley",
+    founded: 2009, founder: "Jesse Katz",
+    address: "12291 Old Redwood Hwy, Healdsburg, CA 95448", lat: 38.5839, lng: -122.8469,
+    website: "https://aperture-cellars.com",
+    owner: "Jesse Katz", group: "Independent (Katz family)",
+    priceRange: [40, 200], tastingFee: "From about $65 by reservation",
+    tours: "Seated tastings by reservation at the striking lens-inspired Aperture Estate hospitality center just south of Healdsburg.",
+    vibeTags: ["Modern", "Luxe", "Scenic"],
+    vibe: "A sleek, light-filled contemporary estate whose forms echo a camera aperture, matching the Bordeaux-serious wines within. Young-gun winemaker Jesse Katz has turned a small custom-crush project into one of Sonoma's most talked-about addresses.",
+    wines: [
+      { name: "Chenin Blanc Clarksburg", why: "A crisp, mineral single-appellation white that earned a spot on Wine Spectator's Top 100 of 2024." },
+      { name: "Devil Proof Malbec", why: "Aperture's flagship rarity, a dark, powerful Alexander Valley Malbec that first put Katz on the collector map." },
+      { name: "Aperture Estate Red", why: "A polished Bordeaux-style blend from the home Alexander Valley vineyards that defines the house style." }
+    ],
+    history: [
+      { y: 2009, t: "Jesse Katz launches Aperture Cellars after apprenticeships at top estates around the world." },
+      { y: 2016, t: "Katz acquires the estate vineyard land on historic Ponzo Ranch outside Healdsburg." },
+      { y: 2022, t: "The dramatic new Aperture Estate winery and hospitality center opens to visitors." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 of 2024 (No. 71), Chenin Blanc Clarksburg, 91 pts", "Jesse Katz named Wine Enthusiast Winemaker of the Year 2025", "Multiple 100-point scores for Devil Proof Malbec"],
+    funFact: "The photographs on every Aperture label were shot by Jesse Katz's father, acclaimed photographer Andy Katz, and the winery's name nods to the camera."
+  },
+
+  {
+    slug: "bedrock", name: "Bedrock Wine Co.", valley: "Sonoma", ava: "Sonoma Valley",
+    founded: 2007, founder: "Morgan Twain-Peterson",
+    address: "414 1st St E, Sonoma, CA 95476", lat: 38.2933, lng: -122.4564,
+    website: "https://bedrockwineco.com",
+    owner: "Morgan Twain-Peterson & Chris Cottrell", group: "Independent (Twain-Peterson / Cottrell)",
+    priceRange: [30, 110], tastingFee: "About $40 by reservation",
+    tours: "Reserved tastings in the 1854 General Joseph Hooker House on the Sonoma plaza.",
+    vibeTags: ["Historic", "Intimate", "Family-run"],
+    vibe: "A scholarly, old-vine crusade run out of a landmark 19th-century home just off Sonoma's town square. Master of Wine Morgan Twain-Peterson champions California's ancient mixed-black field blends with contagious enthusiasm.",
+    wines: [
+      { name: "Bedrock Vineyard Heritage", why: "The flagship field blend from the estate's own 1888-planted Sonoma Valley vines, a Wine Spectator Top 100 perennial." },
+      { name: "Old Vine Zinfandel", why: "A statewide bottling that showcases Bedrock's mission of preserving heritage Zinfandel vineyards." },
+      { name: "Sauvignon Blanc", why: "A crisp, textural white that rounds out the old-vine reds with freshness." }
+    ],
+    history: [
+      { y: 2007, t: "Morgan Twain-Peterson founds Bedrock in a converted chicken coop with six barrels of wine." },
+      { y: 2012, t: "Longtime friend Chris Cottrell joins as business partner." },
+      { y: 2020, t: "Twain-Peterson earns the Master of Wine title, cementing Bedrock's scholarly reputation." }
+    ],
+    storyTags: ["site-reuse"],
+    awards: ["Wine Spectator Top 100 of 2025 (No. 12), Bedrock Vineyard Heritage, 97 pts", "Wine Spectator Top 100 of 2018 (No. 10), Bedrock Heritage", "Regenerative Organic Certified estate vineyard"],
+    funFact: "Founder Morgan Twain-Peterson is the son of Ravenswood founder Joel Peterson and made his first commercial wine as a child under the label Vino Bambino."
+  },
+
+  {
+    slug: "carlisle", name: "Carlisle Winery", valley: "Sonoma", ava: "Russian River Valley",
+    founded: 1998, founder: "Mike & Kendall Officer",
+    address: "6301 Starr Rd, Windsor, CA 95492", lat: 38.5200, lng: -122.8400,
+    website: "https://www.carlislewinery.com",
+    owner: "Mike & Kendall Officer", group: "Independent (Officer family)",
+    priceRange: [28, 65], tastingFee: "Intimate tastings Fridays by appointment only",
+    tours: "Largely a mailing-list winery; small by-appointment tastings are held on Fridays at the Windsor production facility (coordinates are the winery address).",
+    vibeTags: ["Cult", "Rustic", "Family-run"],
+    vibe: "A devoutly followed, allocation-driven producer of old-vine Zinfandel and Rhone reds run out of a working Russian River Valley cellar. The Officers are evangelists for preserving California's disappearing century-old field-blend vineyards.",
+    wines: [
+      { name: "Zinfandel Russian River Valley Papera Ranch", why: "From vines planted in 1934, a benchmark old-vine Zin that made Wine Spectator's Top 100 of 2024." },
+      { name: "Syrah", why: "Carlisle's serious Rhone-variety reds are a cult favorite alongside the Zinfandels." },
+      { name: "Old Vine Zinfandel Sonoma County", why: "A broad old-vine blend that captures the house's field-blend philosophy at a friendly price." }
+    ],
+    history: [
+      { y: 1998, t: "Software developer Mike Officer and wife Kendall bond 650 cases in their first commercial vintage." },
+      { y: 2004, t: "The Officers leave their corporate careers to run Carlisle full time." },
+      { y: 2013, t: "Carlisle moves into its own Russian River Valley winery, the former Robert Mueller facility." }
+    ],
+    storyTags: ["site-reuse"],
+    awards: ["Wine Spectator Top 100 of 2024 (No. 21), Zinfandel Papera Ranch, Highly Recommended", "Regularly 90+ point scores across its old-vine Zinfandels"],
+    funFact: "Carlisle is named for the Officers' daughter, and Mike started out making five gallons of Zinfandel in his kitchen before quitting tech."
+  },
+
+  {
+    slug: "dehlinger", name: "Dehlinger Winery", valley: "Sonoma", ava: "Russian River Valley",
+    founded: 1975, founder: "Tom Dehlinger",
+    address: "4101 Vine Hill Rd, Sebastopol, CA 95472", lat: 38.4506, lng: -122.8613,
+    website: "https://www.dehlingerwinery.com",
+    owner: "Dehlinger family", group: "Independent (Dehlinger family)",
+    priceRange: [35, 90], tastingFee: "No public tasting room; wines sold mainly by mailing list",
+    tours: "A quiet, family-run estate with no public tasting room, selling more than three-quarters of its wine through a mailing list (coordinates are the estate winery on Vine Hill Road).",
+    vibeTags: ["Classic", "Family-run", "Rustic"],
+    vibe: "A pioneering estate winery on the Vine Hill bench that helped define Russian River Valley Pinot Noir. Understated and estate-focused, Dehlinger lets its own vineyards speak with striking purity.",
+    wines: [
+      { name: "Pinot Noir Russian River Valley Estate", why: "The reference-point bottling from Dehlinger's estate vines, balanced and pure and a Russian River benchmark for decades." },
+      { name: "Syrah", why: "An estate-grown Syrah that shows the site's cool-climate finesse alongside the Pinot." },
+      { name: "Chardonnay", why: "A restrained, estate Chardonnay rounding out the classic Burgundian-varietal lineup." }
+    ],
+    history: [
+      { y: 1975, t: "UC Davis-trained enologist Tom Dehlinger founds the winery in the Russian River Valley." },
+      { y: 1975, t: "Early plantings on Vine Hill Road establish what becomes an all-estate operation." },
+      { y: 2000, t: "The winery consolidates around estate-grown fruit and mailing-list sales, shunning wide distribution." },
+      { y: 2025, t: "The 2023 Estate Pinot Noir lands at No. 46 on Wine Spectator's Top 100 of 2025 (94 pts)." }
+    ],
+    storyTags: [],
+    awards: ["Estate Pinot Noir Russian River Valley — No. 46 on Wine Spectator's Top 100 of 2025 (94 pts)", "Long regarded as a Russian River Valley Pinot Noir benchmark"],
+    funFact: "Dehlinger farms essentially all of the fruit it bottles, a rarity that has made its estate Pinot Noir a decades-long reference for the Russian River Valley."
+  },
+
+  {
+    slug: "dry-creek-vineyard", name: "Dry Creek Vineyard", valley: "Sonoma", ava: "Dry Creek Valley",
+    founded: 1972, founder: "David Stare",
+    address: "3770 Lambert Bridge Rd, Healdsburg, CA 95448", lat: 38.6539, lng: -122.9271,
+    website: "https://drycreekvineyard.com",
+    owner: "Wallace family", group: "Independent (Wallace family)",
+    priceRange: [18, 60], tastingFee: "From about $25, walk-ins and reservations welcome",
+    tours: "Relaxed indoor and garden tastings at the ivy-covered New England-style winery, a longtime picnic destination in Dry Creek Valley.",
+    vibeTags: ["Classic", "Family-run", "Casual"],
+    vibe: "The first new winery built in Dry Creek Valley after Prohibition, still family-run and welcoming. Its flag-flying, ivy-clad building and shady picnic lawn make it one of the valley's most approachable stops.",
+    wines: [
+      { name: "Chenin Blanc Clarksburg Dry", why: "A crisp, Loire-inspired dry white from longtime Clarksburg growers that landed on Wine Spectator's Top 100 of 2025." },
+      { name: "Fume Blanc", why: "A pioneering Sauvignon Blanc bottling that helped build the winery's early reputation." },
+      { name: "Heritage Zinfandel", why: "A classic Dry Creek Valley Zinfandel showcasing the region's signature red grape." }
+    ],
+    history: [
+      { y: 1972, t: "David Stare, inspired by the Loire Valley, founds Dry Creek Vineyard, the valley's first post-Prohibition winery." },
+      { y: 1972, t: "Stare bets early on Chenin Blanc and Fume Blanc when few in California would." },
+      { y: 2022, t: "The winery marks its 50th anniversary under daughter Kim Stare Wallace and the Wallace family." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 of 2025 (No. 24), Dry Chenin Blanc Clarksburg, 91 pts", "Founder David Stare honored as a Wine Enthusiast American Wine Legend"],
+    funFact: "Founder David Stare fell for Chenin Blanc while traveling France's Loire Valley and has sourced the grapes from the same Clarksburg growing family for more than 40 years."
+  },
+
+  {
+    slug: "ferren", name: "Ferren Wines", valley: "Sonoma", ava: "Sonoma Coast",
+    founded: 2013, founder: "Matt Courtney & David Wherritt",
+    address: "Healdsburg, CA 95448", lat: 38.6104, lng: -122.8694,
+    website: "https://www.ferrenwines.com",
+    owner: "Matt Courtney & David Wherritt", group: "Independent (Courtney / Wherritt)",
+    priceRange: [55, 95], tastingFee: "No public tasting room; wines allocated by mailing list",
+    tours: "A tiny Healdsburg-based producer with no public tasting room, releasing its single-vineyard wines to a mailing list (coordinates are approximate to the Healdsburg business address).",
+    vibeTags: ["Cult", "Intimate"],
+    vibe: "A small, precision-minded label built on winemaker Matt Courtney's eight-year apprenticeship with Sonoma Coast legend Helen Turley at Marcassin. Ferren makes tiny lots of ageworthy Chardonnay and Pinot Noir from far-coast jewel vineyards.",
+    wines: [
+      { name: "Pinot Noir Sonoma Coast", why: "A polished, cool-climate coastal Pinot that reached Wine Spectator's Top 100 of 2024." },
+      { name: "Chardonnay Sonoma Coast", why: "A taut, mineral-driven Chardonnay reflecting Courtney's Marcassin pedigree." },
+      { name: "Silver Eagle Vineyard Pinot Noir", why: "A single-vineyard bottling from a prized far-coast site farmed to exacting standards." }
+    ],
+    history: [
+      { y: 2013, t: "Matt Courtney and David Wherritt launch Ferren after Courtney's years alongside Helen Turley at Marcassin." },
+      { y: 2013, t: "The first Ferren wines are released to a small mailing-list following." },
+      { y: 2024, t: "The Sonoma Coast Pinot Noir lands on Wine Spectator's Top 100 of 2024." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 of 2024 (No. 96), Pinot Noir Sonoma Coast", "Repeated Top 100 appearances for its Sonoma Coast Pinot Noir"],
+    funFact: "Ferren's founding winemaker Matt Courtney spent eight years as Helen Turley's right hand at the cult Marcassin estate before striking out on his own."
+  },
+
+  {
+    slug: "flowers", name: "Flowers Vineyards & Winery", valley: "Sonoma", ava: "Sonoma Coast",
+    founded: 1989, founder: "Walt & Joan Flowers",
+    address: "4035 Westside Rd, Healdsburg, CA 95448", lat: 38.5641, lng: -122.8712,
+    website: "https://www.flowerswinery.com",
+    owner: "Huneeus Vintners", group: "Huneeus Vintners",
+    priceRange: [45, 120], tastingFee: "From about $60 by reservation",
+    tours: "Seated tastings by reservation at the House of Flowers, a modern hospitality house set among gardens and redwoods on Westside Road.",
+    vibeTags: ["Modern", "Scenic", "Luxe"],
+    vibe: "A benchmark extreme-Sonoma-Coast producer whose estate vines cling to windswept ridges above the fog line, two miles from the Pacific. The elegant Healdsburg tasting house translates that wild coastal purity into a refined, garden-set experience.",
+    wines: [
+      { name: "Chardonnay Sonoma Coast", why: "A taut, saline coastal Chardonnay that earned a spot on Wine Spectator's Top 100 of 2024." },
+      { name: "Pinot Noir Sonoma Coast", why: "The estate's signature red, showing the finesse and tension of high-elevation coastal fruit." },
+      { name: "Camp Meeting Ridge Pinot Noir", why: "A single-vineyard bottling from the original ridge-top vines that made Flowers' name." }
+    ],
+    history: [
+      { y: 1989, t: "Walt and Joan Flowers found the estate on the remote Sonoma Coast." },
+      { y: 1991, t: "They plant the Camp Meeting Ridge vineyard on a ridgeline two miles from the ocean, against prevailing advice." },
+      { y: 2009, t: "Huneeus Vintners takes ownership, investing in the estate and coastal vineyards." }
+    ],
+    storyTags: [],
+    awards: ["Wine Spectator Top 100 of 2024 (No. 43), Chardonnay Sonoma Coast", "Recognized as a benchmark extreme-Sonoma-Coast estate", "Organically farmed estate vineyards"],
+    funFact: "Flowers' estate vineyards sit as high as 1,875 feet, perched above the fog line just two miles from the Pacific, where many said fine wine grapes could not ripen."
+  },
+
+  {
+    slug: "hartford-family", name: "Hartford Family Winery", valley: "Sonoma", ava: "Russian River Valley",
+    founded: 1994, founder: "Don & Jennifer 'Jenny' Hartford",
+    address: "8075 Martinelli Rd, Forestville, CA 95436", lat: 38.4844, lng: -122.9119,
+    website: "https://www.hartfordwines.com",
+    owner: "Hartford family (sole owners)", group: "Jackson Family Wines",
+    priceRange: [35, 90], tastingFee: "$45–$75, by appointment",
+    tours: "Seated tastings by appointment at the French-style Forestville estate, with a second tasting room in downtown Healdsburg.",
+    vibeTags: ["Family-run", "Classic", "Scenic"],
+    vibe: "A serene château-style estate tucked among the redwoods and vines near Forestville, focused with almost obsessive precision on single-vineyard bottlings. Polished but personal — the Hartford name is on the door and on every wine.",
+    wines: [
+      { name: "Old Vine Zinfandel Russian River Valley", why: "Sourced from head-trained, dry-farmed vines up to a century old, it captures the brambly, spice-driven side of Russian River Zinfandel." },
+      { name: "Single-Vineyard Pinot Noir", why: "A lineup of cool-climate Russian River and Sonoma Coast Pinots that showcases the winery's vineyard-by-vineyard philosophy." },
+      { name: "Chardonnay", why: "Barrel-fermented, terroir-driven whites that round out the estate's cool-climate trio." }
+    ],
+    history: [
+      { y: 1994, t: "Don and Jenny Hartford found the winery out of a love for the small, distinctive vineyards near their Russian River Valley home." },
+      { y: 1994, t: "As part of the extended Jackson family (Jenny is the daughter of Jess Jackson), the winery joins the Jackson Family Wines portfolio while remaining family-run." },
+      { y: 2025, t: "The Old Vine Zinfandel earns renewed national attention with a top-flight showing on Wine Spectator's annual list." }
+    ],
+    storyTags: [],
+    awards: ["Old Vine Zinfandel Russian River Valley 2022 — No. 39 on Wine Spectator's Top 100 of 2025 (93 pts)", "Consistently high critic scores for its single-vineyard Pinot Noirs and Chardonnays"],
+    funFact: "Founder Jenny Hartford is the daughter of wine magnate Jess Jackson, making the winery a family-run label within the larger Jackson Family Wines empire."
+  },
+
+  {
+    slug: "merry-edwards", name: "Merry Edwards Winery", valley: "Sonoma", ava: "Russian River Valley",
+    founded: 1997, founder: "Merry Edwards, pioneering California winemaker",
+    address: "2959 Gravenstein Hwy N, Sebastopol, CA 95472", lat: 38.4066, lng: -122.8379,
+    website: "https://merryedwards.com",
+    owner: "Champagne Louis Roederer", group: "Champagne Louis Roederer (Roederer Collection)",
+    priceRange: [40, 80], tastingFee: "Seated tastings by appointment",
+    tours: "Seated, appointment-only tastings at the Sebastopol winery on Highway 116.",
+    vibeTags: ["Intimate", "Classic", "Family-run"],
+    vibe: "The house that a trailblazing woman built — Merry Edwards was among California's first female winemakers and made her name with Pinot Noir before turning Sauvignon Blanc into a cult wine. The Sebastopol tasting room is understated and serious, all about what's in the glass.",
+    wines: [
+      { name: "Sauvignon Blanc Russian River Valley", why: "A barrel-fermented, texturally rich Sauvignon Blanc grown from a proprietary clone — one of California's most sought-after and imitated whites." },
+      { name: "Russian River Valley Pinot Noir", why: "The estate's founding calling card, an appellation blend that showcases Edwards' decades of cool-climate Pinot expertise." },
+      { name: "Single-Vineyard Pinot Noir", why: "Site-specific bottlings such as Meredith and Olivet Lane that trace the nuances of Russian River terroir." }
+    ],
+    history: [
+      { y: 1997, t: "Merry Edwards launches her eponymous winery after a pioneering career that included stints at Mount Eden and Matanzas Creek." },
+      { y: 2009, t: "Her 2007 Sauvignon Blanc lands at No. 9 on Wine Spectator's Top 100, cementing the wine's cult status." },
+      { y: 2019, t: "Champagne Louis Roederer acquires the winery, adding it to the Roederer Collection while Edwards stays on as a consultant." }
+    ],
+    storyTags: [],
+    awards: ["Sauvignon Blanc Russian River Valley 2007 — No. 9 on Wine Spectator's Top 100 of 2009", "Sauvignon Blanc Russian River Valley 2022 — No. 16 on Wine Spectator's Top 100 of 2024 (95 pts)"],
+    funFact: "Merry Edwards was one of the first women to earn a graduate degree in enology and became a mentor figure for a generation of California winemakers before selling to a Champagne house."
+  },
+
+  {
+    slug: "patz-hall", name: "Patz & Hall", valley: "Sonoma", ava: "Sonoma Coast",
+    founded: 1988, founder: "Donald Patz, James Hall, Anne Moses & Heather Patz",
+    address: "596 First St E, Sonoma, CA 95476", lat: 38.2901, lng: -122.4568,
+    website: "https://www.patzhall.com",
+    owner: "James Hall (founding winemaker)", group: "Independent (James Hall)",
+    priceRange: [40, 90], tastingFee: "$40–$65, by appointment",
+    tours: "Seated tastings at a new bungalow salon just off the Sonoma Plaza (opened 2026), after decades at the Sonoma House.",
+    vibeTags: ["Intimate", "Classic", "Casual"],
+    vibe: "A specialist's house devoted almost entirely to Chardonnay and Pinot Noir, built on long relationships with Sonoma's benchmark vineyards. After a corporate detour, it's back in founder James Hall's hands and feels like a return to first principles.",
+    wines: [
+      { name: "Chardonnay Sonoma Coast", why: "A native-fermented, multi-vineyard blend that distills cool-coastal intensity into the winery's flagship white." },
+      { name: "Single-Vineyard Chardonnay", why: "Site-designated bottlings from famed sources like Dutton Ranch and Durell that spotlight Patz & Hall's vineyard connections." },
+      { name: "Pinot Noir", why: "Elegant, cool-climate Pinots from top Sonoma and Napa/Carneros sites round out the Burgundian focus." }
+    ],
+    history: [
+      { y: 1988, t: "Four partners — including sommelier Donald Patz and winemaker James Hall — found Patz & Hall with a singular focus on Chardonnay and Pinot Noir." },
+      { y: 2016, t: "Ste. Michelle Wine Estates acquires the winery, expanding its California footprint." },
+      { y: 2024, t: "Founding winemaker James Hall buys the brand back from Ste. Michelle, returning it to independent ownership." },
+      { y: 2026, t: "The tasting room moves from the longtime Sonoma House to an intimate bungalow steps from the Sonoma Plaza." }
+    ],
+    storyTags: [],
+    awards: ["Chardonnay Sonoma Coast 2022 — No. 22 on Wine Spectator's Top 100 of 2025", "Long recognized as one of Sonoma's benchmark Chardonnay houses"],
+    funFact: "Eight years after selling to Ste. Michelle, co-founder James Hall bought his own winery back in 2024 — an unusual reversal in an era of one-way consolidation."
+  },
+
+  {
+    slug: "platt", name: "Platt Vineyard", valley: "Sonoma", ava: "West Sonoma Coast (Freestone-Occidental)",
+    founded: 2003, founder: "Lewis E. 'Lew' Platt, former Hewlett-Packard CEO, & Joan Platt",
+    address: "383 First St W, Sonoma, CA 95476", lat: 38.2942, lng: -122.4588,
+    website: "https://www.plattvineyard.com",
+    owner: "AXA Millésimes (AXA Group)", group: "AXA Millésimes",
+    priceRange: [65, 165], tastingFee: "By appointment at the Sonoma tasting salon",
+    tours: "The vineyard sits in remote Freestone-Occidental; public tastings are held by appointment at a salon in the town of Sonoma (coordinates shown are the salon).",
+    vibeTags: ["Intimate", "Modern", "Cult"],
+    vibe: "A tiny, exacting estate on a wind-raked ridge in the far West Sonoma Coast, planted by an HP chief executive with an engineer's precision. Under French ownership it has become one of the region's most talked-about new Pinot and Chardonnay projects.",
+    wines: [
+      { name: "Pinot Noir West Sonoma Coast Estate Reserve", why: "A structured, age-worthy Pinot dominated by the Calera clone from the estate's coldest, most exposed blocks." },
+      { name: "Estate Chardonnay", why: "A taut, mineral-driven white that reflects the vineyard's marine-influenced Freestone-Occidental site." }
+    ],
+    history: [
+      { y: 2003, t: "Lew and Joan Platt plant Pinot Noir and Chardonnay on their isolated Freestone-Occidental property after years of soil study." },
+      { y: 2005, t: "Lew Platt dies before the first harvest; the vineyard keeps his name in tribute and long sells fruit to elite producers." },
+      { y: 2022, t: "French group AXA Millésimes buys the vineyard and begins vinifying its fruit under the Platt label." },
+      { y: 2025, t: "The debut 2023 estate wines earn immediate critical acclaim." }
+    ],
+    storyTags: [],
+    awards: ["Pinot Noir West Sonoma Coast Estate Reserve 2023 — No. 98 on Wine Spectator's Top 100 of 2025", "Long prized as a source vineyard for top West Sonoma Coast producers"],
+    funFact: "The vineyard's founder, Lew Platt, ran Hewlett-Packard as CEO in the 1990s and planted the site as a retirement passion but died before tasting a single vintage from it."
+  },
+
+  {
+    slug: "ramey", name: "Ramey Wine Cellars", valley: "Sonoma", ava: "Russian River Valley",
+    founded: 1996, founder: "David & Carla Ramey",
+    address: "25 Healdsburg Ave, Healdsburg, CA 95448", lat: 38.6037, lng: -122.8626,
+    website: "https://www.rameywine.com",
+    owner: "Ramey family", group: "Independent (Ramey family)",
+    priceRange: [45, 125], tastingFee: "By appointment (90-minute seated flight)",
+    tours: "Seated appointment tastings at the downtown Healdsburg tasting room, typically a 90-minute six-wine flight.",
+    vibeTags: ["Classic", "Family-run", "Casual"],
+    vibe: "The house of David Ramey, one of California's most influential winemakers and a champion of restrained, food-friendly whites. The downtown Healdsburg room is relaxed and unpretentious, letting the wines — especially the Chardonnays — do the talking.",
+    wines: [
+      { name: "Chardonnay Russian River Valley", why: "A multi-vineyard blend from top Russian River sites, made in a Burgundian, whole-cluster-pressed style that earned Ramey the nickname 'Professor of Chardonnay.'" },
+      { name: "Cabernet Sauvignon", why: "Napa and Sonoma Cabernets that show Ramey's balanced, terroir-first hand extends well beyond white wine." },
+      { name: "Syrah", why: "Cool-climate, savory Syrah that reflects Ramey's Rhône-influenced sensibility." }
+    ],
+    history: [
+      { y: 1996, t: "David and Carla Ramey found the winery after David's formative stints at Chalk Hill, Matanzas Creek, Dominus and Rudd." },
+      { y: 2024, t: "The Russian River Valley Chardonnay lands at No. 10 on Wine Spectator's Top 100, one of the year's most celebrated whites." },
+      { y: 2024, t: "The next generation — children Claire and Alan Ramey — takes on day-to-day operations, including the family's Westside Farms estate vineyard." }
+    ],
+    storyTags: [],
+    awards: ["Chardonnay Russian River Valley 2022 — No. 10 on Wine Spectator's Top 100 of 2024 (94 pts)", "David Ramey widely regarded as a leading authority on California Chardonnay"],
+    funFact: "David Ramey helped popularize now-standard techniques like native-yeast fermentation and lees stirring in California Chardonnay, earning him the moniker 'the Professor of Chardonnay.'"
+  },
+
+  {
+    slug: "ravenswood", name: "Ravenswood Winery", valley: "Sonoma", ava: "Sonoma Valley",
+    founded: 1976, founder: "Joel Peterson & Reed Foster",
+    address: "18701 Gehricke Rd, Sonoma, CA 95476", lat: 38.3004, lng: -122.4420,
+    website: "https://www.ravenswoodwinery.com",
+    owner: "E&J Gallo Winery", group: "E&J Gallo Winery",
+    priceRange: [27, 70], tastingFee: "No public tasting room (historic Gehricke Road tasting room closed 2019)",
+    tours: "No public tasting room at present; the original Gehricke Road winery closed to visitors in 2019 (coordinates shown are that historic site).",
+    vibeTags: ["Historic", "Rustic", "Cult"],
+    vibe: "The 'No Wimpy Wines' Zinfandel house that helped make old-vine Zin a serious wine, founded on a stormy 1976 harvest day as ravens circled overhead. After a five-year hiatus it has been relaunched under Gallo, with founder Joel Peterson back in the fold.",
+    wines: [
+      { name: "Zinfandel Dry Creek Valley", why: "An appellation Zin from the relaunch that shows the briary, pepper-and-berry Dry Creek style Ravenswood built its name on." },
+      { name: "Single-Vineyard Zinfandel", why: "Historic vineyard-designates like Teldeschi and the storied Old Hill Ranch, made in the native-yeast, open-top tradition." },
+      { name: "Vintners Blend Zinfandel", why: "The value-priced blend that introduced a generation of drinkers to serious California Zinfandel." }
+    ],
+    history: [
+      { y: 1976, t: "Joel Peterson and partner Reed Foster found Ravenswood, crushing its first Zinfandel under a signature ring-of-ravens label." },
+      { y: 1991, t: "The winery opens its Gehricke Road tasting room in the Sonoma Valley hills." },
+      { y: 2001, t: "Constellation Brands acquires Ravenswood as Zinfandel's popularity peaks." },
+      { y: 2021, t: "E&J Gallo buys the brand as part of a large acquisition of Constellation labels; the Sonoma tasting room had already closed in 2019." },
+      { y: 2026, t: "Gallo relaunches Ravenswood after a five-year hiatus with founder Joel Peterson consulting, starting with a small run of Sonoma County Zinfandels." }
+    ],
+    storyTags: ["consolidated"],
+    awards: ["Zinfandel Dry Creek Valley 2023 — No. 42 on Wine Spectator's Top 100 of 2025 (93 pts)", "Decades as one of California's defining old-vine Zinfandel producers"],
+    funFact: "Founder Joel Peterson named the winery after the ravens that heckled him from the trees during his frantic first crush in 1976 — the birds became the label's enduring emblem."
+  },
+
+  {
+    slug: "wayfarer", name: "Wayfarer", valley: "Sonoma", ava: "Fort Ross-Seaview",
+    founded: 1998, founder: "Jayson Pahlmeyer",
+    address: "1441 Grove St, Healdsburg, CA 95448", lat: 38.6301, lng: -122.8772,
+    website: "https://www.wayfarervineyard.com",
+    owner: "Pahlmeyer family", group: "Independent (Pahlmeyer family)",
+    priceRange: [75, 125], tastingFee: "By appointment at the Healdsburg tasting room",
+    tours: "Seated tastings by appointment at the winery and tasting room in downtown Healdsburg; the estate vineyard itself is in the remote Fort Ross-Seaview hills.",
+    vibeTags: ["Intimate", "Luxe", "Cult"],
+    vibe: "A single-vineyard estate on a steep, fog-swept ridge high above the Pacific in the Fort Ross-Seaview AVA, chasing a Burgundian ideal. The wines are made in tiny lots and rank among California's most acclaimed Pinot Noirs and Chardonnays.",
+    wines: [
+      { name: "Pinot Noir Fort Ross-Seaview (Wayfarer Vineyard)", why: "The flagship estate Pinot, a precise, floral expression of the cold, high-elevation site that critics compare to grand cru Burgundy." },
+      { name: "Chardonnay Fort Ross-Seaview", why: "A taut, mineral estate Chardonnay grown on the same wind-battered ridge as the Pinot." },
+      { name: "Block-Designate Pinot Noir", why: "Micro-lot bottlings from individual estate blocks (such as The Traveler and Mother Rock) that map the vineyard's diversity." }
+    ],
+    history: [
+      { y: 1998, t: "Napa vintner Jayson Pahlmeyer buys a remote Fort Ross-Seaview ridge after winemaker Helen Turley calls it destined to be 'the La Tache of California.'" },
+      { y: 2012, t: "Jayson's daughter Cleo Pahlmeyer takes over the site and launches the estate-grown Wayfarer brand." },
+      { y: 2025, t: "The estate Pinot Noir reaches No. 8 on Wine Spectator's Top 100 — among the highest rankings ever for a California Pinot." }
+    ],
+    storyTags: [],
+    awards: ["Pinot Noir Fort Ross-Seaview Wayfarer Vineyard The Estate 2023 — No. 8 on Wine Spectator's Top 100 of 2025 (95 pts)", "Regularly among the top-scoring California Pinot Noirs each vintage"],
+    funFact: "Winemaker Helen Turley scouted the remote ridge in 1998 and declared it could become 'the La Tache of California,' a reference to Burgundy's legendary grand cru vineyard."
+  },
 ];
 
 // Corporate family notes for the Lineage view
@@ -1359,7 +2196,16 @@ const GROUP_NOTES = {
   "Otsuka (hands-off)": "Japan's Otsuka Pharmaceutical has majority-owned Ridge since 1986 and is wine's favorite example of a benevolent, invisible corporate parent.",
   "GI Partners (Far Niente Wine Estates)": "Private equity firm GI Partners took majority ownership of the Far Niente family of wineries (Far Niente, Nickel & Nickel, Dolce, EnRoute, Bella Union) in 2016, with the Nickel family retaining a stake.",
   "PlumpJack Group": "The Getty–Newsom hospitality group (yes, that Newsom — California's governor co-founded it as a wine shop in 1992) grew into PlumpJack, CADE and Odette wineries plus hotels and restaurants.",
-  "Trinchero Family Estates": "The family that bought shuttered Sutter Home in 1948 and invented White Zinfandel in 1975 is now one of the world's largest family-owned wine companies (~50 brands); Trinchero Napa Valley is its luxury flagship."
+  "Trinchero Family Estates": "The family that bought shuttered Sutter Home in 1948 and invented White Zinfandel in 1975 is now one of the world's largest family-owned wine companies (~50 brands); Trinchero Napa Valley is its luxury flagship.",
+  "Terlato Wine Group": "The Terlato family — Illinois-based fine-wine importers turned producers — bought Rutherford Hill in 1996 and took full ownership of Chimney Rock by 2004.",
+  "Chanel (Wertheimer family)": "The Wertheimer family behind the Chanel fashion house acquired St. Supéry in 2015; they also own the Bordeaux estates Château Rauzan-Ségla and Château Canon.",
+  "E&J Gallo Winery": "The world's largest winery, family-owned since 1933; its 2021 purchase of ~30 Constellation brands brought Ravenswood into the fold, and it acquired the cult white-wine label Massican in 2023.",
+  "Huneeus Vintners": "The Chilean-American Huneeus family (Agustin Huneeus Sr. ran Concha y Toro and Franciscan) owns a tight Napa & Sonoma portfolio — Quintessa, Faust and Flowers.",
+  "Crimson Wine Group": "A publicly traded collection (spun off from Leucadia National in 2013) headquartered at the Pine Ridge estate in Stags Leap District; also owns Seghesio, Chamisal, Archery Summit and Double Canyon.",
+  "Champagne Louis Roederer (Roederer Collection)": "The family-owned Champagne house behind Cristal has built a California collection — Roederer Estate, Domaine Anderson, Diamond Creek and Merry Edwards.",
+  "AXA Millésimes": "The wine arm of French insurer AXA (also behind Bordeaux's Château Pichon Baron) entered California by acquiring the Platt Vineyard estate on the West Sonoma Coast.",
+  "Distinguished Vineyards & Wine Partners": "A U.S. wine company with roots in the old Lion Nathan / Kirin portfolio; it owns MacRostie in Sonoma alongside Oregon's Argyle.",
+  "O'Neill Vintners & Distillers": "Jeff O'Neill's fast-growing California wine company took full ownership of the Carneros showpiece Ram's Gate in 2024."
 };
 
 const STORY_TAG_LABELS = {

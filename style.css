@@ -184,6 +184,7 @@ td.tours { font-size: 13px; }
 .awards-head h2 { font-family: var(--serif); font-weight: 600; font-size: 22px; margin: 20px 0 4px; }
 .awards-head .section-desc { color: var(--ink-2); margin: 0 0 12px; max-width: 760px; }
 .awards-head .seg { margin-bottom: 14px; }
+.ws-meta { color: var(--muted); font-size: 13px; margin: 0 0 6px; }
 .rank-badge {
   display: inline-block; font-variant-numeric: tabular-nums; font-weight: 750;
   border-radius: 6px; padding: 2px 8px; background: var(--hairline); color: var(--ink-2);

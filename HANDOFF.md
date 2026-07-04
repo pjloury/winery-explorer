@@ -1,4 +1,16 @@
-# Session handoff — Winery Explorer (2026-07-03)
+# Session handoff — Winery Explorer
+
+## v2 COMPLETE (2026-07-03, session 2)
+All the in-flight work below was finished and deployed:
+- **87 wineries** total (50 Napa / 37 Sonoma). The 34 Wine Spectator Top 100 leaderboard wineries were researched and added as full entries (verified coords/ownership/prose); every leaderboard row now links into the explorer.
+- **Coordinates + facts** for the 24 wineries added in session 1 were web-verified and corrected (18/24 coords changed; fixed owners for Progeny, Rams Gate→O'Neill, Kistler→Bill Price, MacRostie→Distinguished Vineyards, Donum→Warburg family; corrected several addresses).
+- **`awards.js`** (WS Top 100 2024+2025 Napa/Sonoma) was independently fact-checked — all 42 entries confirmed real and accurately ranked/scored; no corrections needed.
+- **GROUP_NOTES** gained: Terlato, Chanel (Wertheimer), E&J Gallo, Huneeus Vintners, Crimson, Roederer, AXA Millésimes, Distinguished Vineyards, O'Neill.
+- **Images**: all 34 new wineries have label images; 14 have property photos (cult/allocation producers have no open-licensed estate photos — skips logged in ATTRIBUTIONS.md). Manifest rebuilt.
+- Verified via headless-Chrome screenshots (table/map/lineage/awards + drawer) and `node --check`. README updated. Committed + deployed to prod.
+
+---
+## Original session-1 handoff (historical)
 
 Resume point for the next Claude session. Read this fully before continuing.
 

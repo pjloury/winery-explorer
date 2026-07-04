@@ -235,6 +235,8 @@ function renderAwards() {
       <h2>Wine Spectator Top 100 — Napa & Sonoma wines</h2>
       <p class="section-desc">Every Napa and Sonoma county wine on Wine Spectator's most recent Top 100 lists, ranked. Click a winery to open its full story in the explorer.</p>
       <div class="seg">${yearChips}</div>
+      ${years.filter((y) => awardYear === "All" || awardYear === y).map((y) =>
+        window.WS_META && window.WS_META[y] ? `<p class="ws-meta"><b>${y}</b> — ${window.WS_META[y]}</p>` : "").join("")}
     </div>
     ${data.length ? `<div class="table-wrap"><table>
       <thead><tr><th>Rank</th><th>List</th><th>Wine</th><th>Vintage</th><th>Score</th><th>Price</th><th>Valley</th><th>Winery</th></tr></thead>

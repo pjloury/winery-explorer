@@ -1,6 +1,6 @@
 # Napa & Sonoma Winery Explorer
 
-A self-contained web app covering 29 top wineries (15 Napa, 14 Sonoma): founding
+A self-contained web app covering 87 top wineries (50 Napa, 37 Sonoma): founding
 dates, consolidation/resurrection histories, famous wines, vibe, addresses,
 tours, bottle prices, awards — with property photos and wine-label images so you
 can recognize the bottles.
@@ -20,15 +20,20 @@ open index.html
 - **Map** — Leaflet map, markers colored by valley (burgundy = Napa, green = Sonoma);
   click a marker for a photo card, then the full story.
 - **Lineage** — who owns whom (corporate families vs. the still-independent club),
-  plus resurrections, reused historic spaces, and Judgment of Paris connections.
+  plus resurrections, reused historic spaces, Judgment of Paris connections, and
+  the wineries featured in *The New Architecture of Wine* (Hebert, 2019).
+- **Top Wines** — every Napa & Sonoma county wine on Wine Spectator's most recent
+  Top 100 lists (2024 & 2025), ranked, each linking to its winery's full story.
 
-Deep links: `index.html#map`, `index.html#lineage`, or `index.html#<slug>`
-(e.g. `#inglenook`) to open straight to a winery.
+Deep links: `index.html#map`, `index.html#lineage`, `index.html#awards`, or
+`index.html#<slug>` (e.g. `#inglenook`) to open straight to a winery.
 
 ## Files
 
-- `data.js` — the dataset (all facts, timelines, prices). Prices/fees are
+- `data.js` — the dataset (all facts, timelines, prices; some entries carry
+  `architect`/`bookSection` for the architecture feature). Prices/fees are
   approximate as of mid-2026; verify before visiting.
+- `awards.js` — Wine Spectator Top 100 (Napa/Sonoma) data for the Top Wines view.
 - `images/property/` — winery photos (openly licensed; see `ATTRIBUTIONS.md`).
 - `images/labels/` — flagship-wine label images for recognition (sources in
   `SOURCES.md`; official/retail bottle shots, personal-use only — don't republish).
