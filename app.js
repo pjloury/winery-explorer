@@ -9,12 +9,55 @@ const state = {
   view: "table",
   valley: "All",
   query: "",
-  sort: { key: "founded", dir: 1 },
+  sort: { key: "prestige", dir: -1 },
+  grouped: false,
+  expandedRegions: new Set(),
 };
 
 const fmtPrice = (w) => `$${w.priceRange[0]}–$${w.priceRange[1]}`;
 const propertyImg = (w) => (IMG[w.slug] && IMG[w.slug].property) || null;
 const labelImg = (w) => (IMG[w.slug] && IMG[w.slug].label) || null;
+
+/* ── Prestige rating ──
+   Editorial acclaim tier (ACCLAIM, 1–5) is the backbone; a Wine Spectator Top 100
+   appearance adds a capped "current buzz" boost and a half-star. Icons stay on top;
+   WS presence breaks ties within a tier. */
+const ACCLAIM_MAP = (typeof ACCLAIM !== "undefined") ? ACCLAIM : {};
+function computePrestige() {
+  WINERIES.forEach((w) => {
+    const a = ACCLAIM_MAP[w.slug] || 3;
+    const apps = (window.WS_TOP100 || []).filter((e) => e.winerySlug === w.slug);
+    let ws = 0;
+    apps.forEach((e) => { ws += (101 - e.rank) * 0.15 + Math.max(0, e.score - 90); });
+    ws = Math.min(ws, 14);
+    let bonus = 0;
+    if (w.storyTags.includes("judgment-of-paris")) bonus += 5;
+    if (w.storyTags.includes("architecture")) bonus += 2;
+    w._acclaim = a;
+    w._wsCount = apps.length;
+    w._prestige = Math.round((a * 20 + ws + bonus) * 10) / 10;
+    w._stars = Math.min(5, a + (apps.length ? 0.5 : 0));
+  });
+}
+computePrestige();
+
+function starsHTML(n) {
+  const pct = (n / 5) * 100;
+  return `<span class="stars" title="Prestige ${n}/5" aria-label="${n} of 5">`
+    + `<span class="stars-bg">★★★★★</span>`
+    + `<span class="stars-fill" style="width:${pct}%">★★★★★</span></span>`;
+}
+
+/* Normalize the ~33 raw AVA strings into ~15 canonical regions for grouping. */
+function regionOf(w) {
+  const a = w.ava;
+  if (/carneros/i.test(a)) return "Carneros";
+  if (/fort ross|sonoma coast/i.test(a)) return "Sonoma Coast";
+  if (/green valley|russian river/i.test(a)) return "Russian River Valley";
+  let r = a.split("/")[0].replace(/\s*\(.*/, "").trim();
+  if (/diamond mountain/i.test(r)) r = "Calistoga";
+  return r;
+}
 
 function filtered() {
   const q = state.query.trim().toLowerCase();
@@ -38,39 +81,74 @@ function sorted(list) {
     let va, vb;
     if (key === "name") { va = a.name; vb = b.name; return va.localeCompare(vb) * dir; }
     if (key === "price") { va = a.priceRange[0]; vb = b.priceRange[0]; }
+    else if (key === "prestige") { va = a._prestige; vb = b._prestige; }
     else { va = a[key]; vb = b[key]; }
+    if (va === vb) return b._prestige - a._prestige; // stable secondary sort by prestige
     return (va - vb) * dir;
   });
 }
 
 /* ── Table view ── */
+const NCOLS = 9;
+function tableRow(w) {
+  const img = propertyImg(w);
+  const thumb = img
+    ? `<img class="thumb" src="${img}" alt="" loading="lazy">`
+    : `<span class="thumb placeholder">🍷</span>`;
+  const badges = w.storyTags.map((t) => `<span class="badge">${STORY_TAG_LABELS[t].label}</span>`).join("");
+  return `<tr data-slug="${w.slug}">
+    <td><div class="w-name">${thumb}<span><b>${w.name}</b><span class="ava">${w.ava}</span></span></div></td>
+    <td class="prestige-cell">${starsHTML(w._stars)}</td>
+    <td><span class="valley-tag ${w.valley}">${w.valley}</span></td>
+    <td class="founded">${w.founded}</td>
+    <td class="wines">${w.wines.map((x) => x.name).join(" · ")}</td>
+    <td><span class="vibe-tags">${w.vibeTags.map((t) => `<span>${t}</span>`).join("")}</span></td>
+    <td class="price">${fmtPrice(w)}</td>
+    <td class="tours">${w.tours.startsWith("Yes") ? "✓ Tours"
+      : /currently closed/i.test(w.tours) ? "✕ Closed"
+      : /closed for renovation/i.test(w.tours) ? "△ Off-site"
+      : "Tastings"}</td>
+    <td>${badges || `<span style="color:var(--muted)">—</span>`}</td>
+  </tr>`;
+}
+
 function renderTable() {
   const list = sorted(filtered());
   const arrow = (k) => state.sort.key === k ? `<span class="arrow">${state.sort.dir === 1 ? "▲" : "▼"}</span>` : "";
-  const rows = list.map((w) => {
-    const img = propertyImg(w);
-    const thumb = img
-      ? `<img class="thumb" src="${img}" alt="" loading="lazy">`
-      : `<span class="thumb placeholder">🍷</span>`;
-    const badges = w.storyTags.map((t) => `<span class="badge">${STORY_TAG_LABELS[t].label}</span>`).join("");
-    return `<tr data-slug="${w.slug}">
-      <td><div class="w-name">${thumb}<span><b>${w.name}</b><span class="ava">${w.ava}</span></span></div></td>
-      <td><span class="valley-tag ${w.valley}">${w.valley}</span></td>
-      <td class="founded">${w.founded}</td>
-      <td class="wines">${w.wines.map((x) => x.name).join(" · ")}</td>
-      <td><span class="vibe-tags">${w.vibeTags.map((t) => `<span>${t}</span>`).join("")}</span></td>
-      <td class="price">${fmtPrice(w)}</td>
-      <td class="tours">${w.tours.startsWith("Yes") ? "✓ Tours"
-        : /currently closed/i.test(w.tours) ? "✕ Closed"
-        : /closed for renovation/i.test(w.tours) ? "△ Off-site"
-        : "Tastings"}</td>
-      <td>${badges || `<span style="color:var(--muted)">—</span>`}</td>
-    </tr>`;
-  }).join("");
+  const searching = !!state.query.trim();
 
-  $("#table-view").innerHTML = `<div class="table-wrap"><table>
+  let body;
+  if (!state.grouped) {
+    body = `<tbody>${list.map(tableRow).join("") || `<tr><td colspan="${NCOLS}" class="empty-row">No wineries match.</td></tr>`}</tbody>`;
+  } else {
+    const groups = {};
+    list.forEach((w) => { const r = regionOf(w); (groups[r] = groups[r] || []).push(w); });
+    const ordered = Object.entries(groups)
+      .map(([r, ws]) => ({ r, ws, lat: ws.reduce((a, w) => a + w.lat, 0) / ws.length }))
+      .sort((a, b) => b.lat - a.lat); // north → south
+    body = ordered.map(({ r, ws }) => {
+      const open = searching || state.expandedRegions.has(r);
+      const valleys = [...new Set(ws.map((w) => w.valley))]
+        .map((v) => `<span class="valley-tag ${v}">${v}</span>`).join("");
+      const head = `<tr class="region-head ${open ? "open" : ""}" data-region="${r}">
+        <td colspan="${NCOLS}"><span class="caret">${open ? "▾" : "▸"}</span> <b>${r}</b> ${valleys}
+        <span class="rcount">${ws.length} winer${ws.length > 1 ? "ies" : "y"}</span></td></tr>`;
+      return `<tbody class="region">${head}${open ? ws.map(tableRow).join("") : ""}</tbody>`;
+    }).join("") || `<tbody><tr><td colspan="${NCOLS}" class="empty-row">No wineries match.</td></tr></tbody>`;
+  }
+
+  $("#table-view").innerHTML = `
+    <div class="table-controls">
+      <span class="seg small">
+        <button class="chip ${!state.grouped ? "active" : ""}" data-group="0">Flat list</button>
+        <button class="chip ${state.grouped ? "active" : ""}" data-group="1">By region · N→S</button>
+      </span>
+      ${state.grouped && !searching ? `<button class="link-btn" id="toggle-all-regions">${state.expandedRegions.size ? "Collapse all" : "Expand all"}</button>` : ""}
+    </div>
+    <div class="table-wrap"><table>
     <thead><tr>
       <th class="sortable" data-sort="name">Winery ${arrow("name")}</th>
+      <th class="sortable" data-sort="prestige">Prestige ${arrow("prestige")}</th>
       <th>Valley</th>
       <th class="sortable" data-sort="founded">Founded ${arrow("founded")}</th>
       <th>Famous for</th>
@@ -79,14 +157,34 @@ function renderTable() {
       <th>Visits</th>
       <th>Story</th>
     </tr></thead>
-    <tbody>${rows || `<tr><td colspan="8" style="color:var(--muted);text-align:center;padding:32px">No wineries match.</td></tr>`}</tbody>
+    ${body}
   </table></div>`;
 
   document.querySelectorAll("#table-view th.sortable").forEach((th) => {
     th.addEventListener("click", () => {
       const k = th.dataset.sort;
       if (state.sort.key === k) state.sort.dir *= -1;
-      else state.sort = { key: k, dir: 1 };
+      else state.sort = { key: k, dir: k === "prestige" ? -1 : 1 };
+      renderTable();
+    });
+  });
+  document.querySelectorAll("#table-view .chip[data-group]").forEach((b) => {
+    b.addEventListener("click", () => { state.grouped = b.dataset.group === "1"; renderTable(); });
+  });
+  const toggleAll = $("#toggle-all-regions");
+  if (toggleAll) toggleAll.addEventListener("click", () => {
+    if (state.expandedRegions.size) state.expandedRegions.clear();
+    else {
+      const groups = new Set(filtered().map(regionOf));
+      state.expandedRegions = groups;
+    }
+    renderTable();
+  });
+  document.querySelectorAll("#table-view .region-head").forEach((h) => {
+    h.addEventListener("click", () => {
+      const r = h.dataset.region;
+      if (state.expandedRegions.has(r)) state.expandedRegions.delete(r);
+      else state.expandedRegions.add(r);
       renderTable();
     });
   });

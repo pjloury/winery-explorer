@@ -102,7 +102,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
 
 /* ── Table ── */
 .table-wrap { background: var(--card); border: 1px solid var(--hairline); border-radius: var(--radius); box-shadow: var(--shadow); overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; min-width: 980px; }
+table { border-collapse: collapse; width: 100%; min-width: 1040px; }
 thead th {
   text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em;
   color: var(--muted); font-weight: 650; padding: 12px 14px;
@@ -145,6 +145,33 @@ td.price { font-variant-numeric: tabular-nums; white-space: nowrap; }
   padding: 1px 6px; margin: 1px 2px 1px 0; background: var(--gold-soft); color: var(--gold); white-space: nowrap;
 }
 td.tours { font-size: 13px; }
+
+/* Prestige star rating */
+.stars { position: relative; display: inline-block; white-space: nowrap; font-size: 15px; line-height: 1; letter-spacing: 1.5px; }
+.stars-bg { color: var(--hairline); }
+.stars-fill { position: absolute; left: 0; top: 0; overflow: hidden; color: var(--gold); }
+td.prestige-cell { white-space: nowrap; }
+
+/* Table controls (flat / grouped toggle) */
+.table-controls { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.seg.small .chip { font-size: 12.5px; padding: 5px 12px; }
+.link-btn { background: none; border: 0; color: var(--gold); font: inherit; font-size: 13px; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 2px; }
+.link-btn:hover { color: var(--ink); }
+.empty-row { color: var(--muted); text-align: center; padding: 32px; }
+
+/* Collapsible region sections */
+tbody.region { border-bottom: 1px solid var(--hairline); }
+tr.region-head { cursor: pointer; }
+tr.region-head td {
+  background: color-mix(in srgb, var(--gold-soft) 55%, var(--card));
+  font-family: var(--serif); border-bottom: 1px solid var(--hairline);
+  position: sticky; top: 44px; z-index: 1;
+}
+tr.region-head:hover td { background: var(--gold-soft); }
+tr.region-head .caret { display: inline-block; width: 14px; color: var(--gold); font-size: 12px; }
+tr.region-head b { font-size: 15px; font-weight: 650; margin-right: 8px; }
+tr.region-head .valley-tag { transform: scale(0.88); margin-right: 2px; }
+tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: var(--sans); margin-left: 6px; }
 
 /* ── Map ── */
 #map { height: calc(100vh - 210px); min-height: 480px; border-radius: var(--radius); border: 1px solid var(--hairline); box-shadow: var(--shadow); }

@@ -2180,6 +2180,22 @@ const WINERIES = [
   },
 ];
 
+// Editorial acclaim tier (1–5): real-world critical standing & renown.
+// Blended with Wine Spectator Top 100 presence to compute the Prestige rating
+// (see app.js computePrestige). Unlisted wineries default to tier 3.
+const ACCLAIM = {
+  // 5 — global icons / benchmarks / cult classics
+  "opus-one": 5, "inglenook": 5, "stags-leap": 5, "chateau-montelena": 5, "robert-mondavi": 5,
+  "caymus": 5, "ridge-lytton-springs": 5, "williams-selyem": 5, "joseph-phelps": 5, "kistler": 5,
+  // 4 — highly acclaimed / nationally famous
+  "beringer": 4, "schramsberg": 4, "far-niente": 4, "heitz": 4, "quintessa": 4, "hall": 4, "cade": 4,
+  "darioush": 4, "duckhorn": 4, "turley": 4, "aubert": 4, "bedrock": 4, "dehlinger": 4, "carlisle": 4,
+  "merry-edwards": 4, "flowers": 4, "ramey": 4, "dana-estates": 4, "beaulieu": 4, "hanzell": 4,
+  "freemark-abbey": 4, "vhr": 4, "massican": 4, "occidental": 4, "donum": 4, "jordan": 4, "aperture": 4, "wayfarer": 4,
+  // 2 — respected but newer / niche / lower-profile
+  "progeny": 2, "almacerro": 2, "annulus": 2, "caterwaul": 2, "newfound": 2, "paula-kornell": 2, "ferren": 2, "platt": 2
+};
+
 // Corporate family notes for the Lineage view
 const GROUP_NOTES = {
   "Treasury Wine Estates": "Australian drinks giant (spun off from Foster's beer, 2011). Its Napa trophies came via the Beringer Blass acquisition chain.",
