@@ -396,6 +396,378 @@ const WINERIES = [
     funFact: "Phelps's construction crews built Chateau Souverain (now the Coppola winery in Sonoma) while his own barn was going up — his fingerprints are on both valleys."
   },
 
+  {
+    slug: "quintessa", name: "Quintessa", valley: "Napa", ava: "Rutherford",
+    founded: 1990, founder: "Agustin & Valeria Huneeus (Chilean wine dynasty)",
+    address: "1601 Silverado Trail, Rutherford, CA 94573", lat: 38.4780, lng: -122.4170,
+    website: "https://www.quintessa.com",
+    owner: "Huneeus family (Quintessa/Huneeus Vintners)", group: "Independent (Huneeus family)",
+    priceRange: [75, 300], tastingFee: "$150–$250, by appointment",
+    tours: "Yes — estate drive and tastings in glass hilltop pavilions overlooking the vines",
+    vibeTags: ["Modern", "Grand", "Intimate"],
+    architect: "Walker Warner Architects", bookSection: "Grasses + Oaks, Glass + Steel",
+    vibe: "A 280-acre biodynamic amphitheater of hills with a crescent of stone winery curved into the land — the cover star of 'The New Architecture of Wine.' Tastings happen in glass pavilions perched over the estate. Serene, sculptural, one-wine luxury.",
+    wines: [
+      { name: "Quintessa", why: "The single estate red blend — a Rutherford Bordeaux blend farmed biodynamically; one wine, one place." },
+      { name: "Illumination", why: "The estate's Sauvignon Blanc counterpart." }
+    ],
+    history: [
+      { y: 1989, t: "Valeria Huneeus discovers the untouched 280-acre Rutherford property; the family vows to make a single wine from it." },
+      { y: 1990, t: "Agustin Huneeus — who ran Concha y Toro and Franciscan — plants the estate; first vintage 1994." },
+      { y: 2002, t: "The crescent-shaped gravity-flow winery by Walker Warner opens, buried in the hillside to disappear into the land." },
+      { y: 2017, t: "Glass tasting pavilions land on the oak knolls — the image that came to define new Napa architecture." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Cover feature of 'The New Architecture of Wine' (2019)", "Consistent 95+ scores for the estate blend", "Certified organic & biodynamic"],
+    funFact: "Agustin Huneeus insisted the winery be invisible from the valley floor — you can drive Silverado Trail and never know a world-class winery curves into that hill."
+  },
+
+  {
+    slug: "hall", name: "HALL Wines", valley: "Napa", ava: "St. Helena",
+    founded: 2003, founder: "Craig & Kathryn Walt Hall (she was U.S. Ambassador to Austria)",
+    address: "401 St. Helena Hwy S, St. Helena, CA 94574", lat: 38.4900, lng: -122.4700,
+    website: "https://www.hallwines.com",
+    owner: "Craig & Kathryn Hall", group: "Independent (Hall family)",
+    priceRange: [35, 350], tastingFee: "$60–$175",
+    tours: "Yes — art-and-architecture tours through the glass winery, gardens, and contemporary art collection",
+    vibeTags: ["Modern", "Showpiece"],
+    architect: "Signum Architecture (glass winery, 2014)", bookSection: "Sustainability + Love of the Land",
+    vibe: "Napa's contemporary-art winery: a giant chrome rabbit ('Bunny Foo Foo') leaping over the vines, a glass-walled winery wrapped around the 1885 Bergfeld ghost winery, and museum-grade art everywhere. Slick, fun, unapologetically new.",
+    wines: [
+      { name: "Kathryn Hall Cabernet Sauvignon", why: "The flagship — the 2010 vintage earned 100 points and put HALL among Napa's elite Cabs." },
+      { name: "'Eleanor' & Napa Valley Cabernet", why: "The broader collection that made HALL a modern Cabernet powerhouse." }
+    ],
+    history: [
+      { y: 1885, t: "The Bergfeld winery is built on the site — one of the St. Helena ghost wineries silenced by Prohibition." },
+      { y: 2003, t: "Dallas financier Craig Hall and vintner-diplomat Kathryn Hall buy the property (their Rutherford estate came in 1995)." },
+      { y: 2009, t: "HALL's Rutherford facility becomes California's first LEED Gold certified winery." },
+      { y: 2014, t: "The glass tasting hall by Signum opens, wrapping the restored 1885 stone building — old bones, radically new skin." }
+    ],
+    storyTags: ["architecture", "site-reuse"],
+    awards: ["100-point 2010 Kathryn Hall Cabernet", "First LEED Gold certified winery in California (Rutherford, 2009)", "Featured in 'The New Architecture of Wine'"],
+    funFact: "'Bunny Foo Foo' — 35 feet of polished stainless steel — divides Napa purists and Instagram roughly down the middle, which is exactly what the Halls intended."
+  },
+
+  {
+    slug: "cade", name: "CADE Estate Winery", valley: "Napa", ava: "Howell Mountain",
+    founded: 2005, founder: "PlumpJack partners: Gordon Getty, Gavin Newsom & John Conover",
+    address: "360 Howell Mountain Rd S, Angwin, CA 94508", lat: 38.5640, lng: -122.4420,
+    website: "https://www.cadewinery.com",
+    owner: "PlumpJack Group (Getty/Newsom/Conover)", group: "PlumpJack Group",
+    priceRange: [60, 250], tastingFee: "$95–$150, by appointment",
+    tours: "Yes — terrace tastings 1,800 feet up Howell Mountain with panoramic valley views",
+    vibeTags: ["Modern", "Intimate"],
+    architect: "Juancarlos Fernandez (credited in book to Lail Design Group)", bookSection: "Sustainability + Love of the Land",
+    vibe: "A concrete, steel and glass eyrie on Howell Mountain, built organic and LEED Gold from day one. Mountain-air tastings with the whole valley at your feet — modern, mineral, a little exclusive.",
+    wines: [
+      { name: "CADE Howell Mountain Cabernet Sauvignon", why: "The estate flagship — powerful, structured mountain Cabernet." },
+      { name: "CADE Estate Reserve", why: "The top barrel selection from the volcanic-ash slopes." }
+    ],
+    history: [
+      { y: 1995, t: "The PlumpJack story starts with a Getty–Newsom wine shop in San Francisco, then PlumpJack Winery in Oakville (1997)." },
+      { y: 2005, t: "The partners buy 54 acres on Howell Mountain for a ground-up sustainable estate." },
+      { y: 2009, t: "CADE opens as Napa's first organically farmed, LEED Gold certified estate winery; sibling Odette follows in Stags Leap (2012)." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Napa's first LEED Gold estate winery", "Featured in 'The New Architecture of Wine'"],
+    funFact: "'CADE' is Shakespearean slang (via Henry VI) for a cask — fitting for a winery co-owned by a governor who started as a wine merchant."
+  },
+
+  {
+    slug: "cuvaison", name: "Cuvaison Estate Wines", valley: "Napa", ava: "Los Carneros",
+    founded: 1969, founder: "Silicon Valley engineers Thomas Cottrell & Thomas Parkhill",
+    address: "1221 Duhig Rd, Napa, CA 94559", lat: 38.2550, lng: -122.3450,
+    website: "https://www.cuvaison.com",
+    owner: "Schmidheiny family (Switzerland), owners since 1979", group: "Independent (Schmidheiny family)",
+    priceRange: [28, 90], tastingFee: "$40–$75",
+    tours: "Yes — glass-box tasting room amid the estate vines; outdoor terraces",
+    vibeTags: ["Modern", "Casual"],
+    architect: "Gould Evans (Douglas Thornley)", bookSection: "Grasses + Oaks, Glass + Steel",
+    vibe: "A minimalist glass-and-board-formed-concrete tasting pavilion floating in 400 acres of Carneros Chardonnay — quiet modernism, cool fog, no crowds. One of the valley's most underrated architectural stops.",
+    wines: [
+      { name: "Estate Chardonnay", why: "The Carneros signature — bright, estate-grown, long the house calling card." },
+      { name: "Estate Pinot Noir", why: "Its red counterpart from the same fog-cooled blocks." }
+    ],
+    history: [
+      { y: 1969, t: "Founded near Calistoga by two engineers at the dawn of modern Napa." },
+      { y: 1979, t: "Switzerland's Schmidheiny family (industrialists) buys Cuvaison and, in 1980, plants 400 acres in then-unfashionable Carneros — a prescient cool-climate bet." },
+      { y: 2009, t: "The Gould Evans tasting pavilion opens at the Carneros estate, later joined by expanded glass hospitality spaces." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'", "Certified Napa Green estate"],
+    funFact: "'Cuvaison' is the French term for the time wine spends on its skins during fermentation — a winemaking-nerd name from 1969 that still filters guests by curiosity."
+  },
+
+  {
+    slug: "trinchero", name: "Trinchero Napa Valley", valley: "Napa", ava: "St. Helena",
+    founded: 1948, founder: "The Trinchero family (Mario & Mary Trinchero, from NYC via Asti, Italy)",
+    address: "3070 St. Helena Hwy N, St. Helena, CA 94574", lat: 38.5250, lng: -122.4780,
+    website: "https://www.trincheronapavalley.com",
+    owner: "Trinchero Family Estates (3rd/4th generation)", group: "Trinchero Family Estates",
+    priceRange: [30, 175], tastingFee: "$45–$95",
+    tours: "Yes — estate tastings in the BAR Architects-designed hospitality house and grounds",
+    vibeTags: ["Modern", "Classic", "Family-run"],
+    architect: "BAR Architects; interiors by Erin Martin Design", bookSection: "The New Agrarian",
+    vibe: "The prestige face of the family that owns Sutter Home: a polished modern-agrarian estate with Erin Martin's theatrical interiors. The story — jug wine to White Zinfandel windfall to serious single-vineyard Cabernet — is peak American wine.",
+    wines: [
+      { name: "Mario's Reserve Cabernet Sauvignon", why: "The flagship named for the patriarch, from prime St. Helena and Rutherford vineyards." },
+      { name: "Sutter Home White Zinfandel", why: "Made by the same family — the happy 1975 stuck-fermentation accident that became America's best-selling wine of the 1980s and bankrolled everything." }
+    ],
+    history: [
+      { y: 1948, t: "The Trincheros leave New York and buy the shuttered Sutter Home winery in St. Helena." },
+      { y: 1975, t: "Bob Trinchero's stuck Zinfandel fermentation creates sweet, pink 'White Zinfandel' — it becomes a national phenomenon and one of wine's great fortunes." },
+      { y: 2007, t: "The family launches Trinchero Napa Valley, its luxury estate label, later opening the BAR-designed showcase estate; Trinchero Family Estates is now one of the largest family-owned wine companies in the world (Ménage à Trois, Napa Cellars, and dozens more)." }
+    ],
+    storyTags: ["architecture", "resurrected"],
+    awards: ["Featured in 'The New Architecture of Wine'", "Trinchero Family Estates: ~4th largest family wine company in the U.S."],
+    funFact: "White Zinfandel profits famously saved thousands of acres of old Zinfandel vines from being ripped out — the pink wine snobs mock preserved the old vines they now revere."
+  },
+
+  {
+    slug: "davis-estates", name: "Davis Estates", valley: "Napa", ava: "Calistoga",
+    founded: 2011, founder: "Mike & Sandy Davis (tech executive turned vintner)",
+    address: "4060 Silverado Trail N, Calistoga, CA 94515", lat: 38.5900, lng: -122.5650,
+    website: "https://www.davisestates.com",
+    owner: "Mike & Sandy Davis", group: "Independent (Davis family)",
+    priceRange: [60, 250], tastingFee: "$95–$200, by appointment",
+    tours: "Yes — appointment-only tastings in the Backen barn and caves; Howard Backen personally designed the hospitality house",
+    vibeTags: ["Modern", "Intimate", "Showpiece"],
+    architect: "Backen & Gillam Architects (Howard Backen)", bookSection: "The New Agrarian",
+    vibe: "Backen's modern-agrarian ideal: a glass-ended barn that opens completely to the vineyard, over caves stuffed with toys (a restored WWII-era Ford GPW among them). Intimate, no-expense-spared Calistoga hospitality.",
+    wines: [
+      { name: "Phase V Cabernet Sauvignon", why: "The flagship Cabernet, made with Philippe Melka consulting — a who's-who of modern Napa talent." },
+      { name: "Zephyr & Estate Cabernets", why: "The tiered Calistoga estate reds." }
+    ],
+    history: [
+      { y: 1900, t: "The property's winemaking roots go back over a century before falling silent." },
+      { y: 2011, t: "Mike Davis, after a career in tech, buys the 155-acre property and rehabilitates the estate." },
+      { y: 2016, t: "The Backen-designed winery, caves and hospitality barn open — a textbook of the 'new agrarian' style." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'", "Melka-consulted Cabernets scoring mid-to-high 90s"],
+    funFact: "Howard Backen — architect of Ram's Gate, Harlan, and half of modern Napa's aesthetic — considered the Davis barn one of the purest expressions of his open-to-the-land style."
+  },
+
+  {
+    slug: "melka-estates", name: "Melka Estates", valley: "Napa", ava: "St. Helena",
+    founded: 1996, founder: "Philippe Melka (Bordeaux-born star winemaker) & Cherie Melka",
+    address: "St. Helena, CA (tasting by appointment)", lat: 38.5050, lng: -122.4700,
+    website: "https://www.melkaestates.com",
+    owner: "Philippe & Cherie Melka", group: "Independent (Melka family)",
+    priceRange: [95, 400], tastingFee: "$150+, strictly by appointment",
+    tours: "Private appointment-only tastings at the Signum-designed estate",
+    vibeTags: ["Modern", "Intimate"],
+    architect: "Signum Architecture (Juancarlos Fernandez)", bookSection: "The New Agrarian",
+    vibe: "The personal label of Napa's most in-demand consulting winemaker — a small, precise, modern estate visit where the draw is the man's palate, not spectacle. For serious Cabernet pilgrims.",
+    wines: [
+      { name: "Métisse", why: "Melka's flagship Bordeaux blend — 'métisse' meaning mixed heritage, French technique on Napa fruit." },
+      { name: "CJ Cabernet Sauvignon", why: "Named for children Chloé and Jérémie; the approachable entry to the Melka style." }
+    ],
+    history: [
+      { y: 1991, t: "Trained at Haut-Brion and Dominus, geologist-turned-winemaker Philippe Melka lands in Napa." },
+      { y: 1996, t: "The Melkas start their own tiny label while Philippe consults for a murderers' row of estates (Hundred Acre, Dana, Davis, Vineyard 29…)." },
+      { y: 2016, t: "The Signum-designed winery and tasting spaces give the family label a permanent architectural home." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'", "Philippe Melka: multiple 100-point wines as consultant; named among the world's top wine consultants"],
+    funFact: "Melka studied geology before wine — clients say he reads a vineyard's dirt the way sommeliers read a label."
+  },
+
+  {
+    slug: "progeny", name: "Progeny Winery", valley: "Napa", ava: "Mount Veeder",
+    founded: 2007, founder: "The Baker family",
+    address: "Mount Veeder, Napa, CA (by appointment)", lat: 38.3700, lng: -122.4000,
+    website: "https://www.progenywinery.com",
+    owner: "Baker family", group: "Independent (Baker family)",
+    priceRange: [75, 225], tastingFee: "$100+, strictly by appointment",
+    tours: "Private appointment-only visits to the glass pavilion on Mount Veeder",
+    vibeTags: ["Modern", "Intimate"],
+    architect: "Signum Architecture", bookSection: "Grasses + Oaks, Glass + Steel",
+    vibe: "A glass jewel-box pavilion floating among oaks and grasses high on Mount Veeder — architecture reduced to a frame for the view. Tiny production, private visits, mountain quiet.",
+    wines: [
+      { name: "Progeny Reserve Cabernet Sauvignon", why: "Structured Mount Veeder mountain Cabernet — the estate's reason for being." }
+    ],
+    history: [
+      { y: 2007, t: "The family establishes the Mount Veeder estate, naming it 'Progeny' for the generations it's meant to serve." },
+      { y: 2015, t: "Signum's glass-and-steel tasting pavilion opens among the oaks — one of the purest 'grasses + oaks, glass + steel' statements in the book." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'"],
+    funFact: "Mount Veeder is Napa's coolest, steepest, most forested mountain AVA — its Cabs trade valley-floor plushness for alpine backbone."
+  },
+
+  {
+    slug: "stewart-cellars", name: "Stewart Cellars", valley: "Napa", ava: "Yountville",
+    founded: 2000, founder: "Michael Stewart (Texas tech entrepreneur); now daughter Caroline & family",
+    address: "6752 Washington St, Yountville, CA 94599", lat: 38.4020, lng: -122.3600,
+    website: "https://www.stewartcellars.com",
+    owner: "Stewart family", group: "Independent (Stewart family)",
+    priceRange: [45, 200], tastingFee: "$45–$125",
+    tours: "Tasting complex in downtown Yountville — walk-in friendly courtyard, library tastings reservable",
+    vibeTags: ["Modern", "Casual", "Family-run"],
+    architect: "Arcanum Architecture (tasting complex, 2016)", bookSection: "Singular Voices",
+    vibe: "A modern stone 'ruin' in downtown Yountville — three structures around a courtyard, meant to look like a Scottish abbey reclaimed with glass and steel. Serious To Kalon Cabernet in a strollable, unstuffy setting.",
+    wines: [
+      { name: "NOMAD Beckstoffer To Kalon Cabernet", why: "Sourced from the most famous Cabernet vineyard in America — collector juice under a family label." },
+      { name: "Napa Valley Cabernet Sauvignon", why: "The house style: polished, dark, Yountville-smooth." }
+    ],
+    history: [
+      { y: 2000, t: "Michael Stewart starts buying elite Beckstoffer fruit (To Kalon, Las Piedras) — a négociant path to the top." },
+      { y: 2016, t: "The Arcanum-designed tasting complex opens on Washington Street, its hand-laid stone walls built to read as centuries old." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'", "NOMAD To Kalon bottlings regularly 95+"],
+    funFact: "The complex's stone was laid by masons to mimic a ruined kirk because the family loved Scotland's Melrose Abbey — new Napa cosplaying old Europe, gorgeously."
+  },
+
+  {
+    slug: "hourglass", name: "Hourglass", valley: "Napa", ava: "Calistoga",
+    founded: 1997, founder: "Jeff Smith (son of 1970s Napa retailer Ned Smith)",
+    address: "1104 Adams St #103, St. Helena / estate on Silverado Trail, Calistoga", lat: 38.5750, lng: -122.5600,
+    website: "https://www.hourglasswines.com",
+    owner: "Jeff Smith & partners", group: "Independent (Smith family)",
+    priceRange: [60, 250], tastingFee: "$125+, by appointment",
+    tours: "Appointment-only tastings at the Blueline estate and Lundberg-designed cave",
+    vibeTags: ["Modern", "Intimate"],
+    architect: "Lundberg Design (Olle Lundberg)", bookSection: "Singular Voices",
+    vibe: "Rock-and-roll cult Cabernet from two narrow valley pinch-points, aged in a raw, industrial-chic Lundberg cave with a steel-and-walnut tasting bar. Cool-kid Napa, no chateau required.",
+    wines: [
+      { name: "Hourglass Estate Cabernet Sauvignon", why: "From the original 4-acre site where the valley narrows to its 'hourglass' waist." },
+      { name: "Blueline Estate Cabernet", why: "The second estate along Blueline creek; both are Tony Biagi-made collector wines." }
+    ],
+    history: [
+      { y: 1976, t: "Ned Smith buys the little Calistoga property; son Jeff later realizes its zinfandel patch sits on perfect Cabernet dirt." },
+      { y: 1997, t: "First Hourglass Cabernet — an instant cult item in the 90s Napa wave." },
+      { y: 2012, t: "The Lundberg Design cave and tasting space open at Blueline — San Francisco industrial design transplanted into a hillside." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'", "Perennial 94–97 point Cabernets"],
+    funFact: "Olle Lundberg also designed for Slanted Door and Twitter HQ; the cave's tasting table was salvaged from a single 30-foot slab of California walnut."
+  },
+
+  {
+    slug: "dana-estates", name: "Dana Estates", valley: "Napa", ava: "Rutherford",
+    founded: 2005, founder: "Hi Sang Lee (Korean fine-wine importer, Nara Cellars)",
+    address: "3155 St. Helena Hwy N, Rutherford, CA 94573", lat: 38.4700, lng: -122.4400,
+    website: "https://www.danaestates.com",
+    owner: "Hi Sang Lee family", group: "Independent (Lee family)",
+    priceRange: [150, 600], tastingFee: "Largely private / allocation customers",
+    tours: "Essentially private — visits reserved for allocation members; the estate rarely opens to the public",
+    vibeTags: ["Modern", "Grand", "Intimate"],
+    architect: "Backen & Gillam Architects (restoration + new winery)", bookSection: "History Reenvisioned",
+    vibe: "A 1883 ghost winery resurrected into one of Napa's most exquisite private estates — hand-cut stone, water features, Zen restraint. You mostly meet Dana through the bottle; a visit is a unicorn.",
+    wines: [
+      { name: "Lotus Vineyard Cabernet Sauvignon", why: "The 2007 earned Robert Parker's 100 points — instant cult status." },
+      { name: "Helms & Hershey Vineyard Cabernets", why: "The other single-vineyard jewels, all Melka-made." }
+    ],
+    history: [
+      { y: 1883, t: "The original stone winery rises in Rutherford; Prohibition eventually silences it like so many others." },
+      { y: 2005, t: "Hi Sang Lee — who built Korea's fine-wine market importing Bordeaux — buys the property to build his own first growth." },
+      { y: 2010, t: "Backen & Gillam's restoration marries the 1883 stone to serene modern pavilions; Parker's 100-point score for the '07 Lotus arrives the same era." }
+    ],
+    storyTags: ["architecture", "resurrected", "site-reuse"],
+    awards: ["100-point 2007 Lotus Vineyard Cabernet (Robert Parker)", "Featured in 'The New Architecture of Wine'"],
+    funFact: "'Dana' is Sanskrit for 'the spirit of generosity' — ironic branding for one of the hardest tasting appointments in the valley."
+  },
+
+  {
+    slug: "darioush", name: "Darioush", valley: "Napa", ava: "Napa Valley (Silverado Trail south)",
+    founded: 1997, founder: "Darioush & Shahpar Khaledi (Iranian-American grocery magnate)",
+    address: "4240 Silverado Trail, Napa, CA 94558", lat: 38.3450, lng: -122.2950,
+    website: "https://www.darioush.com",
+    owner: "Khaledi family", group: "Independent (Khaledi family)",
+    priceRange: [48, 195], tastingFee: "$75–$250",
+    tours: "Yes — signature tastings amid the columns; private Persian-inspired hospitality experiences",
+    vibeTags: ["Grand", "Showpiece", "Modern"],
+    vibe: "Sixteen freestanding travertine columns straight out of Persepolis announce the most audaciously personal building in Napa — a Persian palace of golden stone, fountains, and lavish hospitality. Maximalist and proud.",
+    wines: [
+      { name: "Darioush Signature Cabernet Sauvignon", why: "The estate flagship — plush, exotic, unmistakably labeled with the winged Persian motif." },
+      { name: "Darius II", why: "The limited crown bottling named for the ancient king." }
+    ],
+    history: [
+      { y: 1979, t: "Darioush Khaledi emigrates from Iran after the revolution; he builds L.A.'s K.V. Mart grocery empire from one store." },
+      { y: 1997, t: "He buys land on the Silverado Trail to honor Shiraz — the Persian city of poets and, by name at least, of wine." },
+      { y: 2004, t: "The visitor center opens: 12,000 square feet of Iranian-quarried travertine, its columns echoing Persepolis. Nothing in Napa looks remotely like it." }
+    ],
+    storyTags: [],
+    awards: ["One of the most photographed winery buildings in America", "Signature Cabernet a fixture on luxury lists"],
+    funFact: "The travertine was cut from the same Iranian quarries used for Persepolis itself, shipped block by block to California."
+  },
+
+  {
+    slug: "clos-du-val", name: "Clos du Val", valley: "Napa", ava: "Stags Leap District",
+    founded: 1972, founder: "John Goelet (American shipping heir) & Bordeaux winemaker Bernard Portet",
+    address: "5330 Silverado Trail, Napa, CA 94558", lat: 38.3750, lng: -122.3050,
+    website: "https://www.closduval.com",
+    owner: "Goelet Wine Estates (3rd generation)", group: "Independent (Goelet family)",
+    priceRange: [40, 200], tastingFee: "$60–$125",
+    tours: "Yes — tastings at the Hirondelle House overlooking the estate; cabana experiences in summer",
+    vibeTags: ["Classic", "Modern", "Intimate"],
+    vibe: "French-accented Stags Leap classicism: a vine-draped winery, olive groves, and the airy modern Hirondelle House (2018) looking over the estate. One of Napa's quiet blue-chips — twice a Judgment of Paris story.",
+    wines: [
+      { name: "Estate Cabernet Sauvignon, Stags Leap District", why: "The Hirondelle Vineyard flagship — restrained, French-styled Napa Cab since 1972." },
+      { name: "Three Graces", why: "The top Bordeaux blend, named for the label's dancing figures." }
+    ],
+    history: [
+      { y: 1970, t: "John Goelet sends young Bordelais Bernard Portet on a two-year world search for perfect Cabernet land; he picks Stags Leap." },
+      { y: 1976, t: "Clos du Val's very first vintage (1972) is chosen for the Judgment of Paris." },
+      { y: 1986, t: "At the 10th-anniversary rematch, the 1972 Clos du Val places FIRST — proof California's win aged well." },
+      { y: 2018, t: "Still Goelet-owned, the estate opens the glassy Hirondelle House hospitality home — quiet modernization without a sale." }
+    ],
+    storyTags: ["judgment-of-paris"],
+    awards: ["Winner, 1986 Judgment of Paris 10th-anniversary rematch (1972 Cabernet)", "Original 1976 Judgment of Paris selection"],
+    funFact: "'Hirondelle' means swallow — the birds that wheel over the vineyard each evening gave the estate vineyard and house their names."
+  },
+
+  {
+    slug: "round-pond", name: "Round Pond Estate", valley: "Napa", ava: "Rutherford",
+    founded: 2002, founder: "The MacDonnell family (Rutherford landowners since the 1980s)",
+    address: "875 Rutherford Rd, Rutherford, CA 94573", lat: 38.4650, lng: -122.4150,
+    website: "https://www.roundpond.com",
+    owner: "MacDonnell family", group: "Independent (MacDonnell family)",
+    priceRange: [40, 150], tastingFee: "$75–$185 (food-driven experiences)",
+    tours: "Yes — winery tastings, garden-to-table experiences, and tours of the olive mill across the road",
+    vibeTags: ["Casual", "Showpiece", "Family-run"],
+    vibe: "The Rutherford estate that's as much about the table as the glass: terrace tastings over the vines, a serious olive-oil mill, gardens supplying the food program. Sunny, generous, epicurean.",
+    wines: [
+      { name: "Rutherford Estate Cabernet Sauvignon", why: "Classic 'Rutherford dust' Cabernet from the valley floor." },
+      { name: "Kith & Kin Cabernet", why: "The friendly younger sibling; the estate olive oils are the other 'flagship.'" }
+    ],
+    history: [
+      { y: 1983, t: "The MacDonnells begin farming in Rutherford, selling grapes to top houses." },
+      { y: 2002, t: "The family starts bottling under its own name and builds the estate winery; the olive mill (one of few true mills in Napa) opens across the road." },
+      { y: 2010, t: "Il Pranzo lunches and garden tastings make Round Pond a byword for Napa food-and-wine hospitality." }
+    ],
+    storyTags: [],
+    awards: ["Estate olive oils among California's most awarded", "A top-rated Napa hospitality experience year after year"],
+    funFact: "Round Pond is one of the few Napa wineries where the olive oil tasting is booked as hard as the Cabernet."
+  },
+
+  {
+    slug: "v-sattui", name: "V. Sattui Winery", valley: "Napa", ava: "St. Helena",
+    founded: 1885, founder: "Vittorio Sattui (Genoese immigrant, San Francisco); revived by great-grandson Dario Sattui",
+    address: "1111 White Ln, St. Helena, CA 94574", lat: 38.4895, lng: -122.4735,
+    website: "https://www.vsattui.com",
+    owner: "Sattui family (Dario Sattui)", group: "Independent (Sattui family)",
+    priceRange: [20, 95], tastingFee: "$30–$60; walk-ins welcome",
+    tours: "Yes — plus the legendary deli, cheese shop, and two acres of picnic grounds; barrel cellar tastings",
+    vibeTags: ["Casual", "Historic", "Family-run"],
+    vibe: "Napa's great picnic institution: a stone winery with an artisan deli, crowds of happy day-trippers on the lawn, and wine sold nowhere else on earth. Zero pretension, maximum salami.",
+    wines: [
+      { name: "Morisoli Vineyard Cabernet Sauvignon", why: "The serious Rutherford single-vineyard star of a huge, direct-only lineup." },
+      { name: "Madeira & Gamay Rouge", why: "Cult-followed oddballs that only exist because V. Sattui answers to no distributor." }
+    ],
+    history: [
+      { y: 1885, t: "Vittorio Sattui opens his winery in San Francisco's Mission District, delivering wine by horse cart." },
+      { y: 1920, t: "Prohibition closes the family business; it stays dormant for over half a century." },
+      { y: 1976, t: "Great-grandson Dario Sattui — broke, sleeping in a van by some accounts — resurrects the name in St. Helena with a winery, deli and picnic ground; the direct-to-consumer model is revolutionary." },
+      { y: 2007, t: "Dario's medieval obsession culminates in Castello di Amorosa, the 107-room Tuscan castle he built up-valley as a separate winery." }
+    ],
+    storyTags: ["resurrected"],
+    awards: ["Routinely among the most-awarded wineries at California state & county fairs", "Sells 100% direct — no stores, no restaurants, since 1976"],
+    funFact: "You cannot buy V. Sattui in any shop or restaurant anywhere — a deliberate choice since 1976 that made the picnic grounds a pilgrimage."
+  },
+
   // ───────────────────────── SONOMA COUNTY ─────────────────────────
   {
     slug: "buena-vista", name: "Buena Vista Winery", valley: "Sonoma", ava: "Sonoma Valley",
@@ -744,6 +1116,230 @@ const WINERIES = [
     storyTags: ["consolidated"],
     awards: ["Gardens routinely named among America's best winery grounds", "Fumé Blanc: perennial by-the-glass bestseller nationally"],
     funFact: "The Caranos ran their winery like a great casino resort: obsessive hospitality, spectacle, and a signature drink — it worked."
+  },
+
+  {
+    slug: "rams-gate", name: "Ram's Gate Winery", valley: "Sonoma", ava: "Los Carneros (Sonoma side)",
+    founded: 2011, founder: "Partners incl. Jeff O'Neill, on the old Roche winery site",
+    address: "28700 Arnold Dr, Sonoma, CA 95476", lat: 38.2250, lng: -122.4550,
+    website: "https://www.ramsgatewinery.com",
+    owner: "Private partnership", group: "Independent (partnership)",
+    priceRange: [45, 120], tastingFee: "$65–$150 (food pairings)",
+    tours: "Yes — seated food-and-wine tastings around the open-hearth great room and terraces",
+    vibeTags: ["Modern", "Showpiece"],
+    architect: "Backen & Gillam Architects (Howard Backen)", bookSection: "The New Agrarian",
+    vibe: "The gateway winery of wine country — first stop over the hill from San Francisco — built by Howard Backen as a weathered-wood compound that throws its walls open to Carneros wind and fog. Chef-driven tastings, big sky.",
+    wines: [
+      { name: "Sonoma Coast Pinot Noir", why: "Cool-climate single-vineyard Pinots are the house strength." },
+      { name: "Estate Chardonnay & sparkling", why: "Carneros classics done in a polished modern register." }
+    ],
+    history: [
+      { y: 1989, t: "The Roche family winery opens on this windswept hill at the Carneros gateway." },
+      { y: 2011, t: "Ram's Gate rises on the site — Backen's barn-modern showpiece with a culinary program from day one." }
+    ],
+    storyTags: ["architecture", "site-reuse"],
+    awards: ["Featured in 'The New Architecture of Wine'"],
+    funFact: "The name nods to the rams of the old Carneros sheep ranches — 'carneros' is Spanish for rams."
+  },
+
+  {
+    slug: "macrostie", name: "MacRostie Winery & Vineyards", valley: "Sonoma", ava: "Russian River Valley",
+    founded: 1987, founder: "Steve MacRostie",
+    address: "4605 Westside Rd, Healdsburg, CA 95448", lat: 38.5650, lng: -122.8850,
+    website: "https://www.macrostiewinery.com",
+    owner: "MacRostie family", group: "Independent (MacRostie family)",
+    priceRange: [25, 68], tastingFee: "$40–$70",
+    tours: "Yes — seated tastings in the glass Estate House with 360° vineyard views; walk-ins when space allows",
+    vibeTags: ["Modern", "Casual"],
+    architect: "Gould Evans (Douglas Thornley)", bookSection: "The New Agrarian",
+    vibe: "A glass-walled hilltop pavilion on Westside Road where the building all but disappears into vines and sky — bright, friendly, Chardonnay-first hospitality without a hint of stuffiness.",
+    wines: [
+      { name: "Sonoma Coast Chardonnay", why: "The benchmark of Steve MacRostie's balanced, bright house style since 1987." },
+      { name: "Wildcat Mountain Vineyard Chardonnay & Pinot", why: "From his own high, wind-blasted estate vineyard." }
+    ],
+    history: [
+      { y: 1987, t: "Steve MacRostie, a Sonoma Chardonnay believer through the oaky-butter era, founds his label on restraint." },
+      { y: 1998, t: "Plants Wildcat Mountain in the teeth of Petaluma Gap wind." },
+      { y: 2015, t: "The Gould Evans Estate House opens — one of Sonoma's first truly contemporary tasting buildings." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'"],
+    funFact: "The Estate House deliberately has no 'front' — every side is glass, so the vineyard is the architecture."
+  },
+
+  {
+    slug: "occidental", name: "Occidental Wines", valley: "Sonoma", ava: "Sonoma Coast (Freestone-Occidental)",
+    founded: 2011, founder: "Steve Kistler (of Kistler Vineyards fame)",
+    address: "Bodega Hwy, Freestone/Occidental, CA (by appointment)", lat: 38.3600, lng: -122.9500,
+    website: "https://www.occidentalwines.com",
+    owner: "Steve Kistler & daughters", group: "Independent (Kistler family)",
+    priceRange: [70, 150], tastingFee: "By appointment only",
+    tours: "Rare appointment-only visits at the coastal winery",
+    vibeTags: ["Modern", "Intimate"],
+    architect: "Nielsen:Schuh Architects", bookSection: "Grasses + Oaks, Glass + Steel",
+    vibe: "Steve Kistler's second act: a quiet timber-and-glass winery in the fog belt a few miles from the Pacific, built solely for estate Pinot Noir. Monastic, coastal, hard to get into — the connoisseur's Sonoma.",
+    wines: [
+      { name: "Freestone-Occidental Pinot Noir", why: "The estate calling card — taut, cool-climate Pinot from the true Sonoma Coast." },
+      { name: "SWK & Bodega Headlands Cuvées", why: "The top family-vineyard selections." }
+    ],
+    history: [
+      { y: 2011, t: "After four decades defining California Chardonnay at Kistler, Steve Kistler goes all-in on coastal Pinot under the Occidental name." },
+      { y: 2017, t: "The Nielsen:Schuh winery completes among redwoods and pasture — agriculture-modern, nearly invisible from the road." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'", "Perennial 95+ critic scores for the estate Pinots"],
+    funFact: "Kistler planted the vineyards with his own massale selections carried over from decades of favorite vines — a life's work re-rooted five miles from the ocean."
+  },
+
+  {
+    slug: "hamel", name: "Hamel Family Wines", valley: "Sonoma", ava: "Sonoma Valley / Moon Mountain",
+    founded: 2006, founder: "George Hamel Jr. & family",
+    address: "15401 Sonoma Hwy, Sonoma, CA 95476", lat: 38.3150, lng: -122.4750,
+    website: "https://www.hamelfamilywines.com",
+    owner: "Hamel family", group: "Independent (Hamel family)",
+    priceRange: [60, 250], tastingFee: "$95–$200, by appointment",
+    tours: "Yes — seated estate tastings on the terrace and in the cave; biodynamically farmed estate",
+    vibeTags: ["Modern", "Intimate", "Family-run"],
+    architect: "Gould Evans", bookSection: "Sustainability + Love of the Land",
+    vibe: "A low-slung modern estate of rammed earth, steel and glass gazing across Sonoma Valley — with serious biodynamic farming behind the style. Polished second-generation hospitality.",
+    wines: [
+      { name: "Isthmus", why: "The signature Sonoma Valley red blend." },
+      { name: "Nuns Canyon Vineyard Cabernet & Zinfandel", why: "From their volcanic Moon Mountain estate vineyard." }
+    ],
+    history: [
+      { y: 2006, t: "The Hamels buy their first Sonoma Valley vineyard land." },
+      { y: 2014, t: "The Gould Evans estate winery opens; the family converts everything to certified biodynamic farming." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'", "Demeter-certified biodynamic estate"],
+    funFact: "The tasting terrace was oriented to frame the Mayacamas gap where afternoon light pours into Sonoma Valley — the architects designed around a time of day."
+  },
+
+  {
+    slug: "donum", name: "The Donum Estate", valley: "Sonoma", ava: "Los Carneros (Sonoma side)",
+    founded: 2001, founder: "Anne Moller-Racke (spun out of Buena Vista's Carneros estate)",
+    address: "24500 Ramal Rd, Sonoma, CA 95476", lat: 38.2300, lng: -122.4200,
+    website: "https://www.thedonumestate.com",
+    owner: "Allan & Mei Warburg (Winside/Bestseller fashion fortune)", group: "Independent (Warburg family)",
+    priceRange: [90, 200], tastingFee: "$150–$300, strictly by appointment",
+    tours: "Yes — art-and-wine estate tours past 50+ monumental sculptures, ending in the Donum Home tasting pavilion",
+    vibeTags: ["Modern", "Showpiece", "Intimate"],
+    architect: "Matt Hollis Architects (Donum Home)", bookSection: "Singular Voices",
+    vibe: "The world's largest accessible private sculpture collection — Ai Weiwei's zodiac heads, Louise Bourgeois, Anish Kapoor, Yayoi Kusama — scattered across 200 Carneros acres of Pinot. Wine-country visiting as art pilgrimage.",
+    wines: [
+      { name: "Carneros Estate Pinot Noir", why: "Single-block, low-yield Pinots that built the 'Donum = grand cru Carneros' reputation." },
+      { name: "West Slope & Angel Camp Pinots", why: "The estate's other prized vineyards (Carneros & Anderson Valley)." }
+    ],
+    history: [
+      { y: 2001, t: "When Buena Vista's corporate owner sells the brand, viticulturist Anne Moller-Racke keeps the great Carneros vineyard and founds Donum ('gift' in Latin) — a lineage link to California's oldest winery." },
+      { y: 2011, t: "Danish entrepreneurs Allan & Mei Warburg acquire the estate and begin installing museum-scale sculpture among the vines." },
+      { y: 2021, t: "The Donum Home tasting pavilion by Matt Hollis opens — glass, travertine and vineyard horizon." }
+    ],
+    storyTags: ["architecture"],
+    awards: ["Featured in 'The New Architecture of Wine'", "50+ monumental works — among the world's great private sculpture parks"],
+    funFact: "Donum's vineyard was Buena Vista's prized Carneros ranch — so the flashiest new estate in Sonoma is, by soil, a direct descendant of its oldest."
+  },
+
+  {
+    slug: "williams-selyem", name: "Williams Selyem", valley: "Sonoma", ava: "Russian River Valley",
+    founded: 1981, founder: "Burt Williams (pressman) & Ed Selyem (wine-shop clerk) — garage winemakers",
+    address: "7227 Westside Rd, Healdsburg, CA 95448", lat: 38.5450, lng: -122.8700,
+    website: "https://www.williamsselyem.com",
+    owner: "John & Kathe Dyson (since 1998)", group: "Independent (Dyson family)",
+    priceRange: [45, 165], tastingFee: "List members / by appointment",
+    tours: "Appointment tastings, heavily favoring the famous mailing list",
+    vibeTags: ["Classic", "Intimate"],
+    architect: "Alex Ceppi / D.arc Group (estate winery, 2010s)", bookSection: "Singular Voices",
+    vibe: "The original California cult Pinot — born in a garage, allocated by a decades-long waiting list. The curved, timber-vaulted estate winery on Westside Road finally gave the legend a home worthy of the fruit.",
+    wines: [
+      { name: "Rochioli Riverblock Pinot Noir", why: "The Rochioli-Williams Selyem axis defined Russian River Pinot greatness." },
+      { name: "Westside Road Neighbors Pinot Noir", why: "A blend from the fabled Westside Road vineyards." }
+    ],
+    history: [
+      { y: 1981, t: "Williams and Selyem start making Pinot in a Forestville garage under a gentleman's-agreement of total quality." },
+      { y: 1987, t: "Their 1985 Rochioli Pinot wins the California State Fair sweepstakes — the garage wine beats everyone; the waiting list is born." },
+      { y: 1998, t: "New York farmer-politician John Dyson buys the label, keeping the cult ethos while finally building an estate." },
+      { y: 2011, t: "The D.arc Group gravity-flow winery opens — its laminated-timber vault inspired by an upturned boat hull." }
+    ],
+    storyTags: ["architecture", "consolidated"],
+    awards: ["Featured in 'The New Architecture of Wine'", "The 1985 Rochioli Pinot: the wine that launched RRV Pinot mania"],
+    funFact: "For years the 'winery' was a rented garage with a hand-painted sign reading 'Hacienda del Rio' — collectors now pay four figures for those early bottles."
+  },
+
+  {
+    slug: "kistler", name: "Kistler Vineyards", valley: "Sonoma", ava: "Russian River Valley",
+    founded: 1978, founder: "Steve Kistler & Mark Bixler",
+    address: "Trenton Roadhouse, 4707 Trenton-Healdsburg Rd, Forestville, CA 95436", lat: 38.4950, lng: -122.8650,
+    website: "https://www.kistlervineyards.com",
+    owner: "Kistler family & Bill Price (Price Family Vineyards)", group: "Independent (Kistler/Price)",
+    priceRange: [90, 200], tastingFee: "$150+, by appointment (allocation-list priority)",
+    tours: "Appointment-only tastings at the Trenton Roadhouse",
+    vibeTags: ["Classic", "Intimate"],
+    architect: "Architectural Resources Group (Trenton Roadhouse)", bookSection: "History Reenvisioned",
+    vibe: "California's most storied Chardonnay house, tasted in a lovingly restored century-old roadhouse — history re-envisioned rather than replaced. Hushed, allocation-list territory.",
+    wines: [
+      { name: "Les Noisetiers Chardonnay", why: "The 'entry' to a lineup that redefined single-vineyard California Chardonnay." },
+      { name: "Kistler Vineyard & McCrea Chardonnays", why: "The single-vineyard legends, Burgundian in method, Sonoman in soul." }
+    ],
+    history: [
+      { y: 1978, t: "Kistler and Bixler start with one goal: Burgundy-serious Chardonnay from Sonoma hillsides." },
+      { y: 1990, t: "Through the 90s Kistler becomes the cult Chardonnay of America — one clone, native yeasts, no shortcuts." },
+      { y: 2008, t: "Bill Price (Three Sticks, ex-TPG) takes a stake to steward succession; winemaker Jason Kesner later succeeds Steve." },
+      { y: 2015, t: "The restored Trenton Roadhouse opens for the label's first real hospitality — a 1910s building given new life." }
+    ],
+    storyTags: ["architecture", "site-reuse"],
+    awards: ["Featured in 'The New Architecture of Wine'", "Standard-setter for single-vineyard California Chardonnay"],
+    funFact: "Kistler famously uses a single Chardonnay selection across all its vineyards — the differences you taste are pure dirt."
+  },
+
+  {
+    slug: "medlock-ames", name: "Medlock Ames", valley: "Sonoma", ava: "Alexander Valley (Bell Mountain)",
+    founded: 1998, founder: "Christopher Medlock James & Ames Morison (college friends)",
+    address: "3487 Alexander Valley Rd, Healdsburg, CA 95448", lat: 38.6550, lng: -122.8200,
+    website: "https://www.medlockames.com",
+    owner: "Christopher James & Ames Morison", group: "Independent (James & Morison)",
+    priceRange: [30, 95], tastingFee: "$40–$85",
+    tours: "Yes — ranch tastings among gardens and oaks at Bell Mountain; the 1906 general-store tasting room pours in town",
+    vibeTags: ["Casual", "Modern", "Family-run"],
+    architect: "Wade Design Architects", bookSection: "History Reenvisioned",
+    vibe: "A 338-acre organic ranch where more land is wild than planted — vegetable gardens, olive trees, chickens — plus a restored 1906 country store (with a speakeasy-style bar behind it). Farm-first Sonoma idealism.",
+    wines: [
+      { name: "Bell Mountain Cabernet Sauvignon", why: "Estate-grown organic Cab from red volcanic soils." },
+      { name: "Bell Mountain Sauvignon Blanc", why: "The fresh, garden-party counterpart." }
+    ],
+    history: [
+      { y: 1998, t: "Two friends — one finance, one farming — buy Bell Mountain ranch vowing to farm organically and leave most of it wild." },
+      { y: 2012, t: "They restore the 1906 Alexander Valley general store as their tasting room, keeping the community post office boxes." },
+      { y: 2020, t: "Wade Design's ranch hospitality buildings knit new architecture into the working farm." }
+    ],
+    storyTags: ["architecture", "site-reuse"],
+    awards: ["Featured in 'The New Architecture of Wine'", "Certified organic farming; ranch conservation easements"],
+    funFact: "Behind the general store's back door hides 'The Bar at Medlock Ames' — a locals' cocktail bar using the farm's garden produce, in what was the old barbershop."
+  },
+
+  {
+    slug: "la-crema-saralee", name: "La Crema Estate at Saralee's Vineyard", valley: "Sonoma", ava: "Russian River Valley",
+    founded: 1979, founder: "La Crema founded 1979; estate home is Richard's Grove & Saralee's Vineyard",
+    address: "3575 Slusser Rd, Windsor, CA 95492", lat: 38.4850, lng: -122.7950,
+    website: "https://www.lacrema.com",
+    owner: "Jackson Family Wines (since 1993)", group: "Jackson Family Wines",
+    priceRange: [25, 70], tastingFee: "$35–$65",
+    tours: "Yes — tastings in the converted 1900s barn; vineyard views, bocce and lawn games",
+    vibeTags: ["Casual", "Historic", "Showpiece"],
+    architect: "BraytonHughes Design Studios (barn renovation)", bookSection: "History Reenvisioned",
+    vibe: "A beloved 1900s hop-country barn — once the social heart of Saralee Kunde's famous vineyard — reborn as La Crema's estate home. Approachable Pinot and Chardonnay in genuinely historic agricultural bones.",
+    wines: [
+      { name: "Saralee's Vineyard Chardonnay", why: "From the estate's own storied Russian River vineyard." },
+      { name: "Sonoma Coast Pinot Noir", why: "The bottling that made La Crema a national by-the-glass staple." }
+    ],
+    history: [
+      { y: 1979, t: "La Crema Viñera founded in Petaluma as a Burgundian-method specialist." },
+      { y: 1993, t: "A struggling La Crema is bought by Jess Jackson — becoming one of Jackson Family Wines' engines." },
+      { y: 2016, t: "The renovated Saralee's Vineyard barn opens as the estate tasting home, preserving a Russian River landmark." }
+    ],
+    storyTags: ["architecture", "site-reuse", "consolidated"],
+    awards: ["Featured in 'The New Architecture of Wine'"],
+    funFact: "Saralee Kunde was such a legendary Sonoma host that the barn came with its own parade float storage — the estate kept her hospitality tradition, minus the float."
   }
 ];
 
@@ -761,12 +1357,15 @@ const GROUP_NOTES = {
   "LVMH": "The world's biggest luxury group added Joseph Phelps (2022) to a stable holding Dom Pérignon, Krug, Château d'Yquem, Newton and Chandon.",
   "Delicato Family Wines": "One of America's largest family wine companies; took majority control of Francis Ford Coppola's wine brands in 2021.",
   "Otsuka (hands-off)": "Japan's Otsuka Pharmaceutical has majority-owned Ridge since 1986 and is wine's favorite example of a benevolent, invisible corporate parent.",
-  "GI Partners (Far Niente Wine Estates)": "Private equity firm GI Partners took majority ownership of the Far Niente family of wineries (Far Niente, Nickel & Nickel, Dolce, EnRoute, Bella Union) in 2016, with the Nickel family retaining a stake."
+  "GI Partners (Far Niente Wine Estates)": "Private equity firm GI Partners took majority ownership of the Far Niente family of wineries (Far Niente, Nickel & Nickel, Dolce, EnRoute, Bella Union) in 2016, with the Nickel family retaining a stake.",
+  "PlumpJack Group": "The Getty–Newsom hospitality group (yes, that Newsom — California's governor co-founded it as a wine shop in 1992) grew into PlumpJack, CADE and Odette wineries plus hotels and restaurants.",
+  "Trinchero Family Estates": "The family that bought shuttered Sutter Home in 1948 and invented White Zinfandel in 1975 is now one of the world's largest family-owned wine companies (~50 brands); Trinchero Napa Valley is its luxury flagship."
 };
 
 const STORY_TAG_LABELS = {
   "resurrected": { label: "Resurrected", desc: "Wineries that died — to Prohibition, phylloxera, earthquake, or corporate neglect — and were brought back to life." },
   "site-reuse": { label: "Reused historic space", desc: "Wineries operating in (or restored around) the buildings, cellars and caves of an older winery." },
   "consolidated": { label: "Consolidated", desc: "Independents absorbed into corporate groups — the defining business story of modern Napa & Sonoma." },
-  "judgment-of-paris": { label: "Judgment of Paris", desc: "Connected to the 1976 blind tasting in Paris where California beat France and changed wine forever." }
+  "judgment-of-paris": { label: "Judgment of Paris", desc: "Connected to the 1976 blind tasting in Paris where California beat France and changed wine forever." },
+  "architecture": { label: "New Architecture", desc: "Featured in Heather Sandy Hebert's 'The New Architecture of Wine: 25 Spectacular California Wineries' (2019) — the definitive survey of wine country's contemporary design wave." }
 };

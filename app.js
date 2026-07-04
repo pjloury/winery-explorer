@@ -164,7 +164,7 @@ function renderLineage() {
 
   // Story sections from tags
   const storyCards = Object.entries(STORY_TAG_LABELS)
-    .filter(([tag]) => tag !== "consolidated")
+    .filter(([tag]) => tag === "resurrected" || tag === "site-reuse" || tag === "judgment-of-paris")
     .map(([tag, info]) => {
       const ws = WINERIES.filter((w) => w.storyTags.includes(tag));
       if (!ws.length) return "";
@@ -184,8 +184,70 @@ function renderLineage() {
     <div class="lineage-grid">${corpCards}${indieCard}</div>
     <h2>Deaths, resurrections & reused bones</h2>
     <p class="section-desc">Phylloxera (1880s–90s), the 1906 earthquake, and Prohibition (1920–33) killed most first-generation wineries. The modern era has been one long act of resurrection — new money moving into old stone.</p>
-    <div class="lineage-grid">${storyCards}</div>`;
+    <div class="lineage-grid">${storyCards}</div>
+    <h2>The New Architecture of Wine</h2>
+    <p class="section-desc">${STORY_TAG_LABELS["architecture"].desc} All the book's Napa & Sonoma subjects are in this explorer (its other four — Presqu'ile, Law Estate, Saxum, Epoch — are in Santa Barbara and Paso Robles).</p>
+    <div class="lineage-grid">${["Napa", "Sonoma"].map((v) => {
+      const ws = WINERIES.filter((w) => w.architect && w.valley === v);
+      return `<div class="lineage-card">
+        <h3>${v === "Napa" ? "Napa Valley" : "Sonoma County"} chapters</h3>
+        <p class="note">${ws.length} of the book's 25 wineries.</p>
+        <ul>${ws.map((w) => link(w, `${w.architect}${w.bookSection ? " · “" + w.bookSection + "”" : ""}`)).join("")}</ul>
+      </div>`;
+    }).join("")}</div>`;
   $(".count").textContent = `${WINERIES.length} wineries`;
+}
+
+/* ── Awards leaderboard (Wine Spectator Top 100) ── */
+let awardYear = "All";
+function renderAwards() {
+  const data = (window.WS_TOP100 || []).filter((e) => {
+    if (state.valley !== "All" && e.valley !== state.valley) return false;
+    if (awardYear !== "All" && e.year !== awardYear) return false;
+    const q = state.query.trim().toLowerCase();
+    if (q && !(e.wine + " " + e.winery).toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a, b) => b.year - a.year || a.rank - b.rank);
+
+  const years = [...new Set((window.WS_TOP100 || []).map((e) => e.year))].sort((a, b) => b - a);
+  const yearChips = ["All", ...years].map((y) =>
+    `<button class="chip ${awardYear === y ? "active" : ""}" data-year="${y}">${y === "All" ? "All years" : y}</button>`).join("");
+
+  const rows = data.map((e) => {
+    const w = WINERIES.find((x) => x.slug === e.winerySlug);
+    const wineryCell = w
+      ? `<a class="winery-link" onclick="openDrawer('${w.slug}')">${w.name} →</a>`
+      : `<span style="color:var(--muted)">${e.winery}</span>`;
+    return `<tr>
+      <td class="rank"><span class="rank-badge ${e.rank <= 10 ? "top10" : ""}">#${e.rank}</span></td>
+      <td class="year">${e.year}</td>
+      <td class="wine-cell"><b>${e.wine}</b>${e.note ? `<span class="sub">${e.note}</span>` : ""}</td>
+      <td class="founded">${e.vintage || "NV"}</td>
+      <td class="score">${e.score}</td>
+      <td class="price">${e.price || "—"}</td>
+      <td><span class="valley-tag ${e.valley}">${e.valley}</span></td>
+      <td>${wineryCell}</td>
+    </tr>`;
+  }).join("");
+
+  $("#awards").innerHTML = `
+    <div class="awards-head">
+      <h2>Wine Spectator Top 100 — Napa & Sonoma wines</h2>
+      <p class="section-desc">Every Napa and Sonoma county wine on Wine Spectator's most recent Top 100 lists, ranked. Click a winery to open its full story in the explorer.</p>
+      <div class="seg">${yearChips}</div>
+    </div>
+    ${data.length ? `<div class="table-wrap"><table>
+      <thead><tr><th>Rank</th><th>List</th><th>Wine</th><th>Vintage</th><th>Score</th><th>Price</th><th>Valley</th><th>Winery</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>`
+      : `<p style="color:var(--muted)">No entries match the current filters.</p>`}`;
+
+  document.querySelectorAll("#awards .chip[data-year]").forEach((c) => {
+    c.addEventListener("click", () => {
+      awardYear = c.dataset.year === "All" ? "All" : Number(c.dataset.year);
+      renderAwards();
+    });
+  });
+  $(".count").textContent = `${data.length} ranked wines`;
 }
 
 /* ── Detail drawer ── */
@@ -211,6 +273,7 @@ function openDrawer(slug) {
         <div class="cell"><label>Bottle prices</label><div>${fmtPrice(w)} <span style="color:var(--muted)">(approx.)</span></div></div>
         <div class="cell"><label>Tasting fee</label><div>${w.tastingFee}</div></div>
         <div class="cell"><label>Current owner</label><div>${w.owner}</div></div>
+        ${w.architect ? `<div class="cell wide"><label>Architecture</label><div>${w.architect}${w.bookSection ? ` — “${w.bookSection}” chapter of <i>The New Architecture of Wine</i>` : ""}</div></div>` : ""}
         <div class="cell wide"><label>Tours & visits</label><div>${w.tours}</div></div>
         <div class="cell wide"><label>Address</label><div><a href="${gmaps}" target="_blank" rel="noopener">${w.address}</a></div></div>
         <div class="cell wide"><label>Website</label><div><a href="${w.website}" target="_blank" rel="noopener">${w.website.replace("https://www.", "")}</a></div></div>
@@ -248,6 +311,7 @@ function render() {
   $(`#${state.view}-view`)?.classList.add("active");
   if (state.view === "table") renderTable();
   if (state.view === "map") { $("#map-view").classList.add("active"); renderMap(); map.invalidateSize(); }
+  if (state.view === "awards") renderAwards();
   if (state.view === "lineage") { $("#lineage-view").classList.add("active"); renderLineage(); }
 }
 
@@ -273,7 +337,7 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDrawe
 
 // Deep links: #map, #lineage, or #<winery-slug>
 const hash = location.hash.slice(1);
-if (hash === "map" || hash === "lineage") {
+if (hash === "map" || hash === "lineage" || hash === "awards") {
   state.view = hash;
   document.querySelectorAll(".view-toggle button").forEach((b) =>
     b.classList.toggle("active", b.dataset.view === hash));
