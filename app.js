@@ -303,11 +303,9 @@ function initMap() {
 // Which wineries land on the map: valley + search always apply. If any map
 // filter is active we search ALL wineries that match; otherwise we show just the
 // top N most prestigious.
-function mapList() {
-  if (state.mapFocus) {
-    const w = WINERIES.find((x) => x.slug === state.mapFocus);
-    return w ? [w] : [];
-  }
+// The wineries currently in scope on the map: valley + search + wine/known-for
+// filters; top-N by prestige when no filter is active. (Ignores single-winery focus.)
+function mapCandidates() {
   const base = filtered();
   const filtersActive = state.mapWine.size || state.mapKnown.size;
   return base.filter((w) => {
@@ -316,6 +314,13 @@ function mapList() {
     if (!filtersActive && w._rank > MAP_TOP_N) return false;
     return true;
   });
+}
+function mapList() {
+  if (state.mapFocus) {
+    const w = WINERIES.find((x) => x.slug === state.mapFocus);
+    return w ? [w] : [];
+  }
+  return mapCandidates();
 }
 
 function markerIcon(w) {
@@ -370,11 +375,11 @@ function renderMap() {
 function renderMapIndex() {
   const el = $("#map-index");
   if (!el) return;
-  const items = filtered().slice().sort((a, b) => a.name.localeCompare(b.name));
+  const items = mapCandidates().slice().sort((a, b) => a.name.localeCompare(b.name));
   el.innerHTML = `
     <div class="mi-head">${state.mapFocus
       ? `<button class="link-btn" id="mi-clear">← Show all pins</button>`
-      : `<span>${items.length} wineries · tap to locate</span>`}</div>
+      : `<span>${items.length} winer${items.length === 1 ? "y" : "ies"} shown · tap to locate</span>`}</div>
     <ul>${items.map((w) => `<li class="mi-item ${state.mapFocus === w.slug ? "active" : ""}" data-slug="${w.slug}">
       <span class="mi-dot ${w.valley}"></span><span class="mi-name">${w.name}</span></li>`).join("")}</ul>`;
   el.querySelectorAll(".mi-item").forEach((li) => li.addEventListener("click", () => {
