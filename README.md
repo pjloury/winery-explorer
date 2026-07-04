@@ -20,8 +20,13 @@ open index.html
   filter by valley; full-text search across wines, history, vibe, owners. Toggle
   **By region · N→S** to group wineries into collapsible AVA sections ordered
   north-to-south.
-- **Map** — Leaflet map, markers colored by valley (burgundy = Napa, green = Sonoma);
-  click a marker for a photo card, then the full story.
+- **Map** — Leaflet map showing the **top 25 wineries by prestige** as circular logo
+  markers (winery logo where available, a monogram otherwise), ringed by valley color
+  (burgundy = Napa, green = Sonoma). Filter by **wine type** (Cabernet, Pinot Noir,
+  Chardonnay, Zinfandel, Sauvignon Blanc, Sparkling) or by what a winery is **known for**
+  (Architecture, History & heritage, Gardens & grounds, Food & art); applying any filter
+  expands the map to *every* matching winery, not just the top 25. Click a marker for a
+  photo card and the full story.
 - **Lineage** — who owns whom (corporate families vs. the still-independent club),
   plus resurrections, reused historic spaces, Judgment of Paris connections, and
   the wineries featured in *The New Architecture of Wine* (Hebert, 2019).

@@ -12,19 +12,47 @@ const state = {
   sort: { key: "prestige", dir: -1 },
   grouped: false,
   expandedRegions: new Set(),
+  mapWine: new Set(),
+  mapKnown: new Set(),
 };
 
 const fmtPrice = (w) => `$${w.priceRange[0]}–$${w.priceRange[1]}`;
 const propertyImg = (w) => (IMG[w.slug] && IMG[w.slug].property) || null;
 const labelImg = (w) => (IMG[w.slug] && IMG[w.slug].label) || null;
+const logoImg = (w) => (IMG[w.slug] && IMG[w.slug].logo) || null;
+function monogram(w) {
+  return w.name.replace(/^(The|Château|Chateau)\s+/i, "")
+    .split(/\s+/).filter((x) => /[A-Za-z]/.test(x)).slice(0, 2)
+    .map((x) => x[0].toUpperCase()).join("");
+}
 
 /* ── Prestige rating ──
    Editorial acclaim tier (ACCLAIM, 1–5) is the backbone; a Wine Spectator Top 100
    appearance adds a capped "current buzz" boost and a half-star. Icons stay on top;
    WS presence breaks ties within a tier. */
 const ACCLAIM_MAP = (typeof ACCLAIM !== "undefined") ? ACCLAIM : {};
-function computePrestige() {
+const KFX = (typeof KNOWN_FOR_EXTRA !== "undefined") ? KNOWN_FOR_EXTRA : {};
+
+// Wine-type filter buckets, matched against each winery's wine names.
+const WINE_TYPES = [
+  { key: "Cabernet", re: /cabernet/i },
+  { key: "Pinot Noir", re: /pinot noir/i },
+  { key: "Chardonnay", re: /chardonnay/i },
+  { key: "Zinfandel", re: /zinfandel/i },
+  { key: "Sauvignon Blanc", re: /sauvignon blanc/i },
+  { key: "Sparkling", re: /sparkling|\bbrut\b|blanc de (blancs|noirs)|méthode|champagne/i },
+];
+// "Known for" filter categories.
+const KNOWN_FOR = [
+  { key: "architecture", label: "Architecture" },
+  { key: "history", label: "History & heritage" },
+  { key: "gardens", label: "Gardens & grounds" },
+  { key: "food-art", label: "Food & art" },
+];
+
+function enrichWineries() {
   WINERIES.forEach((w) => {
+    // Prestige rating
     const a = ACCLAIM_MAP[w.slug] || 3;
     const apps = (window.WS_TOP100 || []).filter((e) => e.winerySlug === w.slug);
     let ws = 0;
@@ -37,9 +65,24 @@ function computePrestige() {
     w._wsCount = apps.length;
     w._prestige = Math.round((a * 20 + ws + bonus) * 10) / 10;
     w._stars = Math.min(5, a + (apps.length ? 0.5 : 0));
+
+    // Wine types (from the famous-wines list)
+    const wineText = w.wines.map((x) => x.name).join(" | ");
+    w._wineTypes = new Set(WINE_TYPES.filter((t) => t.re.test(wineText)).map((t) => t.key));
+
+    // Known-for tags: derive history + book architecture, then merge curated extras
+    const kf = new Set();
+    if (w.storyTags.includes("architecture")) kf.add("architecture");
+    if (w.vibeTags.includes("Historic")
+        || w.storyTags.some((t) => ["resurrected", "site-reuse", "judgment-of-paris"].includes(t))) kf.add("history");
+    Object.keys(KFX).forEach((cat) => { if (KFX[cat].includes(w.slug)) kf.add(cat); });
+    w._knownFor = kf;
   });
+  // Prestige rank (1 = most prestigious) for the map's "top N" set
+  [...WINERIES].sort((x, y) => y._prestige - x._prestige).forEach((w, i) => { w._rank = i + 1; });
 }
-computePrestige();
+enrichWineries();
+const MAP_TOP_N = 25;
 
 function starsHTML(n) {
   const pct = (n / 5) * 100;
@@ -209,30 +252,80 @@ function initMap() {
   markerLayer = L.layerGroup().addTo(map);
 }
 
+// Which wineries land on the map: valley + search always apply. If any map
+// filter is active we search ALL wineries that match; otherwise we show just the
+// top N most prestigious.
+function mapList() {
+  const base = filtered();
+  const filtersActive = state.mapWine.size || state.mapKnown.size;
+  return base.filter((w) => {
+    if (state.mapWine.size && ![...state.mapWine].some((t) => w._wineTypes.has(t))) return false;
+    if (state.mapKnown.size && ![...state.mapKnown].some((t) => w._knownFor.has(t))) return false;
+    if (!filtersActive && w._rank > MAP_TOP_N) return false;
+    return true;
+  });
+}
+
+function markerIcon(w) {
+  const logo = logoImg(w);
+  const inner = logo
+    ? `<img src="${logo}" alt="${w.name}">`
+    : `<span class="mono">${monogram(w)}</span>`;
+  return L.divIcon({
+    className: "logo-marker",
+    html: `<div class="lm ${w.valley}" title="${w.name}">${inner}</div>`,
+    iconSize: [38, 38], iconAnchor: [19, 19], popupAnchor: [0, -20],
+  });
+}
+
 function renderMap() {
   initMap();
   markerLayer.clearLayers();
-  const list = filtered();
+  const list = mapList();
   list.forEach((w) => {
-    const m = L.circleMarker([w.lat, w.lng], {
-      radius: 9, color: "#fffdf9", weight: 2,
-      fillColor: VALLEY_COLOR[w.valley], fillOpacity: 0.95,
-    });
+    const m = L.marker([w.lat, w.lng], { icon: markerIcon(w), riseOnHover: true });
     const img = propertyImg(w);
     m.bindPopup(`<div class="popup-card">
         ${img ? `<img src="${img}" alt="${w.name}">` : ""}
         <b>${w.name}</b>
-        <div class="meta">${w.valley} · ${w.ava} · est. ${w.founded}<br>${w.wines[0].name} · ${fmtPrice(w)}</div>
+        <div class="meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava}<br>est. ${w.founded} · ${w.wines[0].name} · ${fmtPrice(w)}</div>
         <button onclick="openDrawer('${w.slug}')">Full story →</button>
       </div>`, { maxWidth: 260 });
-    m.bindTooltip(w.name, { direction: "top", offset: [0, -8] });
+    m.bindTooltip(w.name, { direction: "top", offset: [0, -20] });
     markerLayer.addLayer(m);
   });
   if (list.length) {
-    map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.12));
+    map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.15));
   }
-  $(".count").textContent = `${list.length} of ${WINERIES.length} wineries`;
+  renderMapFilters();
+  const filtersActive = state.mapWine.size || state.mapKnown.size;
+  $(".count").textContent = filtersActive
+    ? `${list.length} match${list.length === 1 ? "" : "es"}`
+    : `Top ${list.length} by prestige`;
 }
+
+function renderMapFilters() {
+  const bar = $("#map-filters");
+  if (!bar) return;
+  const wineChips = WINE_TYPES.map((t) =>
+    `<button class="fchip ${state.mapWine.has(t.key) ? "active" : ""}" data-wine="${t.key}">${t.key}</button>`).join("");
+  const knownChips = KNOWN_FOR.map((t) =>
+    `<button class="fchip ${state.mapKnown.has(t.key) ? "active" : ""}" data-known="${t.key}">${t.label}</button>`).join("");
+  const active = state.mapWine.size || state.mapKnown.size;
+  bar.innerHTML = `
+    <div class="fgroup"><span class="flabel">Wine</span>${wineChips}</div>
+    <div class="fgroup"><span class="flabel">Known for</span>${knownChips}</div>
+    ${active ? `<button class="link-btn" id="map-clear">Clear · back to top ${MAP_TOP_N}</button>` : ""}`;
+  bar.querySelectorAll("[data-wine]").forEach((b) => b.addEventListener("click", () => {
+    toggleSet(state.mapWine, b.dataset.wine); renderMap();
+  }));
+  bar.querySelectorAll("[data-known]").forEach((b) => b.addEventListener("click", () => {
+    toggleSet(state.mapKnown, b.dataset.known); renderMap();
+  }));
+  const clear = $("#map-clear");
+  if (clear) clear.addEventListener("click", () => { state.mapWine.clear(); state.mapKnown.clear(); renderMap(); });
+}
+function toggleSet(set, key) { set.has(key) ? set.delete(key) : set.add(key); }
 
 /* ── Lineage view ── */
 function renderLineage() {

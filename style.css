@@ -174,10 +174,32 @@ tr.region-head .valley-tag { transform: scale(0.88); margin-right: 2px; }
 tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: var(--sans); margin-left: 6px; }
 
 /* ── Map ── */
-#map { height: calc(100vh - 210px); min-height: 480px; border-radius: var(--radius); border: 1px solid var(--hairline); box-shadow: var(--shadow); }
+#map { height: calc(100vh - 268px); min-height: 460px; border-radius: var(--radius); border: 1px solid var(--hairline); box-shadow: var(--shadow); }
 .map-legend {
-  display: flex; gap: 18px; align-items: center; padding: 10px 4px 12px; color: var(--ink-2); font-size: 13.5px;
+  display: flex; gap: 18px; align-items: center; padding: 8px 4px 12px; color: var(--ink-2); font-size: 13.5px;
 }
+
+/* Map filter bar */
+.map-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 6px 2px 2px; }
+.map-filters .fgroup { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.map-filters .fgroup + .fgroup { border-left: 1px solid var(--hairline); padding-left: 14px; }
+.flabel { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); font-weight: 700; margin-right: 2px; }
+.fchip { border: 1px solid var(--hairline); background: var(--card); color: var(--ink-2); border-radius: 999px; padding: 4px 11px; font: inherit; font-size: 12.5px; cursor: pointer; }
+.fchip:hover { border-color: var(--ink-2); color: var(--ink); }
+.fchip.active { background: var(--ink); border-color: var(--ink); color: var(--surface); font-weight: 600; }
+
+/* Logo map markers */
+.logo-marker { background: none; border: 0; }
+.logo-marker .lm {
+  width: 38px; height: 38px; border-radius: 50%; background: var(--card); border: 2.5px solid var(--hairline);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  box-shadow: 0 2px 7px rgba(36, 29, 26, 0.4); transition: transform 0.1s ease;
+}
+.logo-marker .lm.Napa { border-color: var(--napa); }
+.logo-marker .lm.Sonoma { border-color: var(--sonoma); }
+.logo-marker .lm img { width: 100%; height: 100%; object-fit: contain; padding: 3px; box-sizing: border-box; }
+.logo-marker .lm .mono { font-family: var(--serif); font-weight: 700; font-size: 14px; color: var(--ink); letter-spacing: 0.5px; }
+.logo-marker:hover .lm { transform: scale(1.14); }
 .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; border: 2px solid var(--card); box-shadow: 0 0 0 1px var(--hairline); vertical-align: -1px; }
 .dot.napa { background: var(--napa); }
 .dot.sonoma { background: var(--sonoma); }

@@ -2196,6 +2196,19 @@ const ACCLAIM = {
   "progeny": 2, "almacerro": 2, "annulus": 2, "caterwaul": 2, "newfound": 2, "paula-kornell": 2, "ferren": 2, "platt": 2
 };
 
+// Curated "known for" tags for the map filters. History (Historic vibe /
+// resurrected / reused / Judgment of Paris) and book Architecture are derived
+// automatically in app.js; these are the hand-curated additions.
+const KNOWN_FOR_EXTRA = {
+  architecture: ["opus-one", "robert-mondavi", "joseph-phelps", "aperture", "darioush"],
+  gardens: ["kendall-jackson", "ferrari-carano", "chateau-montelena", "inglenook", "v-sattui",
+            "round-pond", "far-niente", "duckhorn", "darioush", "donum", "rams-gate",
+            "coppola-geyserville", "medlock-ames", "hamel"],
+  "food-art": ["donum", "hall", "robert-mondavi", "inglenook", "darioush", "kendall-jackson",
+               "round-pond", "v-sattui", "ferrari-carano", "coppola-geyserville", "duckhorn",
+               "st-supery", "beaulieu"]
+};
+
 // Corporate family notes for the Lineage view
 const GROUP_NOTES = {
   "Treasury Wine Estates": "Australian drinks giant (spun off from Foster's beer, 2011). Its Napa trophies came via the Beringer Blass acquisition chain.",
