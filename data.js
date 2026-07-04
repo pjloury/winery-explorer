@@ -380,6 +380,7 @@ const WINERIES = [
     priceRange: [75, 375], tastingFee: "$95–$200",
     tours: "Yes — terrace tastings overlooking Spring Valley; by appointment",
     vibeTags: ["Modern", "Grand", "Intimate"],
+    architect: "BCV Architecture + Interiors", bookSection: "History Reenvisioned",
     vibe: "A monumental redwood barn — built from reclaimed bridge timbers by Phelps's own construction company — looking down a private valley of vines and oaks. Hushed, architectural, deeply comfortable.",
     wines: [
       { name: "Insignia", why: "California's first proprietary Bordeaux-style blend (1974); the 2002 vintage was Wine Spectator's 2005 Wine of the Year." },
@@ -391,7 +392,7 @@ const WINERIES = [
       { y: 2015, t: "Joe Phelps dies; the family runs it until 2022." },
       { y: 2022, t: "LVMH acquires the winery — the luxury conglomerate's biggest Napa move, placing Insignia alongside Dom Pérignon and Château d'Yquem in its portfolio." }
     ],
-    storyTags: ["consolidated"],
+    storyTags: ["consolidated", "architecture"],
     awards: ["Insignia 2002 — Wine Spectator Wine of the Year 2005", "Insignia has landed in Wine Spectator's Top 10 more than a dozen times"],
     funFact: "Phelps's construction crews built Chateau Souverain (now the Coppola winery in Sonoma) while his own barn was going up — his fingerprints are on both valleys."
   },
@@ -1250,6 +1251,32 @@ const WINERIES = [
   },
 
 
+
+  {
+    slug: "del-dotto", name: "Del Dotto Vineyards", valley: "Napa", ava: "St. Helena",
+    founded: 1988, founder: "Dave Del Dotto (real-estate entrepreneur turned vintner)",
+    address: "1445 St. Helena Hwy S, St. Helena, CA 94574", lat: 38.4937, lng: -122.4557,
+    website: "https://www.deldottovineyards.com",
+    owner: "Del Dotto family (Dave & Yolanda Del Dotto)", group: "Independent (Del Dotto family)",
+    priceRange: [65, 300], tastingFee: "$85–$225, by appointment (cave barrel tasting)",
+    tours: "Yes — the signature Connoisseurs' Cave Tour & Barrel Tasting, by reservation",
+    vibeTags: ["Luxe", "Grand", "Intimate"],
+    vibe: "An unapologetically opulent cave experience: hand-dug 1885 tunnels dripping with imported Italian marble, gold leaf, and crystal chandeliers, where wine is drawn barrel-by-barrel straight from the wood with a glass thief. Theatrical, indulgent, unlike anywhere else in Napa.",
+    wines: [
+      { name: "Connoisseur Series Cabernet Sauvignon", why: "Barrel-selected single-vineyard Cabernets poured straight from the cask — the heart of the cave tasting." },
+      { name: "'The Beast' Cabernet Sauvignon", why: "The lavishly oaked flagship reserve Cabernet." },
+      { name: "Cave Blend", why: "A Super-Tuscan-style Sangiovese–Cabernet blend nodding to the family's Italian roots." }
+    ],
+    history: [
+      { y: 1885, t: "Laborers hand-dig the stone wine caves on the property — among the oldest in Napa Valley." },
+      { y: 1988, t: "Dave Del Dotto founds Del Dotto Vineyards." },
+      { y: 1994, t: "Del Dotto opens its Napa caves for barrel tastings, launching the marble-and-chandelier style the brand is known for." },
+      { y: 2018, t: "Piazza Del Dotto debuts in Oakville — a second, even grander tasting palazzo." }
+    ],
+    storyTags: ["site-reuse"],
+    awards: ["Napa's most theatrical cave barrel-tasting experience", "Consistent 90+ scores for its single-vineyard Connoisseur Cabernets"],
+    funFact: "The caves are lined with imported Italian marble, gold leaf, and crystal chandeliers — and you taste by candlelight straight from the barrel, not a bottle."
+  },
 
   // ───────────────────────── SONOMA COUNTY ─────────────────────────
   {
@@ -2196,6 +2223,20 @@ const ACCLAIM = {
   "progeny": 2, "almacerro": 2, "annulus": 2, "caterwaul": 2, "newfound": 2, "paula-kornell": 2, "ferren": 2, "platt": 2
 };
 
+// Wineries widely considered preeminent / a benchmark for a particular wine
+// style — drives the "⭐ <type> benchmark" badge on the map hover card.
+const PREEMINENT_WINE = {
+  "williams-selyem": "Pinot Noir", "dehlinger": "Pinot Noir", "merry-edwards": "Pinot Noir",
+  "wayfarer": "Pinot Noir", "flowers": "Pinot Noir & Chardonnay", "occidental": "Pinot Noir",
+  "kistler": "Chardonnay", "aubert": "Chardonnay", "ramey": "Chardonnay", "hanzell": "Chardonnay",
+  "ridge-lytton-springs": "Zinfandel", "turley": "Zinfandel", "bedrock": "Zinfandel",
+  "carlisle": "Zinfandel", "ravenswood": "Zinfandel",
+  "caymus": "Cabernet", "inglenook": "Cabernet", "heitz": "Cabernet", "chateau-montelena": "Cabernet",
+  "stags-leap": "Cabernet", "opus-one": "Bordeaux blend", "joseph-phelps": "Bordeaux blend (Insignia)",
+  "duckhorn": "Merlot", "massican": "Italian-style whites",
+  "schramsberg": "Sparkling", "domaine-carneros": "Sparkling", "iron-horse": "Sparkling", "korbel": "Sparkling"
+};
+
 // Curated "known for" tags for the map filters. History (Historic vibe /
 // resurrected / reused / Judgment of Paris) and book Architecture are derived
 // automatically in app.js; these are the hand-curated additions.
@@ -2206,7 +2247,7 @@ const KNOWN_FOR_EXTRA = {
             "coppola-geyserville", "medlock-ames", "hamel"],
   "food-art": ["donum", "hall", "robert-mondavi", "inglenook", "darioush", "kendall-jackson",
                "round-pond", "v-sattui", "ferrari-carano", "coppola-geyserville", "duckhorn",
-               "st-supery", "beaulieu"]
+               "st-supery", "beaulieu", "del-dotto"]
 };
 
 // Corporate family notes for the Lineage view

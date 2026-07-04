@@ -1,6 +1,6 @@
 # Napa & Sonoma Winery Explorer
 
-A self-contained web app covering 87 top wineries (50 Napa, 37 Sonoma): founding
+A self-contained web app covering 88 top wineries (51 Napa, 37 Sonoma): founding
 dates, consolidation/resurrection histories, famous wines, vibe, addresses,
 tours, bottle prices, awards — with property photos and wine-label images so you
 can recognize the bottles.
@@ -17,9 +17,11 @@ open index.html
 
 - **Table** — sortable by **Prestige** (a 5-star rating blending an editorial acclaim
   tier with Wine Spectator Top 100 standing; the default sort), name, founded, or price;
-  filter by valley; full-text search across wines, history, vibe, owners. Toggle
-  **By region · N→S** to group wineries into collapsible AVA sections ordered
-  north-to-south.
+  filter by valley; full-text search across wines, history, vibe, owners. A
+  color-coded **Group** column shows each winery's corporate family (sortable, so
+  same-group estates cluster) vs. the independents. Toggle **By region · N→S** to
+  group wineries into collapsible AVA sections ordered north-to-south. Wineries in
+  Heather Sandy Hebert's *The New Architecture of Wine* carry a 📖 New Architecture badge.
 - **Map** — Leaflet map showing the **top 25 wineries by prestige** as circular logo
   markers (winery logo where available, a monogram otherwise), ringed by valley color
   (burgundy = Napa, green = Sonoma). Filter by **wine type** (Cabernet, Pinot Noir,

@@ -102,7 +102,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
 
 /* ── Table ── */
 .table-wrap { background: var(--card); border: 1px solid var(--hairline); border-radius: var(--radius); box-shadow: var(--shadow); overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; min-width: 1040px; }
+table { border-collapse: collapse; width: 100%; min-width: 1160px; }
 thead th {
   text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em;
   color: var(--muted); font-weight: 650; padding: 12px 14px;
@@ -145,6 +145,22 @@ td.price { font-variant-numeric: tabular-nums; white-space: nowrap; }
   padding: 1px 6px; margin: 1px 2px 1px 0; background: var(--gold-soft); color: var(--gold); white-space: nowrap;
 }
 td.tours { font-size: 13px; }
+
+/* Corporate-group column */
+td.group-cell { max-width: 200px; }
+.group-chip { display: inline-block; font-size: 11.5px; font-weight: 650; border-radius: 6px; padding: 2px 8px; line-height: 1.3; }
+.indie { color: var(--muted); font-size: 12.5px; }
+.gc0 { background: hsl(350 55% 90%); color: hsl(350 48% 34%); }
+.gc1 { background: hsl(32 60% 88%); color: hsl(32 60% 30%); }
+.gc2 { background: hsl(140 45% 88%); color: hsl(140 45% 28%); }
+.gc3 { background: hsl(185 45% 87%); color: hsl(185 55% 27%); }
+.gc4 { background: hsl(210 55% 90%); color: hsl(210 55% 34%); }
+.gc5 { background: hsl(255 50% 91%); color: hsl(255 45% 42%); }
+.gc6 { background: hsl(292 42% 90%); color: hsl(292 42% 38%); }
+.gc7 { background: hsl(24 40% 87%); color: hsl(24 45% 32%); }
+
+/* Special "New Architecture" book badge */
+.badge-arch { background: #ece3f5; color: #6a3fa0; }
 
 /* Prestige star rating */
 .stars { position: relative; display: inline-block; white-space: nowrap; font-size: 15px; line-height: 1; letter-spacing: 1.5px; }
@@ -200,6 +216,37 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .logo-marker .lm img { width: 100%; height: 100%; object-fit: contain; padding: 3px; box-sizing: border-box; }
 .logo-marker .lm .mono { font-family: var(--serif); font-weight: 700; font-size: 14px; color: var(--ink); letter-spacing: 0.5px; }
 .logo-marker:hover .lm { transform: scale(1.14); }
+
+/* Rich hover card on map markers */
+.leaflet-tooltip.winery-tip {
+  max-width: 272px; white-space: normal; padding: 0; border: 1px solid var(--hairline);
+  background: var(--card); color: var(--ink); box-shadow: var(--shadow); border-radius: 10px;
+}
+.leaflet-tooltip.winery-tip.leaflet-tooltip-top::before { border-top-color: var(--card); }
+.leaflet-tooltip.winery-tip.leaflet-tooltip-bottom::before { border-bottom-color: var(--card); }
+.wt { padding: 10px 12px; font-family: var(--sans); }
+.wt b { font-family: var(--serif); font-size: 14.5px; font-weight: 600; }
+.wt-sub { color: var(--muted); font-size: 11px; display: block; margin-top: 1px; }
+.wt p { margin: 7px 0 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
+.wt-badges { margin-top: 9px; display: flex; flex-wrap: wrap; gap: 4px; }
+.mb { font-size: 10.5px; font-weight: 700; border-radius: 5px; padding: 2px 7px; }
+.mb.winner { background: var(--gold-soft); color: var(--gold); }
+.mb.jop { background: var(--napa-soft); color: var(--napa); }
+.mb.book { background: #ece3f5; color: #6a3fa0; }
+.mb.pre { background: var(--sonoma-soft); color: var(--sonoma); }
+
+@media (prefers-color-scheme: dark) {
+  .gc0 { background: hsl(350 30% 25%); color: hsl(350 60% 82%); }
+  .gc1 { background: hsl(32 32% 24%); color: hsl(32 65% 78%); }
+  .gc2 { background: hsl(140 26% 22%); color: hsl(140 45% 76%); }
+  .gc3 { background: hsl(185 30% 22%); color: hsl(185 50% 76%); }
+  .gc4 { background: hsl(210 34% 26%); color: hsl(210 60% 80%); }
+  .gc5 { background: hsl(255 30% 28%); color: hsl(255 55% 84%); }
+  .gc6 { background: hsl(292 28% 26%); color: hsl(292 45% 82%); }
+  .gc7 { background: hsl(24 28% 24%); color: hsl(24 50% 78%); }
+  .badge-arch { background: #2e2340; color: #c9aef0; }
+  .mb.book { background: #2e2340; color: #c9aef0; }
+}
 .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; border: 2px solid var(--card); box-shadow: 0 0 0 1px var(--hairline); vertical-align: -1px; }
 .dot.napa { background: var(--napa); }
 .dot.sonoma { background: var(--sonoma); }

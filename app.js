@@ -84,6 +84,41 @@ function enrichWineries() {
 enrichWineries();
 const MAP_TOP_N = 25;
 
+// ── Corporate-group display (table) ──
+const GN = (typeof GROUP_NOTES !== "undefined") ? GROUP_NOTES : {};
+function groupColorClass(name) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+  return "gc" + (h % 8);
+}
+function groupCellHTML(w) {
+  if (GN[w.group]) return `<span class="group-chip ${groupColorClass(w.group)}" title="${w.group}">${w.group}</span>`;
+  const fam = w.group.replace(/^Independent\s*\(/, "").replace(/\)$/, "");
+  return `<span class="indie" title="Independent — ${fam}">Independent</span>`;
+}
+
+// ── Recognition badges (map hover; shared) ──
+const PREEMINENT = (typeof PREEMINENT_WINE !== "undefined") ? PREEMINENT_WINE : {};
+function wineryBadges(w) {
+  const b = [];
+  if (w._wsCount) {
+    const best = Math.min(...(window.WS_TOP100 || []).filter((e) => e.winerySlug === w.slug).map((e) => e.rank));
+    b.push(`<span class="mb winner">🏆 Wine Spectator Top 100 · #${best}</span>`);
+  }
+  if (w.storyTags.includes("judgment-of-paris")) b.push(`<span class="mb jop">🥇 Judgment of Paris</span>`);
+  if (w.storyTags.includes("architecture")) b.push(`<span class="mb book">📖 New Architecture</span>`);
+  if (PREEMINENT[w.slug]) b.push(`<span class="mb pre">⭐ ${PREEMINENT[w.slug]} benchmark</span>`);
+  return b.join("");
+}
+function mapBlurb(w) {
+  const badges = wineryBadges(w);
+  return `<div class="wt">
+    <b>${w.name}</b> <span class="wt-sub">${w.valley} · ${w.ava} · est. ${w.founded}</span>
+    <p>${w.vibe}</p>
+    ${badges ? `<div class="wt-badges">${badges}</div>` : ""}
+  </div>`;
+}
+
 function starsHTML(n) {
   const pct = (n / 5) * 100;
   return `<span class="stars" title="Prestige ${n}/5" aria-label="${n} of 5">`
@@ -123,6 +158,13 @@ function sorted(list) {
   return [...list].sort((a, b) => {
     let va, vb;
     if (key === "name") { va = a.name; vb = b.name; return va.localeCompare(vb) * dir; }
+    if (key === "group") {
+      // corporate groups first, clustered by name; independents after; prestige within
+      const ga = (GN[a.group] ? "0" : "1") + a.group;
+      const gb = (GN[b.group] ? "0" : "1") + b.group;
+      if (ga === gb) return b._prestige - a._prestige;
+      return ga.localeCompare(gb) * dir;
+    }
     if (key === "price") { va = a.priceRange[0]; vb = b.priceRange[0]; }
     else if (key === "prestige") { va = a._prestige; vb = b._prestige; }
     else { va = a[key]; vb = b[key]; }
@@ -132,17 +174,20 @@ function sorted(list) {
 }
 
 /* ── Table view ── */
-const NCOLS = 9;
+const NCOLS = 10;
 function tableRow(w) {
   const img = propertyImg(w);
   const thumb = img
     ? `<img class="thumb" src="${img}" alt="" loading="lazy">`
     : `<span class="thumb placeholder">🍷</span>`;
-  const badges = w.storyTags.map((t) => `<span class="badge">${STORY_TAG_LABELS[t].label}</span>`).join("");
+  const badges = w.storyTags.map((t) => t === "architecture"
+    ? `<span class="badge badge-arch" title="Featured in 'The New Architecture of Wine' (Hebert, 2019)">📖 New Architecture</span>`
+    : `<span class="badge">${STORY_TAG_LABELS[t].label}</span>`).join("");
   return `<tr data-slug="${w.slug}">
     <td><div class="w-name">${thumb}<span><b>${w.name}</b><span class="ava">${w.ava}</span></span></div></td>
     <td class="prestige-cell">${starsHTML(w._stars)}</td>
     <td><span class="valley-tag ${w.valley}">${w.valley}</span></td>
+    <td class="group-cell">${groupCellHTML(w)}</td>
     <td class="founded">${w.founded}</td>
     <td class="wines">${w.wines.map((x) => x.name).join(" · ")}</td>
     <td><span class="vibe-tags">${w.vibeTags.map((t) => `<span>${t}</span>`).join("")}</span></td>
@@ -193,6 +238,7 @@ function renderTable() {
       <th class="sortable" data-sort="name">Winery ${arrow("name")}</th>
       <th class="sortable" data-sort="prestige">Prestige ${arrow("prestige")}</th>
       <th>Valley</th>
+      <th class="sortable" data-sort="group">Group ${arrow("group")}</th>
       <th class="sortable" data-sort="founded">Founded ${arrow("founded")}</th>
       <th>Famous for</th>
       <th>Vibe</th>
@@ -291,7 +337,7 @@ function renderMap() {
         <div class="meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava}<br>est. ${w.founded} · ${w.wines[0].name} · ${fmtPrice(w)}</div>
         <button onclick="openDrawer('${w.slug}')">Full story →</button>
       </div>`, { maxWidth: 260 });
-    m.bindTooltip(w.name, { direction: "top", offset: [0, -20] });
+    m.bindTooltip(mapBlurb(w), { direction: "top", offset: [0, -20], className: "winery-tip", opacity: 1 });
     markerLayer.addLayer(m);
   });
   if (list.length) {
