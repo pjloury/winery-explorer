@@ -28,7 +28,9 @@ open index.html
   Chardonnay, Zinfandel, Sauvignon Blanc, Sparkling) or by what a winery is **known for**
   (Architecture, History & heritage, Gardens & grounds, Food & art); applying any filter
   expands the map to *every* matching winery, not just the top 25. Click a marker for a
-  photo card and the full story.
+  photo card with a one-line description and key badges (Wine Spectator Top 100 rank,
+  Judgment of Paris, New Architecture). A scrollable winery index on the right lets you
+  tap any name to isolate that estate on the map and open its card.
 - **Lineage** — who owns whom (corporate families vs. the still-independent club),
   plus resurrections, reused historic spaces, Judgment of Paris connections, and
   the wineries featured in *The New Architecture of Wine* (Hebert, 2019).

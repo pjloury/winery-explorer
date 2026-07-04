@@ -14,6 +14,7 @@ const state = {
   expandedRegions: new Set(),
   mapWine: new Set(),
   mapKnown: new Set(),
+  mapFocus: null,
 };
 
 const fmtPrice = (w) => `$${w.priceRange[0]}–$${w.priceRange[1]}`;
@@ -97,26 +98,23 @@ function groupCellHTML(w) {
   return `<span class="indie" title="Independent — ${fam}">Independent</span>`;
 }
 
-// ── Recognition badges (map hover; shared) ──
-const PREEMINENT = (typeof PREEMINENT_WINE !== "undefined") ? PREEMINENT_WINE : {};
-function wineryBadges(w) {
+// First sentence of a vibe, protecting common abbreviations (St. Helena, Mt. Veeder…).
+function firstSentence(t) {
+  const s = t.replace(/U\.S\.A\.|U\.S\.|Ph\.D\./g, (m) => m.replace(/\./g, ""))
+             .replace(/\b(St|Mt|Ste|Dr|Mr|Mrs|Ms|Jr|Sr|No|Ave|Rd|Hwy|vs|etc|Inc|Co)\./g, "$1§");
+  const m = s.match(/^[^.!?]*[.!?]/);
+  return (m ? m[0] : s).split("§").join(".").trim();
+}
+// Only the essential recognition badges for the map popup.
+function popupBadges(w) {
   const b = [];
   if (w._wsCount) {
     const best = Math.min(...(window.WS_TOP100 || []).filter((e) => e.winerySlug === w.slug).map((e) => e.rank));
-    b.push(`<span class="mb winner">🏆 Wine Spectator Top 100 · #${best}</span>`);
+    b.push(`<span class="mb winner">🏆 Top 100 · #${best}</span>`);
   }
   if (w.storyTags.includes("judgment-of-paris")) b.push(`<span class="mb jop">🥇 Judgment of Paris</span>`);
   if (w.storyTags.includes("architecture")) b.push(`<span class="mb book">📖 New Architecture</span>`);
-  if (PREEMINENT[w.slug]) b.push(`<span class="mb pre">⭐ ${PREEMINENT[w.slug]} benchmark</span>`);
   return b.join("");
-}
-function mapBlurb(w) {
-  const badges = wineryBadges(w);
-  return `<div class="wt">
-    <b>${w.name}</b> <span class="wt-sub">${w.valley} · ${w.ava} · est. ${w.founded}</span>
-    <p>${w.vibe}</p>
-    ${badges ? `<div class="wt-badges">${badges}</div>` : ""}
-  </div>`;
 }
 
 function starsHTML(n) {
@@ -302,6 +300,10 @@ function initMap() {
 // filter is active we search ALL wineries that match; otherwise we show just the
 // top N most prestigious.
 function mapList() {
+  if (state.mapFocus) {
+    const w = WINERIES.find((x) => x.slug === state.mapFocus);
+    return w ? [w] : [];
+  }
   const base = filtered();
   const filtersActive = state.mapWine.size || state.mapKnown.size;
   return base.filter((w) => {
@@ -328,26 +330,57 @@ function renderMap() {
   initMap();
   markerLayer.clearLayers();
   const list = mapList();
+  let focusMarker = null;
   list.forEach((w) => {
     const m = L.marker([w.lat, w.lng], { icon: markerIcon(w), riseOnHover: true });
     const img = propertyImg(w);
+    const badges = popupBadges(w);
     m.bindPopup(`<div class="popup-card">
         ${img ? `<img src="${img}" alt="${w.name}">` : ""}
         <b>${w.name}</b>
         <div class="meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava}<br>est. ${w.founded} · ${w.wines[0].name} · ${fmtPrice(w)}</div>
+        <p class="pc-desc">${firstSentence(w.vibe)}</p>
+        ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
         <button onclick="openDrawer('${w.slug}')">Full story →</button>
-      </div>`, { maxWidth: 260 });
-    m.bindTooltip(mapBlurb(w), { direction: "top", offset: [0, -20], className: "winery-tip", opacity: 1 });
+      </div>`, { maxWidth: 288 });
+    m.bindTooltip(w.name, { direction: "top", offset: [0, -20] });
     markerLayer.addLayer(m);
+    if (state.mapFocus === w.slug) focusMarker = m;
   });
-  if (list.length) {
+  if (state.mapFocus && focusMarker) {
+    const w = list[0];
+    map.setView([w.lat, w.lng], 13, { animate: false });
+    focusMarker.openPopup();
+  } else if (list.length) {
     map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.15));
   }
   renderMapFilters();
+  renderMapIndex();
   const filtersActive = state.mapWine.size || state.mapKnown.size;
-  $(".count").textContent = filtersActive
-    ? `${list.length} match${list.length === 1 ? "" : "es"}`
+  $(".count").textContent = state.mapFocus ? "1 winery"
+    : filtersActive ? `${list.length} match${list.length === 1 ? "" : "es"}`
     : `Top ${list.length} by prestige`;
+}
+
+// Right-side scrollable index: tap a name to isolate that winery on the map.
+function renderMapIndex() {
+  const el = $("#map-index");
+  if (!el) return;
+  const items = filtered().slice().sort((a, b) => a.name.localeCompare(b.name));
+  el.innerHTML = `
+    <div class="mi-head">${state.mapFocus
+      ? `<button class="link-btn" id="mi-clear">← Show all pins</button>`
+      : `<span>${items.length} wineries · tap to locate</span>`}</div>
+    <ul>${items.map((w) => `<li class="mi-item ${state.mapFocus === w.slug ? "active" : ""}" data-slug="${w.slug}">
+      <span class="mi-dot ${w.valley}"></span><span class="mi-name">${w.name}</span></li>`).join("")}</ul>`;
+  el.querySelectorAll(".mi-item").forEach((li) => li.addEventListener("click", () => {
+    state.mapFocus = state.mapFocus === li.dataset.slug ? null : li.dataset.slug;
+    renderMap();
+  }));
+  const clr = $("#mi-clear");
+  if (clr) clr.addEventListener("click", () => { state.mapFocus = null; renderMap(); });
+  const active = el.querySelector(".mi-item.active");
+  if (active) active.scrollIntoView({ block: "nearest" });
 }
 
 function renderMapFilters() {
@@ -363,13 +396,13 @@ function renderMapFilters() {
     <div class="fgroup"><span class="flabel">Known for</span>${knownChips}</div>
     ${active ? `<button class="link-btn" id="map-clear">Clear · back to top ${MAP_TOP_N}</button>` : ""}`;
   bar.querySelectorAll("[data-wine]").forEach((b) => b.addEventListener("click", () => {
-    toggleSet(state.mapWine, b.dataset.wine); renderMap();
+    state.mapFocus = null; toggleSet(state.mapWine, b.dataset.wine); renderMap();
   }));
   bar.querySelectorAll("[data-known]").forEach((b) => b.addEventListener("click", () => {
-    toggleSet(state.mapKnown, b.dataset.known); renderMap();
+    state.mapFocus = null; toggleSet(state.mapKnown, b.dataset.known); renderMap();
   }));
   const clear = $("#map-clear");
-  if (clear) clear.addEventListener("click", () => { state.mapWine.clear(); state.mapKnown.clear(); renderMap(); });
+  if (clear) clear.addEventListener("click", () => { state.mapFocus = null; state.mapWine.clear(); state.mapKnown.clear(); renderMap(); });
 }
 function toggleSet(set, key) { set.has(key) ? set.delete(key) : set.add(key); }
 
@@ -567,10 +600,11 @@ document.querySelectorAll(".chip[data-valley]").forEach((c) => {
     document.querySelectorAll(".chip[data-valley]").forEach((x) => x.classList.remove("active"));
     c.classList.add("active");
     state.valley = c.dataset.valley;
+    state.mapFocus = null;
     render();
   });
 });
-$("#search").addEventListener("input", (e) => { state.query = e.target.value; render(); });
+$("#search").addEventListener("input", (e) => { state.query = e.target.value; state.mapFocus = null; render(); });
 $("#overlay").addEventListener("click", closeDrawer);
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDrawer(); });
 
