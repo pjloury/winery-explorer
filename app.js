@@ -105,6 +105,10 @@ function firstSentence(t) {
   const m = s.match(/^[^.!?]*[.!?]/);
   return (m ? m[0] : s).split("§").join(".").trim();
 }
+// Popup description: a curated, name-free highlight where we have one, else the
+// first sentence of the vibe.
+const BLURBS = (typeof BLURB !== "undefined") ? BLURB : {};
+function popupDesc(w) { return BLURBS[w.slug] || firstSentence(w.vibe); }
 // Only the essential recognition badges for the map popup.
 function popupBadges(w) {
   const b = [];
@@ -339,7 +343,7 @@ function renderMap() {
         ${img ? `<img src="${img}" alt="${w.name}">` : ""}
         <b>${w.name}</b>
         <div class="meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava}<br>est. ${w.founded} · ${w.wines[0].name} · ${fmtPrice(w)}</div>
-        <p class="pc-desc">${firstSentence(w.vibe)}</p>
+        <p class="pc-desc">${popupDesc(w)}</p>
         ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
         <button onclick="openDrawer('${w.slug}')">Full story →</button>
       </div>`, { maxWidth: 288 });

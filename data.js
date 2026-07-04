@@ -2223,6 +2223,33 @@ const ACCLAIM = {
   "progeny": 2, "almacerro": 2, "annulus": 2, "caterwaul": 2, "newfound": 2, "paula-kornell": 2, "ferren": 2, "platt": 2
 };
 
+// Focused, name-free one-line highlight for the map popup (the winery name is
+// already shown above it). Falls back to the first sentence of `vibe` when absent.
+const BLURB = {
+  "joseph-phelps": "A monumental redwood barn of reclaimed bridge timbers over a private valley — the birthplace of Insignia.",
+  "etude": "A cool-climate Carneros specialist known for benchmark Pinot Noir, with sweeping views toward San Pablo Bay.",
+  "faust": "A dramatic matte-black 1878 Victorian north of St. Helena, pouring bold Coombsville Cabernet.",
+  "freemark-abbey": "The only estate with both a red and a white in the 1976 Judgment of Paris, in a handsome 19th-century stone building.",
+  "newfound": "A tiny husband-and-wife project favoring Rhône and Mediterranean varieties from cool, characterful sites.",
+  "paula-kornell": "A revived Napa sparkling-wine dynasty, four generations after Hanns Kornell pioneered méthode champenoise in the valley.",
+  "pine-ridge": "A Stags Leap District estate on the Silverado Trail pairing serious Cabernet with a famously friendly Chenin Blanc–Viognier.",
+  "st-supery": "A polished, art-filled Rutherford estate (owned by Chanel's Wertheimer family) pouring 100% estate-grown wines.",
+  "sullivan": "A boutique Rutherford estate tucked among lush gardens, reborn under new ownership around its Coeur de Vigne Cabernet.",
+  "turley": "A temple to old-vine Zinfandel and Petite Sirah, housed in the historic former Frog's Leap winery north of St. Helena.",
+  "aubert": "A cult label from one of California's most revered white-wine makers — opulent, richly textured Chardonnay and Pinot Noir.",
+  "coppola-geyserville": "A 'wine wonderland' of resort pools, restaurants, and Godfather memorabilia in a landmark 1973 winery building.",
+  "la-crema-saralee": "A beloved 1900s hop-country barn — once the social heart of Saralee Kunde's famous Russian River vineyard — reborn as an estate home.",
+  "merry-edwards": "Built by a pioneering woman winemaker — famous for Russian River Pinot Noir and a cult Sauvignon Blanc.",
+  "ramey": "Founded by one of California's most influential winemakers, a champion of restrained, barrel-fermented Chardonnay.",
+  "del-dotto": "Opulent hand-dug 1885 caves of Italian marble, gold leaf, and chandeliers, where you taste barrel-by-barrel by candlelight.",
+  "hall": "Napa's contemporary-art winery — a giant chrome rabbit over the vines, a glass cellar wrapped around an 1885 ruin, art everywhere.",
+  "darioush": "A Persepolis-inspired palace of golden travertine columns and fountains — the most audaciously personal building in Napa.",
+  "burgess": "One of Napa's oldest continuously operating wineries, on a historic Howell Mountain site, reborn with regenerative farming.",
+  "caterwaul": "A friendship-born project between a sixth-generation Napa farmer and a 100-point winemaker — small-lot Cabernet at fair prices.",
+  "buena-vista": "California's oldest premium winery, restored as a theatrical time capsule with a stone Press House and antique-tool museum.",
+  "gundlach-bundschu": "America's oldest continuously family-owned winery, run with indie-rock flair — music festival and vintage-military-rig tours."
+};
+
 // Wineries widely considered preeminent / a benchmark for a particular wine
 // style — drives the "⭐ <type> benchmark" badge on the map hover card.
 const PREEMINENT_WINE = {

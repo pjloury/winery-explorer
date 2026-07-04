@@ -46,6 +46,7 @@ body {
   font-family: var(--sans);
   font-size: 15px;
   line-height: 1.5;
+  overflow-x: hidden; /* belt-and-suspenders: never scroll the page sideways */
 }
 
 /* ── Header ── */
@@ -90,7 +91,7 @@ h1 {
 
 #search {
   border: 1px solid var(--hairline); background: var(--card); color: var(--ink);
-  border-radius: 999px; padding: 8px 16px; font: inherit; width: 230px;
+  border-radius: 999px; padding: 8px 16px; font: inherit; width: 230px; min-width: 0;
 }
 #search::placeholder { color: var(--muted); }
 .count { color: var(--muted); font-size: 13px; margin-left: auto; }
@@ -213,9 +214,9 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 }
 
 /* Map filter bar */
-.map-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 6px 2px 2px; }
-.map-filters .fgroup { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-.map-filters .fgroup + .fgroup { border-left: 1px solid var(--hairline); padding-left: 14px; }
+.map-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 9px; padding: 6px 2px 2px; }
+.map-filters .fgroup { display: contents; }
+.flabel + .fchip { margin-left: 0; }
 .flabel { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); font-weight: 700; margin-right: 2px; }
 .fchip { border: 1px solid var(--hairline); background: var(--card); color: var(--ink-2); border-radius: 999px; padding: 4px 11px; font: inherit; font-size: 12.5px; cursor: pointer; }
 .fchip:hover { border-color: var(--ink-2); color: var(--ink); }
@@ -271,7 +272,7 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 /* ── Lineage ── */
 #lineage h2 { font-family: var(--serif); font-weight: 600; font-size: 22px; margin: 28px 0 4px; }
 #lineage .section-desc { color: var(--ink-2); margin: 0 0 14px; max-width: 760px; }
-.lineage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+.lineage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 14px; }
 .lineage-card {
   background: var(--card); border: 1px solid var(--hairline); border-radius: var(--radius);
   padding: 16px 18px; box-shadow: var(--shadow);
@@ -368,4 +369,60 @@ td.wine-cell .sub { display: block; color: var(--muted); font-size: 12px; }
   #search { width: 100%; }
   .count { margin-left: 0; width: 100%; }
   .meta-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Responsive / mobile ──
+   Tables use fixed layout + per-breakpoint column widths so the visible columns
+   always share the viewport and wrap — never a sideways scroll, never clipped. */
+@media (max-width: 860px) {
+  header { padding: 20px 16px 0; }
+  h1 { font-size: 24px; }
+  .subtitle { font-size: 13.5px; margin-bottom: 14px; }
+  main { padding: 0 16px 48px; }
+  #search { flex: 1 1 160px; width: auto; }
+  table { min-width: 0; table-layout: fixed; width: 100%; }
+  #table-view td, #table-view th, #awards-view td, #awards-view th { overflow: hidden; }
+  .w-name { min-width: 0; }
+  .w-name b { white-space: normal; overflow-wrap: anywhere; }
+  #awards-view .winery-link, #awards-view td.wine-cell b { overflow-wrap: anywhere; white-space: normal; }
+  /* main table: keep Winery / Prestige / Valley / Bottle $ (Group, Founded, etc. live in the drawer) */
+  #table-view th:nth-child(4), #table-view td:nth-child(4),
+  #table-view th:nth-child(5), #table-view td:nth-child(5),
+  #table-view th:nth-child(6), #table-view td:nth-child(6),
+  #table-view th:nth-child(7), #table-view td:nth-child(7),
+  #table-view th:nth-child(9), #table-view td:nth-child(9),
+  #table-view th:nth-child(10), #table-view td:nth-child(10) { display: none; }
+  #table-view th:nth-child(2), #table-view td:nth-child(2) { width: 90px; }
+  #table-view th:nth-child(3), #table-view td:nth-child(3) { width: 72px; }
+  #table-view th:nth-child(8), #table-view td:nth-child(8) { width: 84px; }
+  .valley-tag { padding: 2px 8px; font-size: 11px; }
+  /* Top Wines: drop List, Vintage, Price, Valley → Rank/Wine/Score/Winery */
+  #awards-view th:nth-child(2), #awards-view td:nth-child(2),
+  #awards-view th:nth-child(4), #awards-view td:nth-child(4),
+  #awards-view th:nth-child(6), #awards-view td:nth-child(6),
+  #awards-view th:nth-child(7), #awards-view td:nth-child(7) { display: none; }
+  #awards-view th:nth-child(1), #awards-view td:nth-child(1) { width: 48px; }
+  #awards-view th:nth-child(5), #awards-view td:nth-child(5) { width: 56px; }
+  #awards-view th:nth-child(8), #awards-view td:nth-child(8) { width: 150px; }
+}
+@media (max-width: 560px) {
+  h1 { font-size: 21px; }
+  .subtitle { font-size: 12.5px; }
+  .view-toggle button { padding: 7px 12px; }
+  .chip { padding: 6px 12px; font-size: 13px; }
+  #search { flex-basis: 100%; }
+  main { padding: 0 10px 40px; }
+  thead th, tbody td { padding: 9px 8px; }
+  .w-name { gap: 8px; }
+  .w-name b { font-size: 14.5px; }
+  .thumb { width: 38px; height: 30px; }
+  /* main table: also drop Bottle $ → Winery/Prestige/Valley */
+  #table-view th:nth-child(8), #table-view td:nth-child(8) { display: none; }
+  #table-view th:nth-child(2), #table-view td:nth-child(2) { width: 82px; }
+  #table-view th:nth-child(3), #table-view td:nth-child(3) { width: 66px; }
+  /* Top Wines: also drop Score → Rank/Wine/Winery */
+  #awards-view th:nth-child(5), #awards-view td:nth-child(5) { display: none; }
+  #awards-view th:nth-child(8), #awards-view td:nth-child(8) { width: 120px; }
+  .lineage-grid { grid-template-columns: 1fr; }
+  .leaflet-popup-content-wrapper { max-width: 78vw; }
 }
