@@ -60,7 +60,10 @@ function renderTable() {
       <td class="wines">${w.wines.map((x) => x.name).join(" · ")}</td>
       <td><span class="vibe-tags">${w.vibeTags.map((t) => `<span>${t}</span>`).join("")}</span></td>
       <td class="price">${fmtPrice(w)}</td>
-      <td class="tours">${w.tours.startsWith("Yes") ? "✓ Tours" : "Tastings"}</td>
+      <td class="tours">${w.tours.startsWith("Yes") ? "✓ Tours"
+        : /currently closed/i.test(w.tours) ? "✕ Closed"
+        : /closed for renovation/i.test(w.tours) ? "△ Off-site"
+        : "Tastings"}</td>
       <td>${badges || `<span style="color:var(--muted)">—</span>`}</td>
     </tr>`;
   }).join("");

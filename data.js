@@ -13,7 +13,7 @@ const WINERIES = [
   {
     slug: "inglenook", name: "Inglenook", valley: "Napa", ava: "Rutherford",
     founded: 1879, founder: "Gustave Niebaum, Finnish sea captain & fur trader",
-    address: "1991 St. Helena Hwy, Rutherford, CA 94573", lat: 38.4550, lng: -122.4250,
+    address: "1991 St. Helena Hwy, Rutherford, CA 94573", lat: 38.4549, lng: -122.4305,
     website: "https://www.inglenook.com",
     owner: "Francis Ford & Eleanor Coppola family", group: "Independent (Coppola family)",
     priceRange: [60, 300], tastingFee: "$95–$175, by appointment",
@@ -42,7 +42,7 @@ const WINERIES = [
   {
     slug: "charles-krug", name: "Charles Krug Winery", valley: "Napa", ava: "St. Helena",
     founded: 1861, founder: "Charles Krug, Prussian immigrant",
-    address: "2800 Main St, St. Helena, CA 94574", lat: 38.5205, lng: -122.4718,
+    address: "2800 Main St, St. Helena, CA 94574", lat: 38.5175, lng: -122.4803,
     website: "https://www.charleskrug.com",
     owner: "Peter Mondavi Jr. family (4th generation)", group: "Independent (Peter Mondavi family)",
     priceRange: [30, 200], tastingFee: "$45–$95",
@@ -68,7 +68,7 @@ const WINERIES = [
   {
     slug: "beringer", name: "Beringer Vineyards", valley: "Napa", ava: "St. Helena",
     founded: 1876, founder: "Jacob & Frederick Beringer, from Mainz, Germany",
-    address: "2000 Main St, St. Helena, CA 94574", lat: 38.5119, lng: -122.4804,
+    address: "2000 Main St, St. Helena, CA 94574", lat: 38.5102, lng: -122.4799,
     website: "https://www.beringer.com",
     owner: "Treasury Wine Estates (Australia)", group: "Treasury Wine Estates",
     priceRange: [15, 200], tastingFee: "$40–$85",
@@ -94,13 +94,13 @@ const WINERIES = [
   {
     slug: "robert-mondavi", name: "Robert Mondavi Winery", valley: "Napa", ava: "Oakville",
     founded: 1966, founder: "Robert Mondavi, after the family split at Charles Krug",
-    address: "7801 St. Helena Hwy, Oakville, CA 94562", lat: 38.4404, lng: -122.4093,
+    address: "7801 St. Helena Hwy, Oakville, CA 94562", lat: 38.4391, lng: -122.4087,
     website: "https://www.robertmondaviwinery.com",
     owner: "Constellation Brands", group: "Constellation Brands",
     priceRange: [30, 250], tastingFee: "$50–$150",
     tours: "Yes — the signature 'To Kalon' tour is a classic Napa first-timer experience",
     vibeTags: ["Grand", "Classic", "Showpiece"],
-    vibe: "The mission-style archway and tower framing vineyard and mountains is the single most iconic image in American wine. Equal parts winery, art gallery, and monument to the man who sold the world on Napa. Recently renovated around the Arch & Tower experience.",
+    vibe: "The mission-style archway and tower framing vineyard and mountains is the single most iconic image in American wine. Equal parts winery, art gallery, and monument to the man who sold the world on Napa. Reopened in April 2026 after a $200M+ multi-year renovation.",
     wines: [
       { name: "To Kalon Reserve Cabernet Sauvignon", why: "From the To Kalon vineyard, first planted in 1868 — arguably America's single most famous Cabernet vineyard." },
       { name: "Fumé Blanc", why: "Mondavi invented the name in 1968, rebranding unloved Sauvignon Blanc into a category that swept the country." }
@@ -110,7 +110,8 @@ const WINERIES = [
       { y: 1968, t: "Coins 'Fumé Blanc' — a masterstroke of marketing that rehabilitates Sauvignon Blanc in America." },
       { y: 1979, t: "Partners with Baron Philippe de Rothschild of Château Mouton to create Opus One next door." },
       { y: 1993, t: "First major U.S. winery to go public on NASDAQ." },
-      { y: 2004, t: "After boardroom turmoil, Constellation Brands buys the company for roughly $1.3 billion — the biggest consolidation event in Napa history. Robert dies in 2008 at 94." }
+      { y: 2004, t: "After boardroom turmoil, Constellation Brands buys the company for roughly $1.3 billion — the biggest consolidation event in Napa history. Robert dies in 2008 at 94." },
+      { y: 2026, t: "The Oakville estate reopens in April after a $200M+ renovation; in its 2025 divestiture Constellation sold off mainstream brands but pointedly kept Mondavi and To Kalon." }
     ],
     storyTags: ["consolidated"],
     awards: ["Robert Mondavi: Decanter Man of the Year 1989", "To Kalon Reserve Cabs routinely 95–100 points", "Summer concert series running since 1969"],
@@ -120,7 +121,7 @@ const WINERIES = [
   {
     slug: "opus-one", name: "Opus One", valley: "Napa", ava: "Oakville",
     founded: 1979, founder: "Joint venture: Robert Mondavi × Baron Philippe de Rothschild (Château Mouton Rothschild)",
-    address: "7900 St. Helena Hwy, Oakville, CA 94562", lat: 38.4367, lng: -122.4033,
+    address: "7900 St. Helena Hwy, Oakville, CA 94562", lat: 38.4413, lng: -122.4,
     website: "https://www.opusonewinery.com",
     owner: "50/50: Constellation Brands & Baron Philippe de Rothschild SA", group: "Constellation Brands",
     priceRange: [175, 500], tastingFee: "$100–$300+, strictly by appointment",
@@ -145,9 +146,9 @@ const WINERIES = [
   {
     slug: "stags-leap", name: "Stag's Leap Wine Cellars", valley: "Napa", ava: "Stags Leap District",
     founded: 1970, founder: "Warren Winiarski, former University of Chicago lecturer",
-    address: "5766 Silverado Trail, Napa, CA 94558", lat: 38.3986, lng: -122.3204,
+    address: "5766 Silverado Trail, Napa, CA 94558", lat: 38.3993, lng: -122.3255,
     website: "https://www.stagsleapwinecellars.com",
-    owner: "Ste. Michelle Wine Estates + Marchesi Antinori (Italy)", group: "Ste. Michelle / Antinori",
+    owner: "Marchesi Antinori (Italy) — sole owner since 2023", group: "Marchesi Antinori",
     priceRange: [60, 350], tastingFee: "$75–$225",
     tours: "Yes — FAY Outlook & Visitor Center tastings with palisades views; cave tours by appointment",
     vibeTags: ["Classic", "Modern", "Intimate"],
@@ -160,7 +161,7 @@ const WINERIES = [
       { y: 1970, t: "Winiarski, who left academia after a life-changing bottle, buys a prune orchard next to Nathan Fay's vineyard and plants Cabernet." },
       { y: 1976, t: "At the 'Judgment of Paris' blind tasting, French judges rank his 1973 S.L.V. Cabernet first over Bordeaux's best — the result that put Napa on the world map." },
       { y: 2007, t: "Winiarski sells for $185 million to a partnership of Washington's Ste. Michelle and Italy's Antinori family — old-world money buying the wine that beat it." },
-      { y: 2021, t: "Ste. Michelle itself is acquired by private equity firm Sycamore Partners; the Antinori family later deepens its stake." }
+      { y: 2023, t: "The Antinori family — 26 generations of Tuscan winemaking — buys out Ste. Michelle's 85% to become sole owner: the winery that beat Europe is now fully European-owned." }
     ],
     storyTags: ["consolidated", "judgment-of-paris"],
     awards: ["Winner, 1976 Judgment of Paris (reds)", "A bottle of the 1973 S.L.V. is in the Smithsonian's National Museum of American History"],
@@ -170,7 +171,7 @@ const WINERIES = [
   {
     slug: "chateau-montelena", name: "Chateau Montelena", valley: "Napa", ava: "Calistoga",
     founded: 1882, founder: "Alfred L. Tubbs, San Francisco rope merchant & state senator",
-    address: "1429 Tubbs Ln, Calistoga, CA 94515", lat: 38.6062, lng: -122.5983,
+    address: "1429 Tubbs Ln, Calistoga, CA 94515", lat: 38.6032, lng: -122.5989,
     website: "https://www.montelena.com",
     owner: "Barrett family (Bo Barrett)", group: "Independent (Barrett family)",
     priceRange: [75, 225], tastingFee: "$60–$125",
@@ -196,7 +197,7 @@ const WINERIES = [
   {
     slug: "schramsberg", name: "Schramsberg Vineyards", valley: "Napa", ava: "Diamond Mountain / Calistoga",
     founded: 1862, founder: "Jacob Schram, German immigrant barber",
-    address: "1400 Schramsberg Rd, Calistoga, CA 94515", lat: 38.5591, lng: -122.5560,
+    address: "1400 Schramsberg Rd, Calistoga, CA 94515", lat: 38.5502, lng: -122.538,
     website: "https://www.schramsberg.com",
     owner: "Davies family (Hugh Davies, 2nd generation of the revival)", group: "Independent (Davies family)",
     priceRange: [45, 155], tastingFee: "$95–$150 (includes cave tour)",
@@ -222,7 +223,7 @@ const WINERIES = [
   {
     slug: "caymus", name: "Caymus Vineyards", valley: "Napa", ava: "Rutherford",
     founded: 1972, founder: "Charlie, Lorna & Chuck Wagner — farming Rutherford since 1906",
-    address: "8700 Conn Creek Rd, Rutherford, CA 94573", lat: 38.4562, lng: -122.3949,
+    address: "8700 Conn Creek Rd, Rutherford, CA 94573", lat: 38.466, lng: -122.3933,
     website: "https://www.caymus.com",
     owner: "Wagner family (Chuck Wagner & children)", group: "Independent (Wagner family)",
     priceRange: [55, 250], tastingFee: "$75–$100, seated, by appointment",
@@ -247,9 +248,9 @@ const WINERIES = [
   {
     slug: "far-niente", name: "Far Niente", valley: "Napa", ava: "Oakville",
     founded: 1885, founder: "John Benson, Forty-Niner (uncle of painter Winslow Homer)",
-    address: "1350 Acacia Dr, Oakville, CA 94562", lat: 38.4235, lng: -122.4176,
+    address: "1350 Acacia Dr, Oakville, CA 94562", lat: 38.4257, lng: -122.4032,
     website: "https://www.farniente.com",
-    owner: "Far Niente Family of Wineries & Vineyards (private investor group / Nickel legacy)", group: "Independent (Far Niente family of wineries)",
+    owner: "Far Niente Wine Estates — GI Partners (majority) with the Nickel family & management", group: "GI Partners (Far Niente Wine Estates)",
     priceRange: [75, 300], tastingFee: "$125–$200, by appointment",
     tours: "Yes — estate tour with the 1885 stone winery, caves, azalea gardens, and the classic-car collection",
     vibeTags: ["Grand", "Historic", "Showpiece"],
@@ -273,11 +274,11 @@ const WINERIES = [
   {
     slug: "duckhorn", name: "Duckhorn Vineyards", valley: "Napa", ava: "St. Helena",
     founded: 1976, founder: "Dan & Margaret Duckhorn",
-    address: "1000 Lodi Ln, St. Helena, CA 94574", lat: 38.5296, lng: -122.4589,
+    address: "1000 Lodi Ln, St. Helena, CA 94574", lat: 38.5285, lng: -122.4889,
     website: "https://www.duckhorn.com",
     owner: "The Duckhorn Portfolio, owned by Butterfly Equity (private equity, since 2024)", group: "Duckhorn Portfolio (Butterfly Equity)",
     priceRange: [35, 165], tastingFee: "$60–$125",
-    tours: "Yes — seated tastings on the estate house veranda overlooking Merlot vines",
+    tours: "Estate closed for renovation April 2026 – ~April 2027; tastings meanwhile at The Duckhorn Collection at Paraduxx (7257 Silverado Trail, Napa), by reservation",
     vibeTags: ["Classic", "Showpiece"],
     vibe: "A picture-perfect farmhouse with a wraparound veranda — genteel, garden-club Napa. The house that Merlot built, and proud of it.",
     wines: [
@@ -299,11 +300,11 @@ const WINERIES = [
   {
     slug: "heitz", name: "Heitz Cellar", valley: "Napa", ava: "St. Helena",
     founded: 1961, founder: "Joe & Alice Heitz",
-    address: "436 St. Helena Hwy S, St. Helena, CA 94574", lat: 38.4900, lng: -122.4750,
+    address: "436 St. Helena Hwy S, St. Helena, CA 94574", lat: 38.4907, lng: -122.4509,
     website: "https://www.heitzcellar.com",
     owner: "Gaylon Lawrence Jr. (Lawrence Wine Estates, since 2018)", group: "Lawrence Wine Estates",
     priceRange: [65, 350], tastingFee: "$75–$150",
-    tours: "Tastings by appointment; the historic stone cellar is part of salon experiences",
+    tours: "Yes — The Salon at Heitz Cellar is open daily (walk-ins as space allows); estate 'Home Ranch' experiences by appointment",
     vibeTags: ["Classic", "Historic", "Intimate"],
     vibe: "Quiet, collector-focused, organically farmed. Heitz never chased fashion — same understated label since the 60s, wines released only when ready. The 1898 stone cellar keeps it grounded in old Napa.",
     wines: [
@@ -324,7 +325,7 @@ const WINERIES = [
   {
     slug: "sterling", name: "Sterling Vineyards", valley: "Napa", ava: "Calistoga",
     founded: 1964, founder: "Peter Newton, British paper-company executive",
-    address: "1111 Dunaweal Ln, Calistoga, CA 94515", lat: 38.5679, lng: -122.5727,
+    address: "1111 Dunaweal Ln, Calistoga, CA 94515", lat: 38.5684, lng: -122.5553,
     website: "https://www.sterlingvineyards.com",
     owner: "Treasury Wine Estates", group: "Treasury Wine Estates",
     priceRange: [25, 125], tastingFee: "$65–$95 (includes aerial tram)",
@@ -339,7 +340,7 @@ const WINERIES = [
       { y: 1964, t: "Peter Newton founds Sterling; the hilltop winery, inspired by the Greek island of Mykonos, opens in 1973 with its signature gondola." },
       { y: 1969, t: "Winemaker Ric Forman helps pioneer Napa Merlot as a varietal here." },
       { y: 1977, t: "Coca-Cola buys Sterling — an early example of big-consumer-brand money entering Napa; Seagram follows in 1983, then Diageo, then Treasury Wine Estates in 2016." },
-      { y: 2020, t: "The Glass Fire badly damages the property; after a four-year, ground-up restoration it reopens in 2024, gondola and all." }
+      { y: 2020, t: "The Glass Fire badly damages the property; after a three-year restoration it reopens in October 2023 with a new, larger gondola." }
     ],
     storyTags: ["consolidated", "resurrected"],
     awards: ["The church bells in the tower came from St. Dunstan's-in-the-East, a London church destroyed in the Blitz — they still ring on the half hour"],
@@ -349,11 +350,11 @@ const WINERIES = [
   {
     slug: "domaine-carneros", name: "Domaine Carneros", valley: "Napa", ava: "Los Carneros",
     founded: 1987, founder: "Champagne Taittinger (Claude Taittinger) with Kobrand",
-    address: "1240 Duhig Rd, Napa, CA 94559", lat: 38.2556, lng: -122.3520,
+    address: "1240 Duhig Rd, Napa, CA 94559", lat: 38.2555, lng: -122.3514,
     website: "https://www.domainecarneros.com",
     owner: "Champagne Taittinger & partners", group: "Independent (Taittinger)",
     priceRange: [40, 140], tastingFee: "$45–$90 (table service)",
-    tours: "Yes — château terrace table-service tastings; art-of-sparkling tours by reservation",
+    tours: "Yes — château terrace table-service tastings, reservations required; 21+ only (no children)",
     vibeTags: ["Grand", "Showpiece", "Classic"],
     vibe: "A Louis XV-style château rising improbably from Carneros sheep country, modeled on Taittinger's Château de la Marquetterie in Champagne. Bubbles and caviar on the terrace at golden hour — maximum occasion-energy per dollar in the valley.",
     wines: [
@@ -373,7 +374,7 @@ const WINERIES = [
   {
     slug: "joseph-phelps", name: "Joseph Phelps Vineyards", valley: "Napa", ava: "St. Helena (Spring Valley)",
     founded: 1973, founder: "Joseph Phelps, Colorado construction magnate",
-    address: "200 Taplin Rd, St. Helena, CA 94574", lat: 38.4963, lng: -122.4441,
+    address: "200 Taplin Rd, St. Helena, CA 94574", lat: 38.5021, lng: -122.4295,
     website: "https://www.josephphelps.com",
     owner: "LVMH (Moët Hennessy Louis Vuitton, since 2022)", group: "LVMH",
     priceRange: [75, 375], tastingFee: "$95–$200",
@@ -399,7 +400,7 @@ const WINERIES = [
   {
     slug: "buena-vista", name: "Buena Vista Winery", valley: "Sonoma", ava: "Sonoma Valley",
     founded: 1857, founder: "'Count' Agoston Haraszthy, Hungarian adventurer",
-    address: "18000 Old Winery Rd, Sonoma, CA 95476", lat: 38.3022, lng: -122.4353,
+    address: "18000 Old Winery Rd, Sonoma, CA 95476", lat: 38.2995, lng: -122.4226,
     website: "https://www.buenavistawinery.com",
     owner: "Boisset Collection (Jean-Charles Boisset, France)", group: "Boisset Collection",
     priceRange: [30, 120], tastingFee: "$30–$75",
@@ -425,7 +426,7 @@ const WINERIES = [
   {
     slug: "gundlach-bundschu", name: "Gundlach Bundschu", valley: "Sonoma", ava: "Sonoma Valley",
     founded: 1858, founder: "Jacob Gundlach (Bavaria) & Charles Bundschu",
-    address: "2000 Denmark St, Sonoma, CA 95476", lat: 38.2764, lng: -122.4322,
+    address: "2000 Denmark St, Sonoma, CA 95476", lat: 38.2747, lng: -122.4252,
     website: "https://www.gunbun.com",
     owner: "Bundschu family — 6th generation", group: "Independent (Bundschu family)",
     priceRange: [30, 95], tastingFee: "$40–$60",
@@ -450,7 +451,7 @@ const WINERIES = [
   {
     slug: "korbel", name: "Korbel Champagne Cellars", valley: "Sonoma", ava: "Russian River Valley",
     founded: 1882, founder: "Francis, Anton & Joseph Korbel, Czech immigrant brothers",
-    address: "13250 River Rd, Guerneville, CA 95446", lat: 38.5057, lng: -122.9664,
+    address: "13250 River Rd, Guerneville, CA 95446", lat: 38.5086, lng: -122.9652,
     website: "https://www.korbel.com",
     owner: "Heck family (since 1954)", group: "Independent (Heck family)",
     priceRange: [14, 45], tastingFee: "Inexpensive; historic tours traditionally free/cheap",
@@ -474,7 +475,7 @@ const WINERIES = [
   {
     slug: "sebastiani", name: "Sebastiani Vineyards & Winery", valley: "Sonoma", ava: "Sonoma Valley",
     founded: 1904, founder: "Samuele Sebastiani, Tuscan immigrant stonemason",
-    address: "389 Fourth St E, Sonoma, CA 95476", lat: 38.2966, lng: -122.4463,
+    address: "389 Fourth St E, Sonoma, CA 95476", lat: 38.2934, lng: -122.4493,
     website: "https://www.sebastiani.com",
     owner: "Foley Family Wines (since 2008)", group: "Foley Family Wines",
     priceRange: [20, 130], tastingFee: "$25–$50",
@@ -489,7 +490,8 @@ const WINERIES = [
       { y: 1904, t: "Samuele Sebastiani, who hauled cobblestones from Sonoma quarries to pave San Francisco streets, buys his first tank and crusher." },
       { y: 1920, t: "Survives Prohibition on sacramental and medicinal wine — one of the only Sonoma wineries to keep operating straight through." },
       { y: 1980, t: "Under August Sebastiani it becomes one of America's largest family wineries; a bitter 1986 family ouster (mother Sylvia fires son Sam) becomes wine-country legend." },
-      { y: 2008, t: "The family sells the winery and brand to Bill Foley's growing empire — Foley Family Wines — which also holds Chateau St. Jean, Ferrari-Carano, Chalk Hill, and more." }
+      { y: 2008, t: "The family sells the winery and brand to Bill Foley's growing empire — Foley Family Wines — which also holds Chateau St. Jean, Ferrari-Carano, Chalk Hill, and more." },
+      { y: 2021, t: "Foley ends production at the historic Sonoma facility (the tasting room stays open) and has since sought to redevelop parts of the property — a consolidation story still being written." }
     ],
     storyTags: ["consolidated"],
     awards: ["One of very few wineries operating continuously through Prohibition", "Cherryblock: cult Sonoma Cabernet"],
@@ -499,7 +501,7 @@ const WINERIES = [
   {
     slug: "ridge-lytton-springs", name: "Ridge Vineyards — Lytton Springs", valley: "Sonoma", ava: "Dry Creek Valley",
     founded: 1962, founder: "Ridge founded 1962 (Santa Cruz Mts); Lytton Springs vines planted c. 1901",
-    address: "650 Lytton Springs Rd, Healdsburg, CA 95448", lat: 38.6459, lng: -122.8766,
+    address: "650 Lytton Springs Rd, Healdsburg, CA 95448", lat: 38.6597, lng: -122.8854,
     website: "https://www.ridgewine.com",
     owner: "Otsuka Pharmaceutical (Japan) — famously hands-off since 1986", group: "Otsuka (hands-off)",
     priceRange: [30, 75], tastingFee: "$30–$60",
@@ -525,7 +527,7 @@ const WINERIES = [
   {
     slug: "jordan", name: "Jordan Vineyard & Winery", valley: "Sonoma", ava: "Alexander Valley",
     founded: 1972, founder: "Tom & Sally Jordan, Denver oil family",
-    address: "1474 Alexander Valley Rd, Healdsburg, CA 95448", lat: 38.6486, lng: -122.8234,
+    address: "1474 Alexander Valley Rd, Healdsburg, CA 95448", lat: 38.6558, lng: -122.8441,
     website: "https://www.jordanwinery.com",
     owner: "John Jordan (2nd generation)", group: "Independent (Jordan family)",
     priceRange: [45, 90], tastingFee: "$75–$150 (food-paired experiences)",
@@ -549,7 +551,7 @@ const WINERIES = [
   {
     slug: "kendall-jackson", name: "Kendall-Jackson Wine Estate & Gardens", valley: "Sonoma", ava: "Russian River Valley (Fulton)",
     founded: 1982, founder: "Jess Jackson, San Francisco land-use lawyer",
-    address: "5007 Fulton Rd, Fulton, CA 95439", lat: 38.4940, lng: -122.7770,
+    address: "5007 Fulton Rd, Santa Rosa, CA 95403", lat: 38.5068, lng: -122.7728,
     website: "https://www.kj.com",
     owner: "Jackson Family Wines (Barbara Banke, chairman)", group: "Jackson Family Wines",
     priceRange: [12, 120], tastingFee: "$25–$75 (garden & food pairings)",
@@ -574,7 +576,7 @@ const WINERIES = [
   {
     slug: "chateau-st-jean", name: "Chateau St. Jean", valley: "Sonoma", ava: "Sonoma Valley (Kenwood)",
     founded: 1973, founder: "The Merzoian brothers (named for sister-in-law Jean Sheffield)",
-    address: "8555 Sonoma Hwy, Kenwood, CA 95452", lat: 38.4070, lng: -122.5350,
+    address: "8555 Sonoma Hwy, Kenwood, CA 95452", lat: 38.427, lng: -122.5469,
     website: "https://www.chateaustjean.com",
     owner: "Foley Family Wines (since 2021)", group: "Foley Family Wines",
     priceRange: [15, 100], tastingFee: "$25–$60",
@@ -599,7 +601,7 @@ const WINERIES = [
   {
     slug: "iron-horse", name: "Iron Horse Vineyards", valley: "Sonoma", ava: "Green Valley of Russian River Valley",
     founded: 1976, founder: "Audrey & Barry Sterling with Forrest Tancer",
-    address: "9786 Ross Station Rd, Sebastopol, CA 95472", lat: 38.4281, lng: -122.8770,
+    address: "9786 Ross Station Rd, Sebastopol, CA 95472", lat: 38.4561, lng: -122.8987,
     website: "https://www.ironhorsevineyards.com",
     owner: "Sterling family (Joy Sterling, CEO)", group: "Independent (Sterling family)",
     priceRange: [45, 125], tastingFee: "$35–$60",
@@ -623,7 +625,7 @@ const WINERIES = [
   {
     slug: "hanzell", name: "Hanzell Vineyards", valley: "Sonoma", ava: "Sonoma Valley (Moon Mountain foothills)",
     founded: 1953, founder: "James D. Zellerbach, paper magnate & U.S. Ambassador to Italy",
-    address: "18596 Lomita Ave, Sonoma, CA 95476", lat: 38.3131, lng: -122.4482,
+    address: "18596 Lomita Ave, Sonoma, CA 95476", lat: 38.3111, lng: -122.463,
     website: "https://www.hanzell.com",
     owner: "de Brye family (since 1975)", group: "Independent (de Brye family)",
     priceRange: [45, 145], tastingFee: "$95–$125, appointment only",
@@ -647,11 +649,11 @@ const WINERIES = [
   {
     slug: "simi", name: "Simi Winery", valley: "Sonoma", ava: "Alexander Valley (Healdsburg)",
     founded: 1876, founder: "Giuseppe & Pietro Simi, Tuscan brothers",
-    address: "16275 Healdsburg Ave, Healdsburg, CA 95448", lat: 38.6323, lng: -122.8682,
+    address: "16275 Healdsburg Ave, Healdsburg, CA 95448", lat: 38.6405, lng: -122.8737,
     website: "https://www.simiwinery.com",
-    owner: "Constellation Brands", group: "Constellation Brands",
-    priceRange: [18, 75], tastingFee: "$25–$50",
-    tours: "Yes — historic cellar tours of the 1890 stone winery; shaded courtyard tastings",
+    owner: "WarRoom Cellars (brand, since Nov 2025); The Wine Group (winery property)", group: "The Wine Group / WarRoom Cellars",
+    priceRange: [18, 75], tastingFee: "Tasting room closed since 2023",
+    tours: "Currently closed to visitors — the historic tasting room shut in 2023 and hasn't reopened; the stone cellars are still worth knowing from the outside",
     vibeTags: ["Historic", "Casual", "Classic"],
     vibe: "Hand-laid 1890 stone cellars right on the old Redwood Highway, with a redwood-shaded courtyard. Easygoing and rich in one of wine's great women-in-wine stories.",
     wines: [
@@ -662,7 +664,8 @@ const WINERIES = [
       { y: 1876, t: "The Simi brothers begin making wine in San Francisco from Sonoma grapes; they build the Healdsburg stone cellars in 1890 and name the winery 'Montepulciano' for home." },
       { y: 1904, t: "Both brothers die within weeks; Giuseppe's 18-year-old daughter Isabelle takes over — and runs the winery for 66 years." },
       { y: 1920, t: "Isabelle keeps Simi alive through Prohibition, then reopens in 1934 with a tasting room built from a 25,000-gallon redwood tank beside the highway — one of California's first tasting rooms." },
-      { y: 1970, t: "Isabelle finally sells at 84; after Russell Green and a Moët-Hennessy period (where Zelma Long's winemaking made it famous again), Constellation acquires it in 1999." }
+      { y: 1970, t: "Isabelle finally sells at 84; after Russell Green and a Moët-Hennessy period (where Zelma Long's winemaking made it famous again), Constellation acquires it in 1999." },
+      { y: 2025, t: "Corporate hot potato: Constellation divests SIMI to The Wine Group (June), which sells the brand on to WarRoom Cellars (November) while keeping the Healdsburg facility. The tasting room, closed since 2023, remains dark." }
     ],
     storyTags: ["consolidated", "resurrected"],
     awards: ["One of California's oldest continuously used stone cellars", "Isabelle Simi: pioneering woman winery owner-operator, 1904–1970"],
@@ -672,7 +675,7 @@ const WINERIES = [
   {
     slug: "rodney-strong", name: "Rodney Strong Vineyards", valley: "Sonoma", ava: "Russian River Valley (Healdsburg)",
     founded: 1959, founder: "Rodney Strong, Broadway dancer turned winemaker",
-    address: "11455 Old Redwood Hwy, Healdsburg, CA 95448", lat: 38.5878, lng: -122.8340,
+    address: "11455 Old Redwood Hwy, Healdsburg, CA 95448", lat: 38.5747, lng: -122.842,
     website: "https://www.rodneystrong.com",
     owner: "Klein family (California farming family, since 1989)", group: "Independent (Klein family)",
     priceRange: [17, 120], tastingFee: "$25–$60",
@@ -697,7 +700,7 @@ const WINERIES = [
   {
     slug: "coppola-geyserville", name: "Francis Ford Coppola Winery", valley: "Sonoma", ava: "Alexander Valley (Geyserville)",
     founded: 2010, founder: "Francis Ford Coppola — in the 1973 Chateau Souverain building",
-    address: "300 Via Archimedes, Geyserville, CA 95441", lat: 38.6870, lng: -122.8820,
+    address: "300 Via Archimedes, Geyserville, CA 95441", lat: 38.6795, lng: -122.8878,
     website: "https://www.thefamilycoppola.com",
     owner: "Delicato Family Wines (majority, since 2021)", group: "Delicato Family Wines",
     priceRange: [12, 95], tastingFee: "$25–$45; pool day passes in summer",
@@ -722,7 +725,7 @@ const WINERIES = [
   {
     slug: "ferrari-carano", name: "Ferrari-Carano Vineyards & Winery", valley: "Sonoma", ava: "Dry Creek Valley",
     founded: 1981, founder: "Don & Rhonda Carano, Reno hoteliers (El Dorado casino)",
-    address: "8761 Dry Creek Rd, Healdsburg, CA 95448", lat: 38.6960, lng: -122.9650,
+    address: "8761 Dry Creek Rd, Healdsburg, CA 95448", lat: 38.6966, lng: -122.9677,
     website: "https://www.ferrari-carano.com",
     owner: "Foley Family Wines (since 2020)", group: "Foley Family Wines",
     priceRange: [16, 65], tastingFee: "$25–$60",
@@ -747,16 +750,18 @@ const WINERIES = [
 // Corporate family notes for the Lineage view
 const GROUP_NOTES = {
   "Treasury Wine Estates": "Australian drinks giant (spun off from Foster's beer, 2011). Its Napa trophies came via the Beringer Blass acquisition chain.",
-  "Constellation Brands": "U.S. beverage conglomerate (Corona, Modelo). Bought Robert Mondavi in 2004 — the deal that symbolized corporate Napa — plus Simi and half of Opus One.",
+  "Constellation Brands": "U.S. beverage conglomerate (Corona, Modelo). Bought Robert Mondavi in 2004 — the deal that symbolized corporate Napa. In its 2025 premium-focus shake-up it divested mainstream brands (including SIMI) but kept Robert Mondavi Winery, To Kalon, and its half of Opus One.",
+  "The Wine Group / WarRoom Cellars": "The 2025 endgame of brand consolidation: Constellation offloaded SIMI to The Wine Group, which flipped the brand to WarRoom Cellars months later while keeping the Healdsburg winery — a 149-year-old name traded twice in one year.",
   "Foley Family Wines": "Bill Foley (title-insurance billionaire, owns the Vegas Golden Knights) has quietly assembled one of Sonoma's biggest collections: Sebastiani, Chateau St. Jean, Ferrari-Carano, Chalk Hill, Roth and more.",
   "Jackson Family Wines": "Built by lawyer Jess Jackson from one accidental off-dry Chardonnay into a global family-owned empire (Freemark Abbey, Matanzas Creek, La Crema, Stonestreet…).",
   "Boisset Collection": "Burgundy's Boisset family; Jean-Charles Boisset (married to Gina Gallo) restores historic properties with theatrical flair — Buena Vista, Raymond, DeLoach.",
   "Duckhorn Portfolio (Butterfly Equity)": "Duckhorn grew from Merlot specialist to acquirer (Kosta Browne, Sonoma-Cutrer), IPO'd in 2021, then was taken private by Butterfly Equity in 2024.",
   "Lawrence Wine Estates": "Gaylon Lawrence Jr. (Arkansas agribusiness) is the newest big consolidator of historic Napa names: Heitz, Stony Hill, Burgess.",
-  "Ste. Michelle / Antinori": "The 2007 purchase of Stag's Leap Wine Cellars paired Washington State's biggest producer with Italy's 600-year-old Antinori family.",
+  "Marchesi Antinori": "Italy's 600-year-old Antinori family co-bought Stag's Leap Wine Cellars with Ste. Michelle in 2007, then took sole ownership in 2023 — the Judgment of Paris winner is now fully Italian-owned.",
   "LVMH": "The world's biggest luxury group added Joseph Phelps (2022) to a stable holding Dom Pérignon, Krug, Château d'Yquem, Newton and Chandon.",
   "Delicato Family Wines": "One of America's largest family wine companies; took majority control of Francis Ford Coppola's wine brands in 2021.",
-  "Otsuka (hands-off)": "Japan's Otsuka Pharmaceutical has majority-owned Ridge since 1986 and is wine's favorite example of a benevolent, invisible corporate parent."
+  "Otsuka (hands-off)": "Japan's Otsuka Pharmaceutical has majority-owned Ridge since 1986 and is wine's favorite example of a benevolent, invisible corporate parent.",
+  "GI Partners (Far Niente Wine Estates)": "Private equity firm GI Partners took majority ownership of the Far Niente family of wineries (Far Niente, Nickel & Nickel, Dolce, EnRoute, Bella Union) in 2016, with the Nickel family retaining a stake."
 };
 
 const STORY_TAG_LABELS = {
