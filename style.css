@@ -163,6 +163,10 @@ td.group-cell { max-width: 200px; }
 /* Special "New Architecture" book badge */
 .badge-arch { background: #ece3f5; color: #6a3fa0; }
 
+/* Purple star: featured in "The New Architecture of Wine" */
+.arch-star { color: #7c3aed; font-size: 0.9em; }
+@media (prefers-color-scheme: dark) { .arch-star { color: #c9aef0; } }
+
 /* Prestige star rating */
 .stars { position: relative; display: inline-block; white-space: nowrap; font-size: 15px; line-height: 1; letter-spacing: 1.5px; }
 .stars-bg { color: var(--hairline); }
@@ -234,6 +238,14 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .logo-marker .lm img { width: 100%; height: 100%; object-fit: contain; padding: 2px; box-sizing: border-box; }
 .logo-marker .lm .mono { font-family: var(--serif); font-weight: 700; font-size: 22px; color: var(--ink); letter-spacing: 0.5px; }
 .logo-marker:hover .lm { transform: scale(1.14); }
+
+/* District / AVA labels on the map */
+.district-label span {
+  position: absolute; left: 0; top: 0; transform: translate(-50%, -50%);
+  white-space: nowrap; font-family: var(--serif); font-size: 12.5px; font-weight: 600;
+  letter-spacing: 0.11em; text-transform: uppercase; color: rgba(58, 48, 42, 0.72);
+  text-shadow: 0 0 4px #faf7f2, 0 0 9px #faf7f2, 0 0 14px #faf7f2;
+}
 
 /* Concise description + essential badges inside the click popup */
 .popup-card .pc-desc { margin: 8px 0 0; font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }

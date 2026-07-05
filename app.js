@@ -27,6 +27,12 @@ function monogram(w) {
     .split(/\s+/).filter((x) => /[A-Za-z]/.test(x)).slice(0, 2)
     .map((x) => x[0].toUpperCase()).join("");
 }
+// Purple star marking wineries featured in "The New Architecture of Wine" (2019).
+function archStar(w) {
+  return w.storyTags.includes("architecture")
+    ? ` <span class="arch-star" title="Featured in ‘The New Architecture of Wine’ (Hebert, 2019)">★</span>`
+    : "";
+}
 
 /* ── Prestige rating ──
    Editorial acclaim tier (ACCLAIM, 1–5) is the backbone; a Wine Spectator Top 100
@@ -188,7 +194,7 @@ function tableRow(w) {
     ? `<span class="badge badge-arch" title="Featured in 'The New Architecture of Wine' (Hebert, 2019)">📖 New Architecture</span>`
     : `<span class="badge">${STORY_TAG_LABELS[t].label}</span>`).join("");
   return `<tr data-slug="${w.slug}">
-    <td><div class="w-name">${thumb}<span><b>${w.name}</b><span class="ava">${w.ava}</span></span></div></td>
+    <td><div class="w-name">${thumb}<span><b>${w.name}${archStar(w)}</b><span class="ava">${w.ava}</span></span></div></td>
     <td class="prestige-cell">${starsHTML(w._stars)}</td>
     <td><span class="valley-tag ${w.valley}">${w.valley}</span></td>
     <td class="group-cell">${groupCellHTML(w)}</td>
@@ -300,9 +306,29 @@ function initMap() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
     maxZoom: 18,
   }).addTo(map);
+  // District/AVA name labels sit in their own pane, below the pins and non-clickable.
+  map.createPane("districts");
+  map.getPane("districts").style.zIndex = 450;
+  map.getPane("districts").style.pointerEvents = "none";
+  addDistrictLabels();
   markerLayer = L.layerGroup().addTo(map);
   // Overlaps depend on zoom (pan preserves spacing), so re-separate after each zoom.
   map.on("zoomend", () => separateMarkers(mapEntries));
+}
+
+// Label each Napa/Sonoma district (AVA) at the centroid of its wineries.
+function addDistrictLabels() {
+  const groups = {};
+  WINERIES.forEach((w) => { const r = regionOf(w); (groups[r] = groups[r] || []).push(w); });
+  Object.entries(groups).forEach(([r, ws]) => {
+    if (ws.length < 2 || r === "Napa Valley") return; // skip lone wineries & the generic catch-all
+    const lat = ws.reduce((a, w) => a + w.lat, 0) / ws.length;
+    const lng = ws.reduce((a, w) => a + w.lng, 0) / ws.length;
+    L.marker([lat, lng], {
+      pane: "districts", interactive: false, keyboard: false,
+      icon: L.divIcon({ className: "district-label", html: `<span>${r}</span>`, iconSize: [0, 0] }),
+    }).addTo(map);
+  });
 }
 
 // Nudge overlapping pins apart in screen space (keeping them near their true spot)
@@ -384,13 +410,13 @@ function renderMap() {
     const badges = popupBadges(w);
     m.bindPopup(`<div class="popup-card">
         ${img ? `<img src="${img}" alt="${w.name}">` : ""}
-        <b>${w.name}</b>
+        <b>${w.name}${archStar(w)}</b>
         <div class="meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava}<br>est. ${w.founded} · ${w.wines[0].name} · ${fmtPrice(w)}</div>
         <p class="pc-desc">${popupDesc(w)}</p>
         ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
         <button onclick="openDrawer('${w.slug}')">Full story →</button>
       </div>`, { maxWidth: 288 });
-    m.bindTooltip(w.name, { direction: "top", offset: [0, -32] });
+    m.on("mouseover", () => m.openPopup());
     markerLayer.addLayer(m);
     mapEntries.push({ marker: m, latlng: L.latLng(w.lat, w.lng) });
     if (state.mapFocus === w.slug) focusMarker = m;
@@ -419,7 +445,7 @@ function renderMapIndex() {
       ? `<button class="link-btn" id="mi-clear">← Show all pins</button>`
       : `<span>${items.length} winer${items.length === 1 ? "y" : "ies"} shown · tap to locate</span>`}</div>
     <ul>${items.map((w) => `<li class="mi-item ${state.mapFocus === w.slug ? "active" : ""}" data-slug="${w.slug}">
-      <span class="mi-dot ${w.valley}"></span><span class="mi-name">${w.name}</span></li>`).join("")}</ul>`;
+      <span class="mi-dot ${w.valley}"></span><span class="mi-name">${w.name}${archStar(w)}</span></li>`).join("")}</ul>`;
   el.querySelectorAll(".mi-item").forEach((li) => li.addEventListener("click", () => {
     state.mapFocus = state.mapFocus === li.dataset.slug ? null : li.dataset.slug;
     renderMap();
@@ -552,7 +578,7 @@ function renderAwards() {
       ? `<span class="wl-logo ${w.valley}">${logoImg(w) ? `<img src="${logoImg(w)}" alt="">` : `<span class="mono">${monogram(w)}</span>`}</span>`
       : "";
     const wineryCell = w
-      ? `<a class="winery-link" onclick="openDrawer('${w.slug}')">${badge}<span>${w.name} →</span></a>`
+      ? `<a class="winery-link" onclick="openDrawer('${w.slug}')">${badge}<span>${w.name}${archStar(w)} →</span></a>`
       : `<span style="color:var(--muted)">${e.winery}</span>`;
     return `<tr>
       <td class="rank"><span class="rank-badge ${e.rank <= 10 ? "top10" : ""}">#${e.rank}</span></td>
@@ -609,7 +635,7 @@ function openDrawer(slug) {
     ${img ? `<img class="hero" src="${img}" alt="${w.name}">` : `<div class="hero hero-map" id="hero-map"></div>`}
     <div class="drawer-body">
       <span class="valley-tag ${w.valley}">${w.valley} · ${w.ava}</span>
-      <h2>${w.name}</h2>
+      <h2>${w.name}${archStar(w)}</h2>
       <div class="est">Est. <b>${w.founded}</b> — ${w.founder}</div>
       <div class="story-badges">${w.storyTags.map((t) => `<span class="badge">${STORY_TAG_LABELS[t].label}</span>`).join("")}</div>
       <p class="vibe-line">${w.vibe}</p>
