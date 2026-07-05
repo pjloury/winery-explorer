@@ -45,7 +45,8 @@ const WINE_TYPES = [
 ];
 // "Known for" filter categories.
 const KNOWN_FOR = [
-  { key: "architecture", label: "Architecture" },
+  { key: "arch-modern", label: "Modern architecture" },
+  { key: "arch-classic", label: "Classic architecture" },
   { key: "history", label: "History & heritage" },
   { key: "gardens", label: "Gardens & grounds" },
   { key: "food-art", label: "Food & art" },
@@ -73,7 +74,7 @@ function enrichWineries() {
 
     // Known-for tags: derive history + book architecture, then merge curated extras
     const kf = new Set();
-    if (w.storyTags.includes("architecture")) kf.add("architecture");
+    if (w.storyTags.includes("architecture")) kf.add("arch-modern");
     if (w.vibeTags.includes("Historic")
         || w.storyTags.some((t) => ["resurrected", "site-reuse", "judgment-of-paris"].includes(t))) kf.add("history");
     Object.keys(KFX).forEach((cat) => { if (KFX[cat].includes(w.slug)) kf.add(cat); });
@@ -481,10 +482,18 @@ function renderLineage() {
 
 /* ── Awards leaderboard (Wine Spectator Top 100) ── */
 let awardYear = "All";
+let awardColor = new Set(["red", "white"]);
+// Classify a Wine Spectator entry as red or white (sparkling & whites count as white).
+function wineColor(name) {
+  const t = name.toLowerCase();
+  if (/white blend|chardonnay|sauvignon blanc|chenin|viognier|\bbrut\b|blanc de|sparkling|riesling|gew|s[eé]millon|pinot gris|pinot grigio|albari|\bwhite\b|marsanne|roussanne|ros[eé]/.test(t)) return "white";
+  return "red";
+}
 function renderAwards() {
   const data = (window.WS_TOP100 || []).filter((e) => {
     if (state.valley !== "All" && e.valley !== state.valley) return false;
     if (awardYear !== "All" && e.year !== awardYear) return false;
+    if (!awardColor.has(wineColor(e.wine))) return false;
     const q = state.query.trim().toLowerCase();
     if (q && !(e.wine + " " + e.winery).toLowerCase().includes(q)) return false;
     return true;
@@ -493,11 +502,16 @@ function renderAwards() {
   const years = [...new Set((window.WS_TOP100 || []).map((e) => e.year))].sort((a, b) => b - a);
   const yearChips = ["All", ...years].map((y) =>
     `<button class="chip ${awardYear === y ? "active" : ""}" data-year="${y}">${y === "All" ? "All years" : y}</button>`).join("");
+  const colorChips = [["red", "Reds"], ["white", "Whites"]].map(([c, lbl]) =>
+    `<button class="chip ${awardColor.has(c) ? "active" : ""}" data-color="${c}">${lbl}</button>`).join("");
 
   const rows = data.map((e) => {
     const w = WINERIES.find((x) => x.slug === e.winerySlug);
+    const badge = w
+      ? `<span class="wl-logo ${w.valley}">${logoImg(w) ? `<img src="${logoImg(w)}" alt="">` : `<span class="mono">${monogram(w)}</span>`}</span>`
+      : "";
     const wineryCell = w
-      ? `<a class="winery-link" onclick="openDrawer('${w.slug}')">${w.name} →</a>`
+      ? `<a class="winery-link" onclick="openDrawer('${w.slug}')">${badge}<span>${w.name} →</span></a>`
       : `<span style="color:var(--muted)">${e.winery}</span>`;
     return `<tr>
       <td class="rank"><span class="rank-badge ${e.rank <= 10 ? "top10" : ""}">#${e.rank}</span></td>
@@ -515,7 +529,7 @@ function renderAwards() {
     <div class="awards-head">
       <h2>Wine Spectator Top 100 — Napa & Sonoma wines</h2>
       <p class="section-desc">Every Napa and Sonoma county wine on Wine Spectator's most recent Top 100 lists, ranked. Click a winery to open its full story in the explorer.</p>
-      <div class="seg">${yearChips}</div>
+      <div class="seg">${yearChips} <span class="seg-sep"></span> ${colorChips}</div>
       ${years.filter((y) => awardYear === "All" || awardYear === y).map((y) =>
         window.WS_META && window.WS_META[y] ? `<p class="ws-meta"><b>${y}</b> — ${window.WS_META[y]}</p>` : "").join("")}
     </div>
@@ -527,6 +541,14 @@ function renderAwards() {
   document.querySelectorAll("#awards .chip[data-year]").forEach((c) => {
     c.addEventListener("click", () => {
       awardYear = c.dataset.year === "All" ? "All" : Number(c.dataset.year);
+      renderAwards();
+    });
+  });
+  document.querySelectorAll("#awards .chip[data-color]").forEach((c) => {
+    c.addEventListener("click", () => {
+      const col = c.dataset.color;
+      if (awardColor.has(col)) { if (awardColor.size > 1) awardColor.delete(col); } // keep at least one on
+      else awardColor.add(col);
       renderAwards();
     });
   });
@@ -543,7 +565,7 @@ function openDrawer(slug) {
 
   $("#drawer").innerHTML = `
     <button class="drawer-close" onclick="closeDrawer()" aria-label="Close">✕</button>
-    ${img ? `<img class="hero" src="${img}" alt="${w.name}">` : `<div class="hero placeholder">${w.name}</div>`}
+    ${img ? `<img class="hero" src="${img}" alt="${w.name}">` : `<div class="hero hero-map" id="hero-map"></div>`}
     <div class="drawer-body">
       <span class="valley-tag ${w.valley}">${w.valley} · ${w.ava}</span>
       <h2>${w.name}</h2>
@@ -580,10 +602,27 @@ function openDrawer(slug) {
   $("#overlay").classList.add("open");
   $("#drawer").classList.add("open");
   $("#drawer").scrollTop = 0;
+  if (!img) initHeroMap(w);
+}
+// When a winery has no photo, the drawer hero becomes a small locator map with its pin.
+let heroMap = null;
+function initHeroMap(w) {
+  if (heroMap) { heroMap.remove(); heroMap = null; }
+  const el = document.getElementById("hero-map");
+  if (!el || typeof L === "undefined") return;
+  heroMap = L.map(el, {
+    zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false,
+    doubleClickZoom: false, boxZoom: false, keyboard: false, touchZoom: false, tap: false,
+  });
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", { maxZoom: 18 }).addTo(heroMap);
+  heroMap.setView([w.lat, w.lng], 13);
+  L.marker([w.lat, w.lng], { icon: markerIcon(w) }).addTo(heroMap);
+  setTimeout(() => { if (heroMap) heroMap.invalidateSize(); }, 60);
 }
 function closeDrawer() {
   $("#overlay").classList.remove("open");
   $("#drawer").classList.remove("open");
+  if (heroMap) { heroMap.remove(); heroMap = null; }
 }
 window.openDrawer = openDrawer;
 window.closeDrawer = closeDrawer;

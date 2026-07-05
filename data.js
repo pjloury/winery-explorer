@@ -2268,7 +2268,13 @@ const PREEMINENT_WINE = {
 // resurrected / reused / Judgment of Paris) and book Architecture are derived
 // automatically in app.js; these are the hand-curated additions.
 const KNOWN_FOR_EXTRA = {
-  architecture: ["opus-one", "robert-mondavi", "joseph-phelps", "aperture", "darioush"],
+  // Modern = contemporary design (the "New Architecture of Wine" book wineries carry
+  // the "architecture" storyTag and are added automatically); these are extra moderns.
+  "arch-modern": ["opus-one", "aperture"],
+  // Classic = historic / traditional landmark buildings (chateaus, stone cellars, mansions).
+  "arch-classic": ["inglenook", "beringer", "chateau-montelena", "far-niente", "schramsberg",
+                   "buena-vista", "robert-mondavi", "darioush", "jordan", "chateau-st-jean",
+                   "charles-krug", "v-sattui", "gundlach-bundschu", "sebastiani"],
   gardens: ["kendall-jackson", "ferrari-carano", "chateau-montelena", "inglenook", "v-sattui",
             "round-pond", "far-niente", "duckhorn", "darioush", "donum", "rams-gate",
             "coppola-geyserville", "medlock-ames", "hamel"],

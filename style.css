@@ -299,8 +299,17 @@ td.year { color: var(--muted); font-variant-numeric: tabular-nums; }
 td.score { font-weight: 750; font-variant-numeric: tabular-nums; }
 td.wine-cell b { font-family: var(--serif); font-weight: 600; }
 td.wine-cell .sub { display: block; color: var(--muted); font-size: 12px; }
-.winery-link { color: var(--ink); font-weight: 650; cursor: pointer; text-decoration: none; white-space: nowrap; }
-.winery-link:hover { text-decoration: underline; }
+.winery-link { color: var(--ink); font-weight: 650; cursor: pointer; text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+.winery-link:hover span:last-child { text-decoration: underline; }
+.wl-logo {
+  width: 24px; height: 24px; border-radius: 50%; flex: none; overflow: hidden; background: var(--card);
+  border: 1.5px solid var(--hairline); display: inline-flex; align-items: center; justify-content: center;
+}
+.wl-logo.Napa { border-color: var(--napa); }
+.wl-logo.Sonoma { border-color: var(--sonoma); }
+.wl-logo img { width: 100%; height: 100%; object-fit: contain; padding: 2px; box-sizing: border-box; }
+.wl-logo .mono { font-family: var(--serif); font-weight: 700; font-size: 10px; color: var(--ink); }
+.seg-sep { display: inline-block; width: 1px; height: 18px; background: var(--hairline); vertical-align: middle; margin: 0 3px; }
 
 /* ── Detail drawer ── */
 #overlay {
@@ -322,6 +331,8 @@ td.wine-cell .sub { display: block; color: var(--muted); font-size: 12px; }
 }
 .hero { width: 100%; height: 250px; object-fit: cover; display: block; margin-top: -46px; }
 .hero.placeholder { display: flex; align-items: center; justify-content: center; background: var(--hairline); color: var(--muted); font-family: var(--serif); font-size: 20px; }
+.hero-map { background: var(--hairline); }
+.hero-map.leaflet-container { background: var(--hairline); }
 .drawer-body { padding: 20px 26px 48px; }
 .drawer-body h2 { font-family: var(--serif); font-weight: 600; font-size: 26px; margin: 4px 0 2px; }
 .drawer-body .est { color: var(--ink-2); font-size: 14px; margin-bottom: 12px; }
