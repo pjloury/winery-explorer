@@ -312,11 +312,12 @@ function initMap() {
   map.getPane("districts").style.pointerEvents = "none";
   addDistrictLabels();
   markerLayer = L.layerGroup().addTo(map);
-  // Overlaps depend on zoom (pan preserves spacing), so re-separate after each zoom.
-  map.on("zoomend", () => separateMarkers(mapEntries));
+  // Overlaps depend on zoom (pan preserves spacing), so re-lay-out after each zoom.
+  map.on("zoomend", () => { separateMarkers(mapEntries); layoutDistrictLabels(); });
 }
 
 // Label each Napa/Sonoma district (AVA) at the centroid of its wineries.
+let districtEntries = [];
 function addDistrictLabels() {
   const groups = {};
   WINERIES.forEach((w) => { const r = regionOf(w); (groups[r] = groups[r] || []).push(w); });
@@ -324,10 +325,30 @@ function addDistrictLabels() {
     if (ws.length < 2 || r === "Napa Valley") return; // skip lone wineries & the generic catch-all
     const lat = ws.reduce((a, w) => a + w.lat, 0) / ws.length;
     const lng = ws.reduce((a, w) => a + w.lng, 0) / ws.length;
-    L.marker([lat, lng], {
+    const m = L.marker([lat, lng], {
       pane: "districts", interactive: false, keyboard: false,
       icon: L.divIcon({ className: "district-label", html: `<span>${r}</span>`, iconSize: [0, 0] }),
     }).addTo(map);
+    districtEntries.push({ marker: m, latlng: L.latLng(lat, lng), name: r, count: ws.length });
+  });
+}
+// Scale label font with zoom; hide labels that would overlap (larger AVAs take priority).
+function layoutDistrictLabels() {
+  if (!map || !districtEntries.length) return;
+  const zoom = map.getZoom();
+  const fs = Math.max(9, Math.min(15, Math.round(9 + (zoom - 9) * 2)));
+  const boxes = districtEntries.map((e) => {
+    const p = map.latLngToLayerPoint(e.latlng);
+    return { e, x: p.x, y: p.y, w: e.name.length * fs * 0.62 + 6, h: fs + 6 };
+  });
+  const order = boxes.map((_, i) => i).sort((a, b) => boxes[b].e.count - boxes[a].e.count);
+  const shown = [];
+  order.forEach((i) => {
+    const b = boxes[i], el = b.e.marker._icon;
+    if (!el) return;
+    const clash = shown.some((s) => Math.abs(s.x - b.x) < (s.w + b.w) / 2 && Math.abs(s.y - b.y) < (s.h + b.h) / 2 + 3);
+    if (clash) { el.style.display = "none"; }
+    else { el.style.display = ""; const sp = el.querySelector("span"); if (sp) sp.style.fontSize = fs + "px"; shown.push(b); }
   });
 }
 
@@ -336,8 +357,8 @@ function addDistrictLabels() {
 let mapEntries = [];
 function separateMarkers(entries) {
   if (!map || !entries || entries.length < 2 || state.mapFocus) return;
-  const MIN = 66;   // min center-to-center px (pin ≈ 60px + gap)
-  const MAXD = 82;  // cap how far a pin may drift from its true location
+  const MIN = pinSize() + 8;   // min center-to-center px (pin size + gap)
+  const MAXD = pinSize() + 22; // cap how far a pin may drift from its true location
   const pts = entries.map((e) => map.latLngToLayerPoint(e.latlng));
   const orig = pts.map((p) => p.clone());
   for (let iter = 0; iter < 140; iter++) {
@@ -371,10 +392,12 @@ function separateMarkers(entries) {
 // The wineries currently in scope on the map: valley + search + wine/known-for
 // filters; top-N by prestige when no filter is active. (Ignores single-winery focus.)
 function mapCandidates() {
+  const filtersActive = state.mapWine.size || state.mapKnown.size;
   return filtered().filter((w) => {
     if (state.mapWine.size && ![...state.mapWine].some((t) => w._wineTypes.has(t))) return false;
     if (state.mapKnown.size && ![...state.mapKnown].some((t) => w._knownFor.has(t))) return false;
-    if (state.mapTopOnly && w._rank > MAP_TOP_N) return false;
+    // the Top-25 cap applies only to the unfiltered view; filters always reveal every match
+    if (state.mapTopOnly && !filtersActive && w._rank > MAP_TOP_N) return false;
     return true;
   });
 }
@@ -386,15 +409,17 @@ function mapList() {
   return mapCandidates();
 }
 
+function pinSize() { return window.innerWidth <= 560 ? 42 : 60; }
 function markerIcon(w) {
+  const SZ = pinSize();
   const logo = logoImg(w);
   const inner = logo
     ? `<img src="${logo}" alt="${w.name}">`
-    : `<span class="mono">${monogram(w)}</span>`;
+    : `<span class="mono" style="font-size:${Math.round(SZ * 0.37)}px">${monogram(w)}</span>`;
   return L.divIcon({
     className: "logo-marker",
-    html: `<div class="lm ${w.valley}" title="${w.name}">${inner}</div>`,
-    iconSize: [60, 60], iconAnchor: [30, 30], popupAnchor: [0, -32],
+    html: `<div class="lm ${w.valley}" style="width:${SZ}px;height:${SZ}px" title="${w.name}">${inner}</div>`,
+    iconSize: [SZ, SZ], iconAnchor: [SZ / 2, SZ / 2], popupAnchor: [0, -(SZ / 2 + 3)],
   });
 }
 
@@ -429,6 +454,7 @@ function renderMap() {
     map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.15), { animate: false });
     separateMarkers(mapEntries);
   }
+  layoutDistrictLabels();
   renderMapFilters();
   renderMapIndex();
   $(".count").textContent = state.mapFocus ? "1 winery" : `${list.length} winer${list.length === 1 ? "y" : "ies"} shown`;
