@@ -14,8 +14,12 @@ const state = {
   expandedRegions: new Set(),
   mapWine: new Set(),
   mapKnown: new Set(),
+  mapAva: new Set(),
+  mapAvaOpen: false,
   mapFocus: null,
   mapTopOnly: true,
+  tableTags: new Set(),
+  cardFields: new Set(["ava", "founded", "price"]),
 };
 
 const fmtPrice = (w) => `$${w.priceRange[0]}–$${w.priceRange[1]}`;
@@ -57,6 +61,18 @@ const KNOWN_FOR = [
   { key: "history", label: "History & heritage" },
   { key: "gardens", label: "Gardens & grounds" },
   { key: "food-art", label: "Food & art" },
+];
+// Quick "interesting subset" chips for the table view. Multiple active chips
+// narrow (AND). Predicates rely on the enrichment fields set below.
+const TABLE_CHIPS = [
+  { key: "top25", label: "Top 25", test: (w) => w._rank <= MAP_TOP_N },
+  { key: "prestige", label: "Prestigious", test: (w) => w._stars >= 4.5 },
+  { key: "modern", label: "Modern arch.", test: (w) => w._knownFor.has("arch-modern") },
+  { key: "classic", label: "Classic arch.", test: (w) => w._knownFor.has("arch-classic") },
+  { key: "gardens", label: "Gardens", test: (w) => w._knownFor.has("gardens") },
+  { key: "history", label: "Historic", test: (w) => w._knownFor.has("history") },
+  { key: "jop", label: "Judgment of Paris", test: (w) => w.storyTags.includes("judgment-of-paris") },
+  { key: "book", label: "📖 New Architecture", test: (w) => w.storyTags.includes("architecture") },
 ];
 
 function enrichWineries() {
@@ -117,6 +133,18 @@ function firstSentence(t) {
 // first sentence of the vibe.
 const BLURBS = (typeof BLURB !== "undefined") ? BLURB : {};
 function popupDesc(w) { return BLURBS[w.slug] || firstSentence(w.vibe); }
+// Punchy one-line summary for the mobile card; falls back to the first vibe sentence.
+const TAGLINES = (typeof TAGLINE !== "undefined") ? TAGLINE : (window.TAGLINE || {});
+function taglineOf(w) { return TAGLINES[w.slug] || firstSentence(w.vibe); }
+// Optional detail fields the reader can toggle onto the mobile cards.
+const CARD_FIELDS = [
+  { key: "ava", label: "AVA", get: (w) => w.ava },
+  { key: "founded", label: "Founded", get: (w) => "est. " + w.founded },
+  { key: "price", label: "Price", get: (w) => fmtPrice(w) },
+  { key: "wines", label: "Wines", get: (w) => w.wines.map((x) => x.name).slice(0, 2).join(", ") },
+  { key: "vibe", label: "Vibe", get: (w) => w.vibeTags.join(", ") },
+  { key: "group", label: "Group", get: (w) => (GN[w.group] ? w.group : "Independent") },
+];
 // Only the essential recognition badges for the map popup.
 function popupBadges(w) {
   const b = [];
@@ -168,6 +196,7 @@ function sorted(list) {
   return [...list].sort((a, b) => {
     let va, vb;
     if (key === "name") { va = a.name; vb = b.name; return va.localeCompare(vb) * dir; }
+    if (key === "ava") { const c = a.ava.localeCompare(b.ava); return c ? c * dir : b._prestige - a._prestige; }
     if (key === "group") {
       // corporate groups first, clustered by name; independents after; prestige within
       const ga = (GN[a.group] ? "0" : "1") + a.group;
@@ -184,7 +213,7 @@ function sorted(list) {
 }
 
 /* ── Table view ── */
-const NCOLS = 10;
+const NCOLS = 11;
 function tableRow(w) {
   const img = propertyImg(w);
   const thumb = img
@@ -194,9 +223,10 @@ function tableRow(w) {
     ? `<span class="badge badge-arch" title="Featured in 'The New Architecture of Wine' (Hebert, 2019)">📖 New Architecture</span>`
     : `<span class="badge">${STORY_TAG_LABELS[t].label}</span>`).join("");
   return `<tr data-slug="${w.slug}">
-    <td><div class="w-name">${thumb}<span><b>${w.name}${archStar(w)}</b><span class="ava">${w.ava}</span></span></div></td>
+    <td><div class="w-name">${thumb}<span><b>${w.name}${archStar(w)}</b></span></div></td>
     <td class="prestige-cell">${starsHTML(w._stars)}</td>
     <td><span class="valley-tag ${w.valley}">${w.valley}</span></td>
+    <td class="ava-col">${w.ava}</td>
     <td class="group-cell">${groupCellHTML(w)}</td>
     <td class="founded">${w.founded}</td>
     <td class="wines">${w.wines.map((x) => x.name).join(" · ")}</td>
@@ -210,21 +240,105 @@ function tableRow(w) {
   </tr>`;
 }
 
+function applyTableChips(list) {
+  if (!state.tableTags.size) return list;
+  const tests = TABLE_CHIPS.filter((c) => state.tableTags.has(c.key));
+  return list.filter((w) => tests.every((c) => c.test(w))); // active chips narrow (AND)
+}
+
+// Mobile: a tagline-forward card. Valley is a colored dot, prestige is stars, and
+// the reader-chosen detail fields stack below — everything else lives in the drawer.
+function wineCard(w) {
+  const img = propertyImg(w);
+  const thumb = img
+    ? `<img class="wc-thumb" src="${img}" alt="" loading="lazy">`
+    : `<span class="wc-thumb placeholder">🍷</span>`;
+  const fields = CARD_FIELDS.filter((f) => state.cardFields.has(f.key))
+    .map((f) => `<span class="wc-field">${f.get(w)}</span>`).join("");
+  return `<article class="wcard" data-slug="${w.slug}">
+    ${thumb}
+    <div class="wc-body">
+      <div class="wc-top">
+        <span class="dot ${w.valley.toLowerCase()}" title="${w.valley}"></span>
+        <b class="wc-name">${w.name}${archStar(w)}</b>
+        <span class="wc-stars">${starsHTML(w._stars)}</span>
+      </div>
+      <p class="wc-tag">${taglineOf(w)}</p>
+      ${fields ? `<div class="wc-meta">${fields}</div>` : ""}
+    </div>
+  </article>`;
+}
+
 function renderTable() {
-  const list = sorted(filtered());
+  const list = sorted(applyTableChips(filtered()));
   const arrow = (k) => state.sort.key === k ? `<span class="arrow">${state.sort.dir === 1 ? "▲" : "▼"}</span>` : "";
   const searching = !!state.query.trim();
+  const mobile = isSmallScreen();
 
+  // Group the list once (north→south) for the region view; both layouts reuse it.
+  const groupedOrdered = () => {
+    const groups = {};
+    list.forEach((w) => { const r = regionOf(w); (groups[r] = groups[r] || []).push(w); });
+    return Object.entries(groups)
+      .map(([r, ws]) => ({ r, ws, lat: ws.reduce((a, w) => a + w.lat, 0) / ws.length }))
+      .sort((a, b) => b.lat - a.lat);
+  };
+
+  const controls = `
+    <div class="table-controls">
+      <span class="seg small">
+        <button class="chip ${!state.grouped ? "active" : ""}" data-group="0">Flat list</button>
+        <button class="chip ${state.grouped ? "active" : ""}" data-group="1">By region · N→S</button>
+      </span>
+      ${mobile ? `<label class="sort-select">Sort
+        <select id="card-sort">${[["prestige", "Prestige"], ["name", "Name"], ["founded", "Founded"], ["price", "Price"], ["ava", "AVA"]]
+          .map(([k, l]) => `<option value="${k}" ${state.sort.key === k ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+        <button class="fchip sort-dir" id="card-sort-dir" title="Reverse order">${state.sort.dir === 1 ? "▲" : "▼"}</button>` : ""}
+      ${state.grouped && !searching ? `<button class="link-btn" id="toggle-all-regions">${state.expandedRegions.size ? "Collapse all" : "Expand all"}</button>` : ""}
+    </div>
+    <div class="table-chips">
+      <span class="flabel">Filter</span>
+      ${TABLE_CHIPS.map((c) => `<button class="fchip ${state.tableTags.has(c.key) ? "active" : ""}" data-tag="${c.key}">${c.label}</button>`).join("")}
+      ${state.tableTags.size ? `<button class="link-btn" id="table-clear">Clear</button>` : ""}
+    </div>`;
+
+  if (mobile) {
+    // ── Card layout ──
+    const fieldChooser = `<div class="table-chips card-fields">
+      <span class="flabel">Details</span>
+      ${CARD_FIELDS.map((f) => `<button class="fchip ${state.cardFields.has(f.key) ? "active" : ""}" data-field="${f.key}">${f.label}</button>`).join("")}
+    </div>`;
+    let cards;
+    if (!list.length) {
+      cards = `<p class="empty-row">No wineries match.</p>`;
+    } else if (!state.grouped) {
+      cards = `<div class="card-list">${list.map(wineCard).join("")}</div>`;
+    } else {
+      cards = groupedOrdered().map(({ r, ws }) => {
+        const open = searching || state.expandedRegions.has(r);
+        const valleys = [...new Set(ws.map((w) => w.valley))].map((v) => `<span class="valley-tag ${v}">${v}</span>`).join("");
+        return `<div class="card-region">
+          <div class="region-head ${open ? "open" : ""}" data-region="${r}">
+            <span class="caret">${open ? "▾" : "▸"}</span> <b>${r}</b> ${valleys}
+            <span class="rcount">${ws.length}</span>
+          </div>
+          ${open ? `<div class="card-list">${ws.map(wineCard).join("")}</div>` : ""}
+        </div>`;
+      }).join("");
+    }
+    $("#table-view").innerHTML = controls + fieldChooser + cards;
+    attachTableHandlers();
+    $(".count").textContent = `${list.length} of ${WINERIES.length} wineries`;
+    writeHash();
+    return;
+  }
+
+  // ── Table layout (desktop) ──
   let body;
   if (!state.grouped) {
     body = `<tbody>${list.map(tableRow).join("") || `<tr><td colspan="${NCOLS}" class="empty-row">No wineries match.</td></tr>`}</tbody>`;
   } else {
-    const groups = {};
-    list.forEach((w) => { const r = regionOf(w); (groups[r] = groups[r] || []).push(w); });
-    const ordered = Object.entries(groups)
-      .map(([r, ws]) => ({ r, ws, lat: ws.reduce((a, w) => a + w.lat, 0) / ws.length }))
-      .sort((a, b) => b.lat - a.lat); // north → south
-    body = ordered.map(({ r, ws }) => {
+    body = groupedOrdered().map(({ r, ws }) => {
       const open = searching || state.expandedRegions.has(r);
       const valleys = [...new Set(ws.map((w) => w.valley))]
         .map((v) => `<span class="valley-tag ${v}">${v}</span>`).join("");
@@ -235,19 +349,13 @@ function renderTable() {
     }).join("") || `<tbody><tr><td colspan="${NCOLS}" class="empty-row">No wineries match.</td></tr></tbody>`;
   }
 
-  $("#table-view").innerHTML = `
-    <div class="table-controls">
-      <span class="seg small">
-        <button class="chip ${!state.grouped ? "active" : ""}" data-group="0">Flat list</button>
-        <button class="chip ${state.grouped ? "active" : ""}" data-group="1">By region · N→S</button>
-      </span>
-      ${state.grouped && !searching ? `<button class="link-btn" id="toggle-all-regions">${state.expandedRegions.size ? "Collapse all" : "Expand all"}</button>` : ""}
-    </div>
+  $("#table-view").innerHTML = controls + `
     <div class="table-wrap"><table>
     <thead><tr>
       <th class="sortable" data-sort="name">Winery ${arrow("name")}</th>
       <th class="sortable" data-sort="prestige">Prestige ${arrow("prestige")}</th>
       <th>Valley</th>
+      <th class="sortable" data-sort="ava">AVA ${arrow("ava")}</th>
       <th class="sortable" data-sort="group">Group ${arrow("group")}</th>
       <th class="sortable" data-sort="founded">Founded ${arrow("founded")}</th>
       <th>Famous for</th>
@@ -258,7 +366,12 @@ function renderTable() {
     </tr></thead>
     ${body}
   </table></div>`;
+  attachTableHandlers();
+  $(".count").textContent = `${list.length} of ${WINERIES.length} wineries`;
+  writeHash();
+}
 
+function attachTableHandlers() {
   document.querySelectorAll("#table-view th.sortable").forEach((th) => {
     th.addEventListener("click", () => {
       const k = th.dataset.sort;
@@ -270,6 +383,11 @@ function renderTable() {
   document.querySelectorAll("#table-view .chip[data-group]").forEach((b) => {
     b.addEventListener("click", () => { state.grouped = b.dataset.group === "1"; renderTable(); });
   });
+  document.querySelectorAll("#table-view .fchip[data-tag]").forEach((b) => {
+    b.addEventListener("click", () => { toggleSet(state.tableTags, b.dataset.tag); renderTable(); });
+  });
+  const tableClear = $("#table-clear");
+  if (tableClear) tableClear.addEventListener("click", () => { state.tableTags.clear(); renderTable(); });
   const toggleAll = $("#toggle-all-regions");
   if (toggleAll) toggleAll.addEventListener("click", () => {
     if (state.expandedRegions.size) state.expandedRegions.clear();
@@ -287,11 +405,21 @@ function renderTable() {
       renderTable();
     });
   });
-  document.querySelectorAll("#table-view tbody tr[data-slug]").forEach((tr) => {
-    tr.addEventListener("click", () => openDrawer(tr.dataset.slug));
+  document.querySelectorAll("#table-view tbody tr[data-slug], #table-view .wcard[data-slug]").forEach((el) => {
+    el.addEventListener("click", () => openDrawer(el.dataset.slug));
   });
-  $(".count").textContent = `${list.length} of ${WINERIES.length} wineries`;
-  writeHash();
+  // Mobile card controls
+  const cardSort = $("#card-sort");
+  if (cardSort) cardSort.addEventListener("change", () => {
+    const k = cardSort.value;
+    state.sort = { key: k, dir: k === "prestige" ? -1 : 1 };
+    renderTable();
+  });
+  const cardSortDir = $("#card-sort-dir");
+  if (cardSortDir) cardSortDir.addEventListener("click", () => { state.sort.dir *= -1; renderTable(); });
+  document.querySelectorAll("#table-view .fchip[data-field]").forEach((b) => {
+    b.addEventListener("click", () => { toggleSet(state.cardFields, b.dataset.field); renderTable(); });
+  });
 }
 
 /* ── Map view ── */
@@ -383,6 +511,10 @@ function separateMarkers(entries) {
     const dd = Math.sqrt(dx * dx + dy * dy);
     if (dd > MAXD) { dx = dx / dd * MAXD; dy = dy / dd * MAXD; }
     if (e.marker._icon) L.DomUtil.setPosition(e.marker._icon, L.point(orig[i].x + dx, orig[i].y + dy));
+    // The marker latlng is unchanged, but the icon was nudged (dx,dy); shift the
+    // popup by the same amount so its tail points at the pin, not the raw coord.
+    const pop = e.marker.getPopup();
+    if (pop) { pop.options.offset = L.point(dx, dy); if (pop.isOpen()) pop.update(); }
   });
 }
 
@@ -392,14 +524,19 @@ function separateMarkers(entries) {
 // The wineries currently in scope on the map: valley + search + wine/known-for
 // filters; top-N by prestige when no filter is active. (Ignores single-winery focus.)
 function mapCandidates() {
-  const filtersActive = state.mapWine.size || state.mapKnown.size;
+  const filtersActive = state.mapWine.size || state.mapKnown.size || state.mapAva.size;
   return filtered().filter((w) => {
     if (state.mapWine.size && ![...state.mapWine].some((t) => w._wineTypes.has(t))) return false;
     if (state.mapKnown.size && ![...state.mapKnown].some((t) => w._knownFor.has(t))) return false;
+    if (state.mapAva.size && !state.mapAva.has(regionOf(w))) return false;
     // the Top-25 cap applies only to the unfiltered view; filters always reveal every match
     if (state.mapTopOnly && !filtersActive && w._rank > MAP_TOP_N) return false;
     return true;
   });
+}
+// Distinct AVA/districts (normalized via regionOf, matching the map labels).
+function avaOptions() {
+  return [...new Set(WINERIES.map(regionOf))].sort((a, b) => a.localeCompare(b));
 }
 function mapList() {
   if (state.mapFocus) {
@@ -419,13 +556,15 @@ function markerIcon(w) {
   const inner = (logo && !isSmallScreen())
     ? `<img src="${logo}" alt="${w.name}">`
     : `<span class="mono" style="font-size:${Math.round(SZ * 0.4)}px">${monogram(w)}</span>`;
-  // ring color = architecture; gold ★ = Top 25; green ✿ = gardens (a winery can be all three)
+  // border color = architecture; gold outer ring = Top 25; green ✿ badge = gardens
+  // (a winery can be all three — the ring halo sits outside the arch border).
   const arch = w._knownFor.has("arch-modern") ? "modern" : w._knownFor.has("arch-classic") ? "classic" : "";
-  const star = w._rank <= MAP_TOP_N ? `<span class="pin-badge pin-star" title="Top 25 by prestige">★</span>` : "";
-  const garden = w._knownFor.has("gardens") ? `<span class="pin-badge pin-garden" title="Known for gardens & grounds">✿</span>` : "";
+  const top = w._rank <= MAP_TOP_N ? "top" : "";
+  const garden = w._knownFor.has("gardens")
+    ? `<span class="pin-badge pin-garden" title="Known for gardens & grounds">✿</span>` : "";
   return L.divIcon({
     className: "logo-marker",
-    html: `<div class="lm ${arch}" style="width:${SZ}px;height:${SZ}px" title="${w.name}">${inner}</div>${star}${garden}`,
+    html: `<div class="lm ${arch} ${top}" style="width:${SZ}px;height:${SZ}px" title="${w.name}">${inner}</div>${garden}`,
     iconSize: [SZ, SZ], iconAnchor: [SZ / 2, SZ / 2], popupAnchor: [0, -(SZ / 2 + 3)],
   });
 }
@@ -448,7 +587,20 @@ function renderMap() {
         ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
         <button onclick="openDrawer('${w.slug}')">Full story →</button>
       </div>`, { maxWidth: 288 });
-    m.on("mouseover", () => m.openPopup());
+    // Hover opens the popup; leaving the pin closes it so it never lingers and
+    // blocks the map. A short grace period lets the cursor cross into the popup
+    // (to reach the "Full story" button) without it vanishing.
+    let closeT = null;
+    const cancelClose = () => { if (closeT) { clearTimeout(closeT); closeT = null; } };
+    const scheduleClose = () => { cancelClose(); closeT = setTimeout(() => m.closePopup(), 220); };
+    m.on("mouseover", () => { cancelClose(); m.openPopup(); });
+    m.on("mouseout", scheduleClose);
+    m.on("popupopen", (e) => {
+      const el = e.popup.getElement();
+      if (!el) return;
+      el.addEventListener("mouseenter", cancelClose);
+      el.addEventListener("mouseleave", scheduleClose);
+    });
     markerLayer.addLayer(m);
     mapEntries.push({ marker: m, latlng: L.latLng(w.lat, w.lng) });
     if (state.mapFocus === w.slug) focusMarker = m;
@@ -496,13 +648,21 @@ function renderMapFilters() {
     `<button class="fchip ${state.mapWine.has(t.key) ? "active" : ""}" data-wine="${t.key}">${t.key}</button>`).join("");
   const knownChips = KNOWN_FOR.map((t) =>
     `<button class="fchip ${state.mapKnown.has(t.key) ? "active" : ""}" data-known="${t.key}">${t.label}</button>`).join("");
-  const active = state.mapWine.size || state.mapKnown.size;
+  const active = state.mapWine.size || state.mapKnown.size || state.mapAva.size;
+  const avaMenu = avaOptions().map((r) =>
+    `<label class="ava-opt"><input type="checkbox" data-ava="${r}" ${state.mapAva.has(r) ? "checked" : ""}>${r}</label>`).join("");
+  const avaGroup = `<span class="fgroup"><span class="flabel">AVA</span>`
+    + `<details class="ava-picker" ${state.mapAvaOpen ? "open" : ""}>`
+    + `<summary class="fchip ${state.mapAva.size ? "active" : ""}">${state.mapAva.size ? `AVA · ${state.mapAva.size}` : "Any AVA"} ▾</summary>`
+    + `<div class="ava-menu">${avaMenu}${state.mapAva.size ? `<button class="link-btn" id="ava-clear">Clear regions</button>` : ""}</div>`
+    + `</details></span>`;
   const showChips = `<span class="fgroup"><span class="flabel">Show</span>`
     + `<button class="fchip ${state.mapTopOnly ? "active" : ""}" data-top="1">★ Top ${MAP_TOP_N}</button>`
     + `<button class="fchip ${!state.mapTopOnly ? "active" : ""}" data-top="0">All ${WINERIES.length}</button></span>`;
   bar.innerHTML = showChips + `
     <span class="fgroup"><span class="flabel">Wine</span>${wineChips}</span>
     <span class="fgroup"><span class="flabel">Known for</span>${knownChips}</span>
+    ${avaGroup}
     ${active ? `<button class="link-btn" id="map-clear">Clear filters</button>` : ""}`;
   bar.querySelectorAll("[data-top]").forEach((b) => b.addEventListener("click", () => {
     state.mapFocus = null; state.mapTopOnly = b.dataset.top === "1"; renderMap();
@@ -513,8 +673,16 @@ function renderMapFilters() {
   bar.querySelectorAll("[data-known]").forEach((b) => b.addEventListener("click", () => {
     state.mapFocus = null; toggleSet(state.mapKnown, b.dataset.known); renderMap();
   }));
+  // AVA multi-picker: keep the panel open across selections by remembering its state.
+  const picker = bar.querySelector(".ava-picker");
+  if (picker) picker.addEventListener("toggle", () => { state.mapAvaOpen = picker.open; });
+  bar.querySelectorAll("[data-ava]").forEach((cb) => cb.addEventListener("change", () => {
+    state.mapFocus = null; state.mapAvaOpen = true; toggleSet(state.mapAva, cb.dataset.ava); renderMap();
+  }));
+  const avaClear = $("#ava-clear");
+  if (avaClear) avaClear.addEventListener("click", () => { state.mapFocus = null; state.mapAva.clear(); renderMap(); });
   const clear = $("#map-clear");
-  if (clear) clear.addEventListener("click", () => { state.mapFocus = null; state.mapWine.clear(); state.mapKnown.clear(); renderMap(); });
+  if (clear) clear.addEventListener("click", () => { state.mapFocus = null; state.mapWine.clear(); state.mapKnown.clear(); state.mapAva.clear(); renderMap(); });
 }
 function toggleSet(set, key) { set.has(key) ? set.delete(key) : set.add(key); }
 
@@ -774,6 +942,8 @@ function encodeState() {
   if (!(state.sort.key === "prestige" && state.sort.dir === -1)) p.set("sort", `${state.sort.key}:${state.sort.dir}`);
   if (state.mapWine.size) p.set("wine", [...state.mapWine].join(","));
   if (state.mapKnown.size) p.set("known", [...state.mapKnown].join(","));
+  if (state.mapAva.size) p.set("ava", [...state.mapAva].join("~"));
+  if (state.tableTags.size) p.set("tags", [...state.tableTags].join(","));
   if (!state.mapTopOnly) p.set("all", "1");
   if (state.mapFocus) p.set("focus", state.mapFocus);
   return p.toString();
@@ -787,7 +957,8 @@ function applyHash() {
   // reset persisted state to defaults, then layer on whatever the hash specifies
   state.view = "table"; state.valley = "All"; state.query = "";
   state.grouped = false; state.sort = { key: "prestige", dir: -1 };
-  state.mapWine = new Set(); state.mapKnown = new Set(); state.mapFocus = null;
+  state.mapWine = new Set(); state.mapKnown = new Set(); state.mapAva = new Set();
+  state.tableTags = new Set(); state.mapFocus = null;
   state.mapTopOnly = true;
   pendingDrawer = null;
   const raw = location.hash.slice(1);
@@ -807,6 +978,8 @@ function applyHash() {
   if (sort) { const [k, d] = sort.split(":"); if (k) state.sort = { key: k, dir: Number(d) === 1 ? 1 : -1 }; }
   if (p.get("wine")) state.mapWine = new Set(p.get("wine").split(",").filter(Boolean));
   if (p.get("known")) state.mapKnown = new Set(p.get("known").split(",").filter(Boolean));
+  if (p.get("ava")) state.mapAva = new Set(p.get("ava").split("~").filter(Boolean));
+  if (p.get("tags")) state.tableTags = new Set(p.get("tags").split(",").filter(Boolean));
   if (p.get("all") === "1") state.mapTopOnly = false;
   const focus = p.get("focus");
   if (focus && WINERIES.some((w) => w.slug === focus)) state.mapFocus = focus;
@@ -831,3 +1004,16 @@ if (pendingDrawer) openDrawer(pendingDrawer);
 window.addEventListener("hashchange", () => { restoreFromHash(); });
 // The browser tries to scroll to a matching element id on load — undo that.
 window.addEventListener("load", () => setTimeout(() => window.scrollTo(0, 0), 0));
+// Re-render when crossing the phone/desktop breakpoint (table ⇄ card layout).
+let _wasSmall = isSmallScreen(), _resizeT = null;
+window.addEventListener("resize", () => {
+  clearTimeout(_resizeT);
+  _resizeT = setTimeout(() => {
+    const small = isSmallScreen();
+    if (small !== _wasSmall) {
+      _wasSmall = small;
+      if (state.view === "table") renderTable();
+      if (state.view === "map" && map) renderMap();
+    }
+  }, 180);
+});

@@ -174,7 +174,7 @@ td.group-cell { max-width: 200px; }
 td.prestige-cell { white-space: nowrap; }
 
 /* Table controls (flat / grouped toggle) */
-.table-controls { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.table-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 12px; }
 .seg.small .chip { font-size: 12.5px; padding: 5px 12px; }
 .link-btn { background: none; border: 0; color: var(--gold); font: inherit; font-size: 13px; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 2px; }
 .link-btn:hover { color: var(--ink); }
@@ -225,6 +225,49 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .fchip { border: 1px solid var(--hairline); background: var(--card); color: var(--ink-2); border-radius: 999px; padding: 4px 11px; font: inherit; font-size: 12.5px; cursor: pointer; }
 .fchip:hover { border-color: var(--ink-2); color: var(--ink); }
 .fchip.active { background: var(--ink); border-color: var(--ink); color: var(--surface); font-weight: 600; }
+/* AVA multi-picker dropdown */
+.ava-picker { position: relative; }
+.ava-picker > summary { list-style: none; user-select: none; }
+.ava-picker > summary::-webkit-details-marker { display: none; }
+.ava-menu {
+  position: absolute; z-index: 1200; top: calc(100% + 5px); left: 0; min-width: 180px; max-height: 260px; overflow-y: auto;
+  background: var(--card); border: 1px solid var(--hairline); border-radius: 10px; padding: 6px;
+  box-shadow: 0 6px 20px rgba(36, 29, 26, 0.22); display: flex; flex-direction: column; gap: 1px;
+}
+.ava-opt { display: flex; align-items: center; gap: 7px; padding: 5px 8px; border-radius: 6px; font-size: 13px; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.ava-opt:hover { background: var(--hover, rgba(0,0,0,0.05)); color: var(--ink); }
+.ava-opt input { accent-color: var(--gold); margin: 0; }
+.ava-menu .link-btn { margin: 4px 6px 2px; align-self: flex-start; }
+/* Table quick-filter chips */
+.table-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: -4px 0 14px; }
+.ava-col { color: var(--ink-2); font-size: 13px; white-space: nowrap; }
+
+/* Mobile card list (tagline-forward; tap a card for the full drawer) */
+.sort-select { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+.sort-select select { font: inherit; font-size: 13px; text-transform: none; letter-spacing: 0; font-weight: 500; padding: 4px 6px; border-radius: 8px; border: 1px solid var(--hairline); background: var(--card); color: var(--ink); }
+.fchip.sort-dir { padding: 4px 10px; }
+.card-list { display: flex; flex-direction: column; gap: 10px; }
+.card-region { margin-bottom: 10px; }
+.card-region > .card-list { margin-top: 8px; }
+.card-region .region-head { display: flex; align-items: center; gap: 7px; padding: 8px 2px; cursor: pointer; font-family: var(--serif); }
+.card-region .region-head .rcount { margin-left: auto; font-family: var(--sans); font-size: 12px; color: var(--muted); }
+.wcard {
+  display: flex; gap: 12px; padding: 12px; background: var(--card);
+  border: 1px solid var(--hairline); border-radius: 12px; cursor: pointer;
+  box-shadow: 0 1px 3px rgba(36, 29, 26, 0.06); -webkit-tap-highlight-color: transparent;
+}
+.wcard:active { transform: scale(0.994); }
+.wc-thumb { width: 58px; height: 58px; flex: 0 0 58px; border-radius: 9px; object-fit: cover; background: var(--surface); }
+.wc-thumb.placeholder { display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.wc-body { flex: 1 1 auto; min-width: 0; }
+.wc-top { display: flex; align-items: baseline; gap: 7px; }
+.wc-top .dot { flex: 0 0 auto; align-self: center; }
+.wc-name { font-family: var(--serif); font-size: 16px; font-weight: 600; line-height: 1.15; }
+.wc-stars { margin-left: auto; font-size: 11px; white-space: nowrap; flex: 0 0 auto; }
+.wc-tag { margin: 5px 0 0; font-size: 14px; color: var(--ink); line-height: 1.35; }
+.wc-meta { display: flex; flex-wrap: wrap; align-items: center; margin-top: 7px; font-size: 12.5px; color: var(--muted); }
+.wc-field { white-space: nowrap; }
+.wc-field + .wc-field::before { content: "·"; margin: 0 7px; color: var(--hairline); }
 
 /* Logo map markers */
 .logo-marker { background: none; border: 0; }
@@ -233,22 +276,26 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
   display: flex; align-items: center; justify-content: center; overflow: hidden;
   box-shadow: 0 2px 8px rgba(36, 29, 26, 0.45); transition: transform 0.1s ease;
 }
-.logo-marker .lm.modern { border-color: #7c3aed; }   /* Modern architecture */
-.logo-marker .lm.classic { border-color: #2a9d8f; }  /* Classic architecture */
-.logo-marker .lm img { width: 100%; height: 100%; object-fit: contain; padding: 2px; box-sizing: border-box; }
+.logo-marker .lm.modern { border-color: #5170a3; }   /* Modern architecture — muted slate blue */
+.logo-marker .lm.classic { border-color: #a75d3a; }  /* Classic architecture — warm sienna */
+/* Top 25 = a gold halo outside the arch border (the two can coexist). */
+.logo-marker .lm.top { box-shadow: 0 0 0 3px #e0a92e, 0 2px 8px rgba(36, 29, 26, 0.45); }
+/* Percentage padding keeps the logo inside the circle's inscribed square so
+   square/edge-to-edge logos don't get clipped by the round crop. */
+.logo-marker .lm img { width: 100%; height: 100%; object-fit: contain; padding: 15%; box-sizing: border-box; }
 .logo-marker .lm .mono { font-family: var(--serif); font-weight: 700; font-size: 22px; color: var(--ink); letter-spacing: 0.5px; }
 .logo-marker:hover .lm { transform: scale(1.14); }
-/* corner symbol badges (Top 25, Gardens) */
+/* corner symbol badge (Gardens) */
 .pin-badge {
   position: absolute; width: 18px; height: 18px; border-radius: 50%; background: var(--card);
   display: flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1;
   box-shadow: 0 1px 3px rgba(0,0,0,0.35);
 }
-.pin-star { top: -3px; right: -3px; color: #e0a92e; }
-.pin-garden { top: -3px; left: -3px; color: #2f8f4e; font-size: 11px; }
+.pin-garden { top: -3px; right: -3px; color: #2f8f4e; font-size: 11px; }
 @media (max-width: 560px) {
   .pin-badge { width: 14px; height: 14px; font-size: 9px; }
   .pin-garden { font-size: 8px; }
+  .logo-marker .lm.top { box-shadow: 0 0 0 2px #e0a92e, 0 2px 8px rgba(36, 29, 26, 0.45); }
 }
 
 /* District / AVA labels on the map */
@@ -286,8 +333,9 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .map-legend .lg-star { color: #e0a92e; margin-right: 3px; }
 .map-legend .lg-flower { color: #2f8f4e; margin-right: 3px; }
 .map-legend .lg-ring { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 2.5px solid; vertical-align: -2px; margin-right: 3px; }
-.map-legend .lg-ring.modern { border-color: #7c3aed; }
-.map-legend .lg-ring.classic { border-color: #2a9d8f; }
+.map-legend .lg-ring.modern { border-color: #5170a3; }
+.map-legend .lg-ring.classic { border-color: #a75d3a; }
+.map-legend .lg-ring.top { border-color: #e0a92e; }
 .popup-card { width: 230px; font-family: var(--sans); }
 .popup-card img { width: 100%; height: 110px; object-fit: cover; border-radius: 6px; display: block; margin-bottom: 8px; }
 .popup-card b { font-family: var(--serif); font-size: 15px; }
@@ -425,16 +473,18 @@ td.wine-cell .sub { display: block; color: var(--muted); font-size: 12px; }
   .w-name { min-width: 0; }
   .w-name b { white-space: normal; overflow-wrap: anywhere; }
   #awards-view .winery-link, #awards-view td.wine-cell b { overflow-wrap: anywhere; white-space: normal; }
-  /* main table: keep Winery / Prestige / Valley / Bottle $ (Group, Founded, etc. live in the drawer) */
-  #table-view th:nth-child(4), #table-view td:nth-child(4),
+  /* main table (tablet): keep Winery / Prestige / Valley / AVA / Bottle $
+     (Group, Founded, Famous-for, Vibe, Visits, Story live in the drawer).
+     Cols: 1 Winery 2 Prestige 3 Valley 4 AVA 5 Group 6 Founded 7 Famous 8 Vibe 9 Bottle$ 10 Visits 11 Story */
   #table-view th:nth-child(5), #table-view td:nth-child(5),
   #table-view th:nth-child(6), #table-view td:nth-child(6),
   #table-view th:nth-child(7), #table-view td:nth-child(7),
-  #table-view th:nth-child(9), #table-view td:nth-child(9),
-  #table-view th:nth-child(10), #table-view td:nth-child(10) { display: none; }
+  #table-view th:nth-child(8), #table-view td:nth-child(8),
+  #table-view th:nth-child(10), #table-view td:nth-child(10),
+  #table-view th:nth-child(11), #table-view td:nth-child(11) { display: none; }
   #table-view th:nth-child(2), #table-view td:nth-child(2) { width: 90px; }
-  #table-view th:nth-child(3), #table-view td:nth-child(3) { width: 72px; }
-  #table-view th:nth-child(8), #table-view td:nth-child(8) { width: 84px; }
+  #table-view th:nth-child(3), #table-view td:nth-child(3) { width: 68px; }
+  #table-view th:nth-child(9), #table-view td:nth-child(9) { width: 84px; }
   .valley-tag { padding: 2px 8px; font-size: 11px; }
   /* Top Wines: drop List, Vintage, Price, Valley → Rank/Wine/Score/Winery */
   #awards-view th:nth-child(2), #awards-view td:nth-child(2),
@@ -456,10 +506,7 @@ td.wine-cell .sub { display: block; color: var(--muted); font-size: 12px; }
   .w-name { gap: 8px; }
   .w-name b { font-size: 14.5px; }
   .thumb { width: 38px; height: 30px; }
-  /* main table: also drop Bottle $ → Winery/Prestige/Valley */
-  #table-view th:nth-child(8), #table-view td:nth-child(8) { display: none; }
-  #table-view th:nth-child(2), #table-view td:nth-child(2) { width: 82px; }
-  #table-view th:nth-child(3), #table-view td:nth-child(3) { width: 66px; }
+  /* (≤560 renders the card layout, not the table — see wineCard/renderTable.) */
   /* Top Wines: also drop Score → Rank/Wine/Winery */
   #awards-view th:nth-child(5), #awards-view td:nth-child(5) { display: none; }
   #awards-view th:nth-child(8), #awards-view td:nth-child(8) { width: 120px; }
