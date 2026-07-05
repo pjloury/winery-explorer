@@ -15,6 +15,7 @@ const state = {
   mapWine: new Set(),
   mapKnown: new Set(),
   mapFocus: null,
+  mapTopOnly: true,
 };
 
 const fmtPrice = (w) => `$${w.priceRange[0]}–$${w.priceRange[1]}`;
@@ -300,6 +301,42 @@ function initMap() {
     maxZoom: 18,
   }).addTo(map);
   markerLayer = L.layerGroup().addTo(map);
+  // Overlaps depend on zoom (pan preserves spacing), so re-separate after each zoom.
+  map.on("zoomend", () => separateMarkers(mapEntries));
+}
+
+// Nudge overlapping pins apart in screen space (keeping them near their true spot)
+// so large markers stay legible and none is obscured.
+let mapEntries = [];
+function separateMarkers(entries) {
+  if (!map || !entries || entries.length < 2 || state.mapFocus) return;
+  const MIN = 52;   // min center-to-center px (pin ≈ 46px + gap)
+  const MAXD = 70;  // cap how far a pin may drift from its true location
+  const pts = entries.map((e) => map.latLngToLayerPoint(e.latlng));
+  const orig = pts.map((p) => p.clone());
+  for (let iter = 0; iter < 140; iter++) {
+    let moved = false;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        let dx = pts[j].x - pts[i].x, dy = pts[j].y - pts[i].y;
+        let d = Math.sqrt(dx * dx + dy * dy);
+        if (d === 0) { dx = 0; dy = 1; d = 1; }
+        if (d < MIN) {
+          const push = (MIN - d) / 2, ux = dx / d, uy = dy / d;
+          pts[i].x -= ux * push; pts[i].y -= uy * push;
+          pts[j].x += ux * push; pts[j].y += uy * push;
+          moved = true;
+        }
+      }
+    }
+    if (!moved) break;
+  }
+  entries.forEach((e, i) => {
+    let dx = pts[i].x - orig[i].x, dy = pts[i].y - orig[i].y;
+    const dd = Math.sqrt(dx * dx + dy * dy);
+    if (dd > MAXD) { dx = dx / dd * MAXD; dy = dy / dd * MAXD; }
+    if (e.marker._icon) L.DomUtil.setPosition(e.marker._icon, L.point(orig[i].x + dx, orig[i].y + dy));
+  });
 }
 
 // Which wineries land on the map: valley + search always apply. If any map
@@ -308,12 +345,10 @@ function initMap() {
 // The wineries currently in scope on the map: valley + search + wine/known-for
 // filters; top-N by prestige when no filter is active. (Ignores single-winery focus.)
 function mapCandidates() {
-  const base = filtered();
-  const filtersActive = state.mapWine.size || state.mapKnown.size;
-  return base.filter((w) => {
+  return filtered().filter((w) => {
     if (state.mapWine.size && ![...state.mapWine].some((t) => w._wineTypes.has(t))) return false;
     if (state.mapKnown.size && ![...state.mapKnown].some((t) => w._knownFor.has(t))) return false;
-    if (!filtersActive && w._rank > MAP_TOP_N) return false;
+    if (state.mapTopOnly && w._rank > MAP_TOP_N) return false;
     return true;
   });
 }
@@ -333,7 +368,7 @@ function markerIcon(w) {
   return L.divIcon({
     className: "logo-marker",
     html: `<div class="lm ${w.valley}" title="${w.name}">${inner}</div>`,
-    iconSize: [38, 38], iconAnchor: [19, 19], popupAnchor: [0, -20],
+    iconSize: [46, 46], iconAnchor: [23, 23], popupAnchor: [0, -24],
   });
 }
 
@@ -342,6 +377,7 @@ function renderMap() {
   markerLayer.clearLayers();
   const list = mapList();
   let focusMarker = null;
+  mapEntries = [];
   list.forEach((w) => {
     const m = L.marker([w.lat, w.lng], { icon: markerIcon(w), riseOnHover: true });
     const img = propertyImg(w);
@@ -354,8 +390,9 @@ function renderMap() {
         ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
         <button onclick="openDrawer('${w.slug}')">Full story →</button>
       </div>`, { maxWidth: 288 });
-    m.bindTooltip(w.name, { direction: "top", offset: [0, -20] });
+    m.bindTooltip(w.name, { direction: "top", offset: [0, -24] });
     markerLayer.addLayer(m);
+    mapEntries.push({ marker: m, latlng: L.latLng(w.lat, w.lng) });
     if (state.mapFocus === w.slug) focusMarker = m;
   });
   if (state.mapFocus && focusMarker) {
@@ -363,14 +400,12 @@ function renderMap() {
     map.setView([w.lat, w.lng], 13, { animate: false });
     focusMarker.openPopup();
   } else if (list.length) {
-    map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.15));
+    map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.15), { animate: false });
+    separateMarkers(mapEntries);
   }
   renderMapFilters();
   renderMapIndex();
-  const filtersActive = state.mapWine.size || state.mapKnown.size;
-  $(".count").textContent = state.mapFocus ? "1 winery"
-    : filtersActive ? `${list.length} match${list.length === 1 ? "" : "es"}`
-    : `Top ${list.length} by prestige`;
+  $(".count").textContent = state.mapFocus ? "1 winery" : `${list.length} winer${list.length === 1 ? "y" : "ies"} shown`;
   writeHash();
 }
 
@@ -403,10 +438,16 @@ function renderMapFilters() {
   const knownChips = KNOWN_FOR.map((t) =>
     `<button class="fchip ${state.mapKnown.has(t.key) ? "active" : ""}" data-known="${t.key}">${t.label}</button>`).join("");
   const active = state.mapWine.size || state.mapKnown.size;
-  bar.innerHTML = `
-    <div class="fgroup"><span class="flabel">Wine</span>${wineChips}</div>
-    <div class="fgroup"><span class="flabel">Known for</span>${knownChips}</div>
-    ${active ? `<button class="link-btn" id="map-clear">Clear · back to top ${MAP_TOP_N}</button>` : ""}`;
+  const showChips = `<span class="fgroup"><span class="flabel">Show</span>`
+    + `<button class="fchip ${state.mapTopOnly ? "active" : ""}" data-top="1">★ Top ${MAP_TOP_N}</button>`
+    + `<button class="fchip ${!state.mapTopOnly ? "active" : ""}" data-top="0">All ${WINERIES.length}</button></span>`;
+  bar.innerHTML = showChips + `
+    <span class="fgroup"><span class="flabel">Wine</span>${wineChips}</span>
+    <span class="fgroup"><span class="flabel">Known for</span>${knownChips}</span>
+    ${active ? `<button class="link-btn" id="map-clear">Clear filters</button>` : ""}`;
+  bar.querySelectorAll("[data-top]").forEach((b) => b.addEventListener("click", () => {
+    state.mapFocus = null; state.mapTopOnly = b.dataset.top === "1"; renderMap();
+  }));
   bar.querySelectorAll("[data-wine]").forEach((b) => b.addEventListener("click", () => {
     state.mapFocus = null; toggleSet(state.mapWine, b.dataset.wine); renderMap();
   }));
@@ -674,6 +715,7 @@ function encodeState() {
   if (!(state.sort.key === "prestige" && state.sort.dir === -1)) p.set("sort", `${state.sort.key}:${state.sort.dir}`);
   if (state.mapWine.size) p.set("wine", [...state.mapWine].join(","));
   if (state.mapKnown.size) p.set("known", [...state.mapKnown].join(","));
+  if (!state.mapTopOnly) p.set("all", "1");
   if (state.mapFocus) p.set("focus", state.mapFocus);
   return p.toString();
 }
@@ -687,6 +729,7 @@ function applyHash() {
   state.view = "table"; state.valley = "All"; state.query = "";
   state.grouped = false; state.sort = { key: "prestige", dir: -1 };
   state.mapWine = new Set(); state.mapKnown = new Set(); state.mapFocus = null;
+  state.mapTopOnly = true;
   pendingDrawer = null;
   const raw = location.hash.slice(1);
   if (!raw) return;
@@ -705,6 +748,7 @@ function applyHash() {
   if (sort) { const [k, d] = sort.split(":"); if (k) state.sort = { key: k, dir: Number(d) === 1 ? 1 : -1 }; }
   if (p.get("wine")) state.mapWine = new Set(p.get("wine").split(",").filter(Boolean));
   if (p.get("known")) state.mapKnown = new Set(p.get("known").split(",").filter(Boolean));
+  if (p.get("all") === "1") state.mapTopOnly = false;
   const focus = p.get("focus");
   if (focus && WINERIES.some((w) => w.slug === focus)) state.mapFocus = focus;
 }
