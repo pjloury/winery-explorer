@@ -416,9 +416,13 @@ function markerIcon(w) {
   const inner = logo
     ? `<img src="${logo}" alt="${w.name}">`
     : `<span class="mono" style="font-size:${Math.round(SZ * 0.37)}px">${monogram(w)}</span>`;
+  // ring color = architecture; gold ★ = Top 25; green ✿ = gardens (a winery can be all three)
+  const arch = w._knownFor.has("arch-modern") ? "modern" : w._knownFor.has("arch-classic") ? "classic" : "";
+  const star = w._rank <= MAP_TOP_N ? `<span class="pin-badge pin-star" title="Top 25 by prestige">★</span>` : "";
+  const garden = w._knownFor.has("gardens") ? `<span class="pin-badge pin-garden" title="Known for gardens & grounds">✿</span>` : "";
   return L.divIcon({
     className: "logo-marker",
-    html: `<div class="lm ${w.valley}" style="width:${SZ}px;height:${SZ}px" title="${w.name}">${inner}</div>`,
+    html: `<div class="lm ${arch}" style="width:${SZ}px;height:${SZ}px" title="${w.name}">${inner}</div>${star}${garden}`,
     iconSize: [SZ, SZ], iconAnchor: [SZ / 2, SZ / 2], popupAnchor: [0, -(SZ / 2 + 3)],
   });
 }

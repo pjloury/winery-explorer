@@ -229,15 +229,23 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 /* Logo map markers */
 .logo-marker { background: none; border: 0; }
 .logo-marker .lm {
-  width: 60px; height: 60px; border-radius: 50%; background: var(--card); border: 1.5px solid var(--hairline);
+  width: 60px; height: 60px; border-radius: 50%; background: var(--card); border: 2px solid var(--hairline);
   display: flex; align-items: center; justify-content: center; overflow: hidden;
   box-shadow: 0 2px 8px rgba(36, 29, 26, 0.45); transition: transform 0.1s ease;
 }
-.logo-marker .lm.Napa { border-color: var(--napa); }
-.logo-marker .lm.Sonoma { border-color: var(--sonoma); }
+.logo-marker .lm.modern { border-color: #7c3aed; }   /* Modern architecture */
+.logo-marker .lm.classic { border-color: #2a9d8f; }  /* Classic architecture */
 .logo-marker .lm img { width: 100%; height: 100%; object-fit: contain; padding: 2px; box-sizing: border-box; }
 .logo-marker .lm .mono { font-family: var(--serif); font-weight: 700; font-size: 22px; color: var(--ink); letter-spacing: 0.5px; }
 .logo-marker:hover .lm { transform: scale(1.14); }
+/* corner symbol badges (Top 25, Gardens) */
+.pin-badge {
+  position: absolute; width: 18px; height: 18px; border-radius: 50%; background: var(--card);
+  display: flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+}
+.pin-star { top: -3px; right: -3px; color: #e0a92e; }
+.pin-garden { top: -3px; left: -3px; color: #2f8f4e; font-size: 11px; }
 
 /* District / AVA labels on the map */
 .district-label span {
@@ -271,6 +279,11 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; border: 2px solid var(--card); box-shadow: 0 0 0 1px var(--hairline); vertical-align: -1px; }
 .dot.napa { background: var(--napa); }
 .dot.sonoma { background: var(--sonoma); }
+.map-legend .lg-star { color: #e0a92e; margin-right: 3px; }
+.map-legend .lg-flower { color: #2f8f4e; margin-right: 3px; }
+.map-legend .lg-ring { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 2.5px solid; vertical-align: -2px; margin-right: 3px; }
+.map-legend .lg-ring.modern { border-color: #7c3aed; }
+.map-legend .lg-ring.classic { border-color: #2a9d8f; }
 .popup-card { width: 230px; font-family: var(--sans); }
 .popup-card img { width: 100%; height: 110px; object-fit: cover; border-radius: 6px; display: block; margin-bottom: 8px; }
 .popup-card b { font-family: var(--serif); font-size: 15px; }
