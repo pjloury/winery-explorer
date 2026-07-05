@@ -7,7 +7,7 @@ const $ = (sel) => document.querySelector(sel);
 
 const state = {
   view: "table",
-  valley: "All",
+  valleys: new Set(["Napa", "Sonoma"]),  // both on by default; unselect one to focus
   query: "",
   sort: { key: "prestige", dir: -1 },
   grouped: false,
@@ -18,8 +18,13 @@ const state = {
   mapAvaOpen: false,
   mapFocus: null,
   mapTopOnly: true,
+  tableTopOnly: true,    // table/cards default to the Top 25, like the map
   tableTags: new Set(),
   cardFields: new Set(["ava", "founded", "price"]),
+  filtersOpen: false,    // mobile: filter panel collapsed by default
+  mapFiltersOpen: false,
+  navOpen: false,
+  searchOpen: false,
 };
 
 const fmtPrice = (w) => `$${w.priceRange[0]}–$${w.priceRange[1]}`;
@@ -77,18 +82,13 @@ const TABLE_CHIPS = [
 
 function enrichWineries() {
   WINERIES.forEach((w) => {
-    // Prestige rating
     const a = ACCLAIM_MAP[w.slug] || 3;
     const apps = (window.WS_TOP100 || []).filter((e) => e.winerySlug === w.slug);
     let ws = 0;
     apps.forEach((e) => { ws += (101 - e.rank) * 0.15 + Math.max(0, e.score - 90); });
     ws = Math.min(ws, 14);
-    let bonus = 0;
-    if (w.storyTags.includes("judgment-of-paris")) bonus += 5;
-    if (w.storyTags.includes("architecture")) bonus += 2;
     w._acclaim = a;
     w._wsCount = apps.length;
-    w._prestige = Math.round((a * 20 + ws + bonus) * 10) / 10;
     w._stars = Math.min(5, a + (apps.length ? 0.5 : 0));
 
     // Wine types (from the famous-wines list)
@@ -102,8 +102,20 @@ function enrichWineries() {
         || w.storyTags.some((t) => ["resurrected", "site-reuse", "judgment-of-paris"].includes(t))) kf.add("history");
     Object.keys(KFX).forEach((cat) => { if (KFX[cat].includes(w.slug)) kf.add(cat); });
     w._knownFor = kf;
+
+    // Prestige: editorial acclaim tier is the backbone; then nudge up the wineries
+    // with more award-winning wines, notable architecture, gardens, and real photos.
+    let bonus = 0;
+    if (w.storyTags.includes("judgment-of-paris")) bonus += 5;
+    bonus += Math.min(apps.length, 4) * 1.5;              // more Wine Spectator Top-100 wines
+    bonus += Math.min((w.awards || []).length, 3) * 0.8; // other awards & accolades
+    if (kf.has("arch-modern") || kf.has("arch-classic")) bonus += 2.5; // notable architecture
+    if (kf.has("gardens")) bonus += 2.5;                 // gardens & grounds
+    if (kf.has("food-art")) bonus += 1;
+    if (propertyImg(w)) bonus += 2;                      // has photography
+    w._prestige = Math.round((a * 20 + ws + bonus) * 10) / 10;
   });
-  // Prestige rank (1 = most prestigious) for the map's "top N" set
+  // Prestige rank (1 = most prestigious) for the "top N" set
   [...WINERIES].sort((x, y) => y._prestige - x._prestige).forEach((w, i) => { w._rank = i + 1; });
 }
 enrichWineries();
@@ -178,7 +190,7 @@ function regionOf(w) {
 function filtered() {
   const q = state.query.trim().toLowerCase();
   return WINERIES.filter((w) => {
-    if (state.valley !== "All" && w.valley !== state.valley) return false;
+    if (!state.valleys.has(w.valley)) return false;
     if (!q) return true;
     const hay = [
       w.name, w.ava, w.vibe, w.owner, w.group, w.founder, w.funFact,
@@ -196,6 +208,7 @@ function sorted(list) {
   return [...list].sort((a, b) => {
     let va, vb;
     if (key === "name") { va = a.name; vb = b.name; return va.localeCompare(vb) * dir; }
+    if (key === "lat") { return a.lat === b.lat ? b._prestige - a._prestige : (b.lat - a.lat) * dir; } // dir=1 → north first
     if (key === "ava") { const c = a.ava.localeCompare(b.ava); return c ? c * dir : b._prestige - a._prestige; }
     if (key === "group") {
       // corporate groups first, clustered by name; independents after; prestige within
@@ -269,11 +282,17 @@ function wineCard(w) {
   </article>`;
 }
 
+const FUNNEL = `<svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" style="vertical-align:-1px"><path d="M1 2h14l-5.3 6.2V13l-3.4 1.6V8.2z" fill="currentColor"/></svg>`;
+const SORT_OPTS = [["prestige", "Rating"], ["name", "Name"], ["lat", "North → South"], ["founded", "Founded"], ["price", "Price"], ["ava", "AVA"]];
+
 function renderTable() {
-  const list = sorted(applyTableChips(filtered()));
+  let list = sorted(applyTableChips(filtered()));
   const arrow = (k) => state.sort.key === k ? `<span class="arrow">${state.sort.dir === 1 ? "▲" : "▼"}</span>` : "";
   const searching = !!state.query.trim();
   const mobile = isSmallScreen();
+  // Default to the Top 25 (by prestige); an active quick-filter or search reveals every match.
+  const tblFiltersActive = state.tableTags.size || searching;
+  if (state.tableTopOnly && !tblFiltersActive) list = list.filter((w) => w._rank <= MAP_TOP_N);
 
   // Group the list once (north→south) for the region view; both layouts reuse it.
   const groupedOrdered = () => {
@@ -284,30 +303,46 @@ function renderTable() {
       .sort((a, b) => b.lat - a.lat);
   };
 
-  const controls = `
-    <div class="table-controls">
-      <span class="seg small">
-        <button class="chip ${!state.grouped ? "active" : ""}" data-group="0">Flat list</button>
-        <button class="chip ${state.grouped ? "active" : ""}" data-group="1">By region · N→S</button>
-      </span>
-      ${mobile ? `<label class="sort-select">Sort
-        <select id="card-sort">${[["prestige", "Prestige"], ["name", "Name"], ["founded", "Founded"], ["price", "Price"], ["ava", "AVA"]]
-          .map(([k, l]) => `<option value="${k}" ${state.sort.key === k ? "selected" : ""}>${l}</option>`).join("")}</select></label>
-        <button class="fchip sort-dir" id="card-sort-dir" title="Reverse order">${state.sort.dir === 1 ? "▲" : "▼"}</button>` : ""}
-      ${state.grouped && !searching ? `<button class="link-btn" id="toggle-all-regions">${state.expandedRegions.size ? "Collapse all" : "Expand all"}</button>` : ""}
-    </div>
-    <div class="table-chips">
-      <span class="flabel">Filter</span>
+  const showToggle = `<span class="seg small">
+      <button class="chip ${state.tableTopOnly ? "active" : ""}" data-ttop="1">★ Top ${MAP_TOP_N}</button>
+      <button class="chip ${!state.tableTopOnly ? "active" : ""}" data-ttop="0">All ${WINERIES.length}</button></span>`;
+  const groupSeg = `<span class="seg small">
+      <button class="chip ${!state.grouped ? "active" : ""}" data-group="0">Flat list</button>
+      <button class="chip ${state.grouped ? "active" : ""}" data-group="1">By region</button></span>`;
+  const expandAll = state.grouped && !searching
+    ? `<button class="link-btn" id="toggle-all-regions">${state.expandedRegions.size ? "Collapse all" : "Expand all"}</button>` : "";
+  const filterChips = `<div class="table-chips">
+      <span class="flabel">Show only</span>
       ${TABLE_CHIPS.map((c) => `<button class="fchip ${state.tableTags.has(c.key) ? "active" : ""}" data-tag="${c.key}">${c.label}</button>`).join("")}
       ${state.tableTags.size ? `<button class="link-btn" id="table-clear">Clear</button>` : ""}
     </div>`;
 
+  // Desktop control bar (sort happens via clickable column headers).
+  const controls = `
+    <div class="table-controls">${groupSeg}${showToggle}${expandAll}</div>
+    ${filterChips}`;
+
   if (mobile) {
-    // ── Card layout ──
-    const fieldChooser = `<div class="table-chips card-fields">
-      <span class="flabel">Details</span>
-      ${CARD_FIELDS.map((f) => `<button class="fchip ${state.cardFields.has(f.key) ? "active" : ""}" data-field="${f.key}">${f.label}</button>`).join("")}
-    </div>`;
+    // ── Card layout: compact bar (sort + filter icon), rest folds into a panel ──
+    const activeCount = state.tableTags.size;
+    const sortControl = `<label class="sort-select">Sort
+        <select id="card-sort">${SORT_OPTS.map(([k, l]) => `<option value="${k}" ${state.sort.key === k ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+        <button class="fchip sort-dir" id="card-sort-dir" title="Reverse order">${state.sort.dir === 1 ? "▲" : "▼"}</button>`;
+    const detailChips = `<div class="table-chips card-fields">
+        <span class="flabel">Card details</span>
+        ${CARD_FIELDS.map((f) => `<button class="fchip ${state.cardFields.has(f.key) ? "active" : ""}" data-field="${f.key}">${f.label}</button>`).join("")}
+      </div>`;
+    const panel = state.filtersOpen ? `<div class="filter-panel">
+        <div class="fp-row"><span class="flabel">Show</span>${showToggle}</div>
+        <div class="fp-row"><span class="flabel">Group</span>${groupSeg}${expandAll}</div>
+        ${filterChips}
+        ${detailChips}
+      </div>` : "";
+    const mobileControls = `
+      <div class="table-controls">
+        ${sortControl}
+        <button class="fchip filter-toggle ${activeCount || state.filtersOpen ? "active" : ""}" id="filters-toggle" aria-expanded="${state.filtersOpen}">${FUNNEL} Filters${activeCount ? ` · ${activeCount}` : ""}</button>
+      </div>${panel}`;
     let cards;
     if (!list.length) {
       cards = `<p class="empty-row">No wineries match.</p>`;
@@ -326,9 +361,9 @@ function renderTable() {
         </div>`;
       }).join("");
     }
-    $("#table-view").innerHTML = controls + fieldChooser + cards;
+    $("#table-view").innerHTML = mobileControls + cards;
     attachTableHandlers();
-    $(".count").textContent = `${list.length} of ${WINERIES.length} wineries`;
+    $(".count").textContent = countText(list, tblFiltersActive);
     writeHash();
     return;
   }
@@ -367,8 +402,14 @@ function renderTable() {
     ${body}
   </table></div>`;
   attachTableHandlers();
-  $(".count").textContent = `${list.length} of ${WINERIES.length} wineries`;
+  $(".count").textContent = countText(list, tblFiltersActive);
   writeHash();
+}
+
+function countText(list, filtersActive) {
+  return (state.tableTopOnly && !filtersActive)
+    ? `Top ${list.length} of ${WINERIES.length}`
+    : `${list.length} of ${WINERIES.length} wineries`;
 }
 
 function attachTableHandlers() {
@@ -383,6 +424,11 @@ function attachTableHandlers() {
   document.querySelectorAll("#table-view .chip[data-group]").forEach((b) => {
     b.addEventListener("click", () => { state.grouped = b.dataset.group === "1"; renderTable(); });
   });
+  document.querySelectorAll("#table-view .chip[data-ttop]").forEach((b) => {
+    b.addEventListener("click", () => { state.tableTopOnly = b.dataset.ttop === "1"; renderTable(); });
+  });
+  const filtersToggle = $("#filters-toggle");
+  if (filtersToggle) filtersToggle.addEventListener("click", () => { state.filtersOpen = !state.filtersOpen; renderTable(); });
   document.querySelectorAll("#table-view .fchip[data-tag]").forEach((b) => {
     b.addEventListener("click", () => { toggleSet(state.tableTags, b.dataset.tag); renderTable(); });
   });
@@ -659,11 +705,22 @@ function renderMapFilters() {
   const showChips = `<span class="fgroup"><span class="flabel">Show</span>`
     + `<button class="fchip ${state.mapTopOnly ? "active" : ""}" data-top="1">★ Top ${MAP_TOP_N}</button>`
     + `<button class="fchip ${!state.mapTopOnly ? "active" : ""}" data-top="0">All ${WINERIES.length}</button></span>`;
-  bar.innerHTML = showChips + `
+  const groupsHTML = `
     <span class="fgroup"><span class="flabel">Wine</span>${wineChips}</span>
     <span class="fgroup"><span class="flabel">Known for</span>${knownChips}</span>
     ${avaGroup}
     ${active ? `<button class="link-btn" id="map-clear">Clear filters</button>` : ""}`;
+  if (isSmallScreen()) {
+    // Keep only Show visible; fold Wine/Known-for/AVA behind a filter icon.
+    const count = state.mapWine.size + state.mapKnown.size + state.mapAva.size;
+    bar.innerHTML = showChips
+      + `<button class="fchip filter-toggle ${count || state.mapFiltersOpen ? "active" : ""}" id="map-filters-toggle" aria-expanded="${state.mapFiltersOpen}">${FUNNEL} Filters${count ? ` · ${count}` : ""}</button>`
+      + (state.mapFiltersOpen ? `<div class="map-filter-panel">${groupsHTML}</div>` : "");
+  } else {
+    bar.innerHTML = showChips + groupsHTML;
+  }
+  const mapFiltersToggle = $("#map-filters-toggle");
+  if (mapFiltersToggle) mapFiltersToggle.addEventListener("click", () => { state.mapFiltersOpen = !state.mapFiltersOpen; renderMap(); });
   bar.querySelectorAll("[data-top]").forEach((b) => b.addEventListener("click", () => {
     state.mapFocus = null; state.mapTopOnly = b.dataset.top === "1"; renderMap();
   }));
@@ -759,7 +816,7 @@ function wineColor(name) {
 }
 function renderAwards() {
   const data = (window.WS_TOP100 || []).filter((e) => {
-    if (state.valley !== "All" && e.valley !== state.valley) return false;
+    if (!state.valleys.has(e.valley)) return false;
     if (awardYear !== "All" && e.year !== awardYear) return false;
     if (!awardColor.has(wineColor(e.wine))) return false;
     const q = state.query.trim().toLowerCase();
@@ -906,22 +963,37 @@ function render() {
   writeHash();
 }
 
+const controlsEl = document.querySelector(".controls");
 document.querySelectorAll(".view-toggle button").forEach((b) => {
   b.addEventListener("click", () => {
-    document.querySelectorAll(".view-toggle button").forEach((x) => x.classList.remove("active"));
-    b.classList.add("active");
     state.view = b.dataset.view;
+    state.navOpen = false; controlsEl.classList.remove("nav-open");
+    $("#nav-toggle").setAttribute("aria-expanded", "false");
+    syncControls();
     render();
   });
 });
 document.querySelectorAll(".chip[data-valley]").forEach((c) => {
   c.addEventListener("click", () => {
-    document.querySelectorAll(".chip[data-valley]").forEach((x) => x.classList.remove("active"));
-    c.classList.add("active");
-    state.valley = c.dataset.valley;
+    const v = c.dataset.valley;
+    // both on by default; unselecting one focuses the other. Never allow empty.
+    if (state.valleys.has(v)) { if (state.valleys.size > 1) state.valleys.delete(v); }
+    else state.valleys.add(v);
     state.mapFocus = null;
+    syncControls();
     render();
   });
+});
+$("#nav-toggle").addEventListener("click", () => {
+  state.navOpen = !state.navOpen;
+  controlsEl.classList.toggle("nav-open", state.navOpen);
+  $("#nav-toggle").setAttribute("aria-expanded", String(state.navOpen));
+});
+$("#search-toggle").addEventListener("click", () => {
+  state.searchOpen = !state.searchOpen;
+  controlsEl.classList.toggle("search-open", state.searchOpen);
+  $("#search-toggle").setAttribute("aria-expanded", String(state.searchOpen));
+  if (state.searchOpen) $("#search").focus();
 });
 $("#search").addEventListener("input", (e) => { state.query = e.target.value; state.mapFocus = null; render(); });
 $("#overlay").addEventListener("click", closeDrawer);
@@ -936,7 +1008,7 @@ let applyingHash = false;
 function encodeState() {
   const p = new URLSearchParams();
   if (state.view !== "table") p.set("v", state.view);
-  if (state.valley !== "All") p.set("valley", state.valley);
+  if (state.valleys.size === 1) p.set("valley", [...state.valleys][0]); // both = default, omit
   if (state.query.trim()) p.set("q", state.query.trim());
   if (state.grouped) p.set("grp", "1");
   if (!(state.sort.key === "prestige" && state.sort.dir === -1)) p.set("sort", `${state.sort.key}:${state.sort.dir}`);
@@ -945,6 +1017,7 @@ function encodeState() {
   if (state.mapAva.size) p.set("ava", [...state.mapAva].join("~"));
   if (state.tableTags.size) p.set("tags", [...state.tableTags].join(","));
   if (!state.mapTopOnly) p.set("all", "1");
+  if (!state.tableTopOnly) p.set("tall", "1");
   if (state.mapFocus) p.set("focus", state.mapFocus);
   return p.toString();
 }
@@ -955,11 +1028,11 @@ function writeHash() {
 }
 function applyHash() {
   // reset persisted state to defaults, then layer on whatever the hash specifies
-  state.view = "table"; state.valley = "All"; state.query = "";
+  state.view = "table"; state.valleys = new Set(["Napa", "Sonoma"]); state.query = "";
   state.grouped = false; state.sort = { key: "prestige", dir: -1 };
   state.mapWine = new Set(); state.mapKnown = new Set(); state.mapAva = new Set();
   state.tableTags = new Set(); state.mapFocus = null;
-  state.mapTopOnly = true;
+  state.mapTopOnly = true; state.tableTopOnly = true;
   pendingDrawer = null;
   const raw = location.hash.slice(1);
   if (!raw) return;
@@ -971,7 +1044,7 @@ function applyHash() {
   const p = new URLSearchParams(raw);
   const views = ["table", "map", "awards", "lineage"];
   if (views.includes(p.get("v"))) state.view = p.get("v");
-  if (["Napa", "Sonoma"].includes(p.get("valley"))) state.valley = p.get("valley");
+  if (["Napa", "Sonoma"].includes(p.get("valley"))) state.valleys = new Set([p.get("valley")]);
   if (p.has("q")) state.query = p.get("q") || "";
   if (p.get("grp") === "1") state.grouped = true;
   const sort = p.get("sort");
@@ -981,13 +1054,16 @@ function applyHash() {
   if (p.get("ava")) state.mapAva = new Set(p.get("ava").split("~").filter(Boolean));
   if (p.get("tags")) state.tableTags = new Set(p.get("tags").split(",").filter(Boolean));
   if (p.get("all") === "1") state.mapTopOnly = false;
+  if (p.get("tall") === "1") state.tableTopOnly = false;
   const focus = p.get("focus");
   if (focus && WINERIES.some((w) => w.slug === focus)) state.mapFocus = focus;
 }
 function syncControls() {
   document.querySelectorAll(".view-toggle button").forEach((b) => b.classList.toggle("active", b.dataset.view === state.view));
-  document.querySelectorAll(".chip[data-valley]").forEach((c) => c.classList.toggle("active", c.dataset.valley === state.valley));
+  document.querySelectorAll(".chip[data-valley]").forEach((c) => c.classList.toggle("active", state.valleys.has(c.dataset.valley)));
   $("#search").value = state.query;
+  const ham = $("#nav-toggle");
+  if (ham) ham.textContent = state.view === "map" ? "☰ Map" : state.view === "awards" ? "☰ Top Wines" : state.view === "lineage" ? "☰ Lineage" : "☰ Table";
 }
 function restoreFromHash() {
   applyingHash = true;

@@ -96,6 +96,26 @@ h1 {
 #search::placeholder { color: var(--muted); }
 .count { color: var(--muted); font-size: 13px; margin-left: auto; }
 
+/* Icon buttons (hamburger / search) — shown only on mobile */
+.icon-btn {
+  display: none; align-items: center; justify-content: center; gap: 6px;
+  border: 1px solid var(--hairline); background: var(--card); color: var(--ink);
+  border-radius: 999px; height: 38px; min-width: 38px; padding: 0 10px;
+  font: inherit; font-weight: 650; font-size: 15px; cursor: pointer; flex: 0 0 auto;
+}
+.hamburger { font-size: 14px; }
+.filter-toggle { display: inline-flex; align-items: center; gap: 5px; }
+/* Collapsible filter panels (table cards + map) */
+.filter-panel, .map-filter-panel {
+  display: flex; flex-direction: column; gap: 10px;
+  background: var(--card); border: 1px solid var(--hairline); border-radius: 12px;
+  padding: 12px; margin-bottom: 14px;
+}
+.filter-panel .table-chips, .filter-panel .fp-row { margin: 0; }
+.fp-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.map-filters .map-filter-panel .fgroup { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; width: 100%; }
+.map-filter-panel .flabel { width: 100%; }
+
 /* ── Views ── */
 main { max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
 .view { display: none; }
@@ -498,10 +518,26 @@ td.wine-cell .sub { display: block; color: var(--muted); font-size: 12px; }
 @media (max-width: 560px) {
   h1 { font-size: 21px; }
   .subtitle { font-size: 12.5px; }
-  .view-toggle button { padding: 7px 12px; }
   .chip { padding: 6px 12px; font-size: 13px; }
-  #search { flex-basis: 100%; }
   main { padding: 0 10px 40px; }
+  /* Show icon buttons; move the view tabs into the hamburger dropdown */
+  .icon-btn { display: inline-flex; }
+  .controls { gap: 8px; }
+  .view-toggle { display: none; }
+  .controls.nav-open .view-toggle {
+    display: flex; flex-direction: column; order: 20; flex-basis: 100%; width: 100%;
+    border-radius: 12px; overflow: hidden;
+  }
+  .controls.nav-open .view-toggle button {
+    text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--hairline); font-weight: 600;
+  }
+  .controls.nav-open .view-toggle button:last-child { border-bottom: 0; }
+  .controls.nav-open #nav-toggle { background: var(--ink); color: var(--surface); }
+  /* Search collapses to the 🔍 icon; expands to a full-width row on tap */
+  #search { display: none; }
+  .controls.search-open .search-toggle { background: var(--ink); color: var(--surface); }
+  .controls.search-open #search { display: block; order: 21; flex-basis: 100%; width: 100%; }
+  .count { font-size: 12px; }
   thead th, tbody td { padding: 9px 8px; }
   .w-name { gap: 8px; }
   .w-name b { font-size: 14.5px; }

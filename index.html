@@ -26,17 +26,18 @@
   <h1>🍷 Napa &amp; Sonoma Winery Explorer</h1>
   <p class="subtitle">The top estates of both valleys — founding stories, consolidations &amp; resurrections, famous bottles, vibes, and what a visit costs. Prices and fees are approximate; verify before visiting.</p>
   <div class="controls">
+    <button class="icon-btn hamburger" id="nav-toggle" aria-label="Switch view" aria-expanded="false">☰</button>
     <span class="view-toggle">
       <button data-view="table" class="active">Table</button>
       <button data-view="map">Map</button>
       <button data-view="awards">Top Wines</button>
       <button data-view="lineage">Lineage</button>
     </span>
-    <span class="seg">
-      <button class="chip active" data-valley="All">Both valleys</button>
-      <button class="chip napa" data-valley="Napa">Napa</button>
-      <button class="chip sonoma" data-valley="Sonoma">Sonoma</button>
+    <span class="seg valleys">
+      <button class="chip napa active" data-valley="Napa">Napa</button>
+      <button class="chip sonoma active" data-valley="Sonoma">Sonoma</button>
     </span>
+    <button class="icon-btn search-toggle" id="search-toggle" aria-label="Search" aria-expanded="false">🔍</button>
     <input id="search" type="search" placeholder="Search wines, history, vibe…">
     <span class="count"></span>
   </div>
