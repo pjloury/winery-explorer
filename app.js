@@ -283,6 +283,7 @@ function renderTable() {
     tr.addEventListener("click", () => openDrawer(tr.dataset.slug));
   });
   $(".count").textContent = `${list.length} of ${WINERIES.length} wineries`;
+  writeHash();
 }
 
 /* ── Map view ── */
@@ -369,6 +370,7 @@ function renderMap() {
   $(".count").textContent = state.mapFocus ? "1 winery"
     : filtersActive ? `${list.length} match${list.length === 1 ? "" : "es"}`
     : `Top ${list.length} by prestige`;
+  writeHash();
 }
 
 // Right-side scrollable index: tap a name to isolate that winery on the map.
@@ -594,6 +596,7 @@ function render() {
   if (state.view === "map") { $("#map-view").classList.add("active"); renderMap(); map.invalidateSize(); }
   if (state.view === "awards") renderAwards();
   if (state.view === "lineage") { $("#lineage-view").classList.add("active"); renderLineage(); }
+  writeHash();
 }
 
 document.querySelectorAll(".view-toggle button").forEach((b) => {
@@ -617,14 +620,72 @@ $("#search").addEventListener("input", (e) => { state.query = e.target.value; st
 $("#overlay").addEventListener("click", closeDrawer);
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDrawer(); });
 
-// Deep links: #map, #lineage, or #<winery-slug>
-const hash = location.hash.slice(1);
-if (hash === "map" || hash === "lineage" || hash === "awards") {
-  state.view = hash;
-  document.querySelectorAll(".view-toggle button").forEach((b) =>
-    b.classList.toggle("active", b.dataset.view === hash));
+/* ── URL state: persist view + filters across refresh ──────────────────────
+   The hash holds a compact query string (e.g. #v=map&valley=Napa&wine=Cabernet).
+   Legacy single-token deep links (#map, #lineage, #awards, #<slug>) still work. */
+let pendingDrawer = null;
+let applyingHash = false;
+
+function encodeState() {
+  const p = new URLSearchParams();
+  if (state.view !== "table") p.set("v", state.view);
+  if (state.valley !== "All") p.set("valley", state.valley);
+  if (state.query.trim()) p.set("q", state.query.trim());
+  if (state.grouped) p.set("grp", "1");
+  if (!(state.sort.key === "prestige" && state.sort.dir === -1)) p.set("sort", `${state.sort.key}:${state.sort.dir}`);
+  if (state.mapWine.size) p.set("wine", [...state.mapWine].join(","));
+  if (state.mapKnown.size) p.set("known", [...state.mapKnown].join(","));
+  if (state.mapFocus) p.set("focus", state.mapFocus);
+  return p.toString();
 }
-render();
-if (hash && WINERIES.some((w) => w.slug === hash)) openDrawer(hash);
-// The browser scrolls to a matching element id after load — undo that for view hashes.
-if (hash) window.addEventListener("load", () => setTimeout(() => window.scrollTo(0, 0), 0));
+function writeHash() {
+  if (applyingHash) return; // don't rewrite while restoring from the hash
+  const s = encodeState();
+  history.replaceState(null, "", location.pathname + location.search + (s ? "#" + s : ""));
+}
+function applyHash() {
+  // reset persisted state to defaults, then layer on whatever the hash specifies
+  state.view = "table"; state.valley = "All"; state.query = "";
+  state.grouped = false; state.sort = { key: "prestige", dir: -1 };
+  state.mapWine = new Set(); state.mapKnown = new Set(); state.mapFocus = null;
+  pendingDrawer = null;
+  const raw = location.hash.slice(1);
+  if (!raw) return;
+  if (!raw.includes("=")) { // legacy deep link
+    if (["map", "lineage", "awards", "table"].includes(raw)) state.view = raw;
+    else if (WINERIES.some((w) => w.slug === raw)) pendingDrawer = raw;
+    return;
+  }
+  const p = new URLSearchParams(raw);
+  const views = ["table", "map", "awards", "lineage"];
+  if (views.includes(p.get("v"))) state.view = p.get("v");
+  if (["Napa", "Sonoma"].includes(p.get("valley"))) state.valley = p.get("valley");
+  if (p.has("q")) state.query = p.get("q") || "";
+  if (p.get("grp") === "1") state.grouped = true;
+  const sort = p.get("sort");
+  if (sort) { const [k, d] = sort.split(":"); if (k) state.sort = { key: k, dir: Number(d) === 1 ? 1 : -1 }; }
+  if (p.get("wine")) state.mapWine = new Set(p.get("wine").split(",").filter(Boolean));
+  if (p.get("known")) state.mapKnown = new Set(p.get("known").split(",").filter(Boolean));
+  const focus = p.get("focus");
+  if (focus && WINERIES.some((w) => w.slug === focus)) state.mapFocus = focus;
+}
+function syncControls() {
+  document.querySelectorAll(".view-toggle button").forEach((b) => b.classList.toggle("active", b.dataset.view === state.view));
+  document.querySelectorAll(".chip[data-valley]").forEach((c) => c.classList.toggle("active", c.dataset.valley === state.valley));
+  $("#search").value = state.query;
+}
+function restoreFromHash() {
+  applyingHash = true;
+  applyHash();
+  syncControls();
+  render();
+  applyingHash = false;
+  writeHash(); // normalize legacy hashes to the canonical form
+}
+
+restoreFromHash();
+if (pendingDrawer) openDrawer(pendingDrawer);
+// Respond to manual URL edits / shared links (our own replaceState doesn't fire this).
+window.addEventListener("hashchange", () => { restoreFromHash(); });
+// The browser tries to scroll to a matching element id on load — undo that.
+window.addEventListener("load", () => setTimeout(() => window.scrollTo(0, 0), 0));
