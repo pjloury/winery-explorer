@@ -310,8 +310,8 @@ function initMap() {
 let mapEntries = [];
 function separateMarkers(entries) {
   if (!map || !entries || entries.length < 2 || state.mapFocus) return;
-  const MIN = 52;   // min center-to-center px (pin ≈ 46px + gap)
-  const MAXD = 70;  // cap how far a pin may drift from its true location
+  const MIN = 66;   // min center-to-center px (pin ≈ 60px + gap)
+  const MAXD = 82;  // cap how far a pin may drift from its true location
   const pts = entries.map((e) => map.latLngToLayerPoint(e.latlng));
   const orig = pts.map((p) => p.clone());
   for (let iter = 0; iter < 140; iter++) {
@@ -368,7 +368,7 @@ function markerIcon(w) {
   return L.divIcon({
     className: "logo-marker",
     html: `<div class="lm ${w.valley}" title="${w.name}">${inner}</div>`,
-    iconSize: [46, 46], iconAnchor: [23, 23], popupAnchor: [0, -24],
+    iconSize: [60, 60], iconAnchor: [30, 30], popupAnchor: [0, -32],
   });
 }
 
@@ -390,7 +390,7 @@ function renderMap() {
         ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
         <button onclick="openDrawer('${w.slug}')">Full story →</button>
       </div>`, { maxWidth: 288 });
-    m.bindTooltip(w.name, { direction: "top", offset: [0, -24] });
+    m.bindTooltip(w.name, { direction: "top", offset: [0, -32] });
     markerLayer.addLayer(m);
     mapEntries.push({ marker: m, latlng: L.latLng(w.lat, w.lng) });
     if (state.mapFocus === w.slug) focusMarker = m;
