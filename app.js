@@ -409,13 +409,16 @@ function mapList() {
   return mapCandidates();
 }
 
-function pinSize() { return window.innerWidth <= 560 ? 42 : 60; }
+function isSmallScreen() { return window.innerWidth <= 560; }
+function pinSize() { return isSmallScreen() ? 34 : 60; }
 function markerIcon(w) {
   const SZ = pinSize();
   const logo = logoImg(w);
-  const inner = logo
+  // On small screens drop the (illegible-when-tiny) logo — use a compact monogram
+  // so the color ring + ★/✿ symbols carry the meaning.
+  const inner = (logo && !isSmallScreen())
     ? `<img src="${logo}" alt="${w.name}">`
-    : `<span class="mono" style="font-size:${Math.round(SZ * 0.37)}px">${monogram(w)}</span>`;
+    : `<span class="mono" style="font-size:${Math.round(SZ * 0.4)}px">${monogram(w)}</span>`;
   // ring color = architecture; gold ★ = Top 25; green ✿ = gardens (a winery can be all three)
   const arch = w._knownFor.has("arch-modern") ? "modern" : w._knownFor.has("arch-classic") ? "classic" : "";
   const star = w._rank <= MAP_TOP_N ? `<span class="pin-badge pin-star" title="Top 25 by prestige">★</span>` : "";

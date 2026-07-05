@@ -1277,6 +1277,285 @@ const WINERIES = [
     awards: ["Napa's most theatrical cave barrel-tasting experience", "Consistent 90+ scores for its single-vineyard Connoisseur Cabernets"],
     funFact: "The caves are lined with imported Italian marble, gold leaf, and crystal chandeliers — and you taste by candlelight straight from the barrel, not a bottle."
   },
+  {
+    slug: "palmaz", name: "Palmaz Vineyards", valley: "Napa", ava: "Coombsville",
+    founded: 1997, founder: "Julio & Amalia Palmaz",
+    address: "4029 Hagen Road, Napa, CA 94558", lat: 38.3232, lng: -122.2244,
+    website: "https://palmazvineyards.com",
+    owner: "Palmaz family", group: "Independent (Palmaz family)",
+    priceRange: [95, 250], tastingFee: "$150 per person, by appointment only",
+    tours: "Yes — a private guided descent through the 18-story gravity-flow cave, by appointment",
+    vibeTags: ["Modern", "Showpiece", "Luxe"],
+    vibe: "A 100,000-square-foot, 18-story winery bored into the flank of Mount George — one of the largest wine caves on earth. Fruit enters at the top and moves entirely by gravity down through fermentation, with tank data projected in real time onto a domed 'reservoir' ceiling. High-tech, subterranean, and unabashedly futuristic.",
+    wines: [
+      { name: "Palmaz Cabernet Sauvignon", why: "The estate flagship — a dense, mountain-grown Coombsville Cabernet that launched with Randy Dunn crafting the debut vintage." },
+      { name: "Cedar Knoll Cabernet Sauvignon", why: "A second estate Cabernet named for the pre-Prohibition winery that once stood on the land." },
+      { name: "Amalia Chardonnay", why: "A cool-climate Coombsville white named for co-founder Amalia Palmaz." }
+    ],
+    history: [
+      { y: 1881, t: "Henry Hagen founds the Cedar Knoll winery on the site, one of Napa's early wine estates, later abandoned after Prohibition." },
+      { y: 1997, t: "Julio and Amalia Palmaz — he the cardiologist who invented the balloon-expandable coronary stent — buy the derelict property." },
+      { y: 2001, t: "The first Palmaz vintage is released, handcrafted by consulting winemaker Randy Dunn." },
+      { y: 2008, t: "The 18-story, gravity-flow cave is completed after roughly seven years of excavation into Mount George." }
+    ],
+    storyTags: ["resurrected", "site-reuse"],
+    awards: ["Home to one of the largest wine caves in Napa Valley (roughly 100,000 sq ft)", "Consistent 90+ critic scores for the estate Cabernet", "Built on the resurrected 1881 Cedar Knoll winery site"],
+    funFact: "The domed ceiling of the underground fermentation chamber doubles as a projection screen, displaying live data from each tank in a system the family calls FILCS — the Fermentation Intelligence Logic Control System."
+  },
+
+  {
+    slug: "eleven-eleven", name: "Eleven Eleven Wines", valley: "Napa", ava: "Oak Knoll District",
+    founded: 2012, founder: "Ellie Anest & Aurelien Roulin",
+    address: "620 Trancas Street, Napa, CA 94558", lat: 38.3249, lng: -122.2857,
+    website: "https://www.elevenelevenwines.com",
+    owner: "Anest & Roulin families", group: "Independent (Anest & Roulin)",
+    priceRange: [30, 95], tastingFee: "$45–$75, by appointment",
+    tours: "Yes — seated tastings at the winery just north of downtown Napa, by appointment",
+    vibeTags: ["Modern", "Intimate"],
+    vibe: "A boutique Napa winery born of a chance meeting between two strangers on a Paris-to-Los Angeles flight. Named for 11:11 — the wish-making moment — it trades on serendipity and warmth, with wines from estate Oak Knoll vineyards crafted by acclaimed winemaker Kirk Venge. Personal, stylish, and easygoing.",
+    wines: [
+      { name: "Cabernet Franc", why: "The winery's signature red — a plush, aromatic bottling that built its reputation." },
+      { name: "Cabernet Sauvignon", why: "A polished Napa Cabernet from the founders' Oak Knoll estate fruit." },
+      { name: "Rosé of Syrah", why: "A crisp dry rosé from estate Syrah at the Destin Vineyard." }
+    ],
+    history: [
+      { y: 2010, t: "Ellie Anest and Aurelien Roulin meet by chance on an Air France flight from Paris to Los Angeles." },
+      { y: 2012, t: "The partners found Eleven Eleven and release their first vintage, made by Kirk Venge." }
+    ],
+    storyTags: [],
+    awards: ["Signature Cabernet Franc among Napa's most talked-about", "Wines crafted by acclaimed winemaker Kirk Venge", "A leading boutique tasting experience minutes from downtown Napa"],
+    funFact: "The name honors 11:11 — the moment the founders both wish upon a clock — a nod to the serendipity of the airplane meeting that started the winery."
+  },
+
+  {
+    slug: "raymond", name: "Raymond Vineyards", valley: "Napa", ava: "St. Helena",
+    founded: 1971, founder: "Roy Raymond Sr. & sons Roy Jr. and Walter",
+    address: "849 Zinfandel Lane, St. Helena, CA 94574", lat: 38.4849, lng: -122.4391,
+    website: "https://raymondvineyards.com",
+    owner: "Boisset Collection (Jean-Charles Boisset)", group: "Boisset Collection",
+    priceRange: [25, 150], tastingFee: "$40–$95, themed experiences by reservation",
+    tours: "Yes — the Crystal Cellar, the mirrored Red Room, and the biodynamic Theater of Nature, by reservation",
+    vibeTags: ["Showpiece", "Luxe", "Modern"],
+    vibe: "A working Napa estate turned theatrical sensory playground by flamboyant proprietor Jean-Charles Boisset. Tastings unfold in a Baccarat-crystal cellar, a red-velvet-and-mirror lounge, and an outdoor 'Theater of Nature' explaining biodynamic farming. Serious organic winemaking wrapped in pure showmanship.",
+    wines: [
+      { name: "Generations Cabernet Sauvignon", why: "The estate's flagship, a polished St. Helena Cabernet honoring the Raymond family's winemaking lineage." },
+      { name: "Reserve Selection Cabernet Sauvignon", why: "A widely available, dependable everyday Napa Cabernet." },
+      { name: "District Collection", why: "A lineup of single-district Napa Cabernets exploring how AVA shapes the grape." }
+    ],
+    history: [
+      { y: 1971, t: "Roy Raymond Sr. — married into the Beringer family — launches the winery with sons Roy Jr. and Walter; first vintage 1974." },
+      { y: 2009, t: "Burgundy's Boisset family, led by Jean-Charles Boisset, acquires Raymond." },
+      { y: 2013, t: "The estate's vineyards complete conversion to certified organic and biodynamic farming as Boisset reinvents the visitor experience." }
+    ],
+    storyTags: ["consolidated"],
+    awards: ["Estate vineyards certified organic and biodynamic (Demeter)", "Generations Cabernet earns consistent high-90s-caliber praise", "One of Napa's most immersive tasting destinations"],
+    funFact: "Founder Roy Raymond Sr. married Martha Jane Beringer, granddaughter of Jacob Beringer, and worked more than 35 years at Beringer before putting his own name on a winery."
+  },
+
+  {
+    slug: "tank-garage", name: "Tank Garage Winery", valley: "Napa", ava: "Calistoga",
+    founded: 2014, founder: "James Harder",
+    address: "1020 Foothill Boulevard, Calistoga, CA 94515", lat: 38.5748, lng: -122.5791,
+    website: "https://www.tankgaragewinery.com",
+    owner: "James Harder", group: "Independent (James Harder)",
+    priceRange: [28, 75], tastingFee: "About $40 for four to five wines, walk-ins welcome",
+    tours: "No formal tours — walk-in tastings inside the restored 'Lubrication' bay of the old service station",
+    vibeTags: ["Casual", "Rustic"],
+    vibe: "A restored 1930s gas station on Calistoga's main drag, packed with vintage Americana, neon, and a gleaming 1947 Indian Chief motorcycle. Every wine is a 'one-off' — an experimental blend made only once and never repeated. Fun, funky, and defiantly un-Napa.",
+    wines: [
+      { name: "One-off red blends", why: "Rotating, single-release reds sourced from unusual varieties and rare vineyards across California." },
+      { name: "Skin-contact 'orange' & white wines", why: "Adventurous whites and skin-fermented bottlings that change every season." },
+      { name: "Pét-nat sparkling", why: "Natural, lightly fizzy wines fitting the winery's experimental streak." }
+    ],
+    history: [
+      { y: 1930, t: "A service station and garage is built on Calistoga's Foothill Boulevard (Highway 29), later owned by motorcycle racer Eddie Bratton." },
+      { y: 2014, t: "James Harder and partner Jim Regusci open Tank Garage inside the restored station, blending motor culture and rock 'n' roll with wine." },
+      { y: 2019, t: "Harder becomes sole owner and later buys the property outright, expanding toward a second Paso Robles location." }
+    ],
+    storyTags: ["site-reuse"],
+    awards: ["Housed in a restored 1930s Calistoga service station", "Known for collectible 'one-off' wines made a single time", "A cult favorite for its vintage-Americana design"],
+    funFact: "Every Tank Garage bottling is a true one-off — once a blend sells out it is never made again, so no two labels ever repeat."
+  },
+
+  {
+    slug: "nickel-nickel", name: "Nickel & Nickel", valley: "Napa", ava: "Oakville",
+    founded: 1997, founder: "The partners of Far Niente (led by Gil Nickel)",
+    address: "8164 St. Helena Highway, Oakville, CA 94562", lat: 38.4379, lng: -122.3991,
+    website: "https://farniente.com/wineries/nickel-and-nickel",
+    owner: "Far Niente Wine Estates", group: "GI Partners (Far Niente Wine Estates)",
+    priceRange: [90, 225], tastingFee: "$75, by appointment",
+    tours: "Yes — a guided tour of the restored 1880s Sullenger farmstead and its reassembled barn, by appointment",
+    vibeTags: ["Historic", "Classic", "Grand"],
+    vibe: "A pristine 42-acre farmstead on the Oakville stretch of Highway 29, restored around an 1880s Victorian home and a striking gambrel-roofed barn. The mission is singular: 100% varietal, single-vineyard Cabernets that showcase how each Napa site tastes on its own. Polished, agrarian, and precise.",
+    wines: [
+      { name: "John C. Sullenger Vineyard Cabernet Sauvignon", why: "The estate Oakville bottling from the vineyard surrounding the winery itself." },
+      { name: "Branding Iron Vineyard Cabernet Sauvignon", why: "One of many single-vineyard Cabernets bottled separately to capture a specific site's signature." },
+      { name: "State Ranch Vineyard Cabernet Sauvignon", why: "A Yountville-district single-vineyard Cabernet in the house style of purity and place." }
+    ],
+    history: [
+      { y: 1997, t: "The partners of Far Niente, led by Gil Nickel, launch Nickel & Nickel to focus solely on single-vineyard, single-varietal wines." },
+      { y: 2003, t: "The restored farmstead and its reconstructed barn open to visitors as the winery's Oakville home." },
+      { y: 2023, t: "Far Niente Wine Estates, including Nickel & Nickel, is acquired by investment firm GI Partners." }
+    ],
+    storyTags: ["site-reuse", "consolidated"],
+    awards: ["Napa's benchmark producer of 100% single-vineyard Cabernet", "Multiple vineyard-designate Cabernets earning 90+ scores", "Meticulous restoration of an 1880s Oakville farmstead"],
+    funFact: "The winery's centerpiece Gleason Barn was originally raised in New Hampshire in 1770, then carefully dismantled and reassembled beam by beam on the Oakville estate."
+  },
+
+  {
+    slug: "frogs-leap", name: "Frog's Leap", valley: "Napa", ava: "Rutherford",
+    founded: 1981, founder: "John Williams & Larry Turley",
+    address: "8815 Conn Creek Road, Rutherford, CA 94573", lat: 38.4741, lng: -122.4024,
+    website: "https://www.frogsleap.com",
+    owner: "Williams family (John Williams)", group: "Independent (Williams family)",
+    priceRange: [24, 95], tastingFee: "$40–$75, by reservation",
+    tours: "Yes — seated tastings on the deck of the Vineyard House or in the certified-organic gardens, by reservation",
+    vibeTags: ["Historic", "Rustic", "Casual"],
+    vibe: "A big red barn from 1884 surrounded by dry-farmed, organic Rutherford vines and vegetable gardens — the antithesis of Napa glitz. John Williams built Frog's Leap on the radical-then, mainstream-now idea that great wine starts with healthy soil and a sense of humor. Relaxed, agrarian, quietly serious.",
+    wines: [
+      { name: "Sauvignon Blanc", why: "The winery's calling card — a crisp, dry-farmed white that helped define Napa Sauvignon Blanc." },
+      { name: "Zinfandel", why: "A bright, balanced old-vine style that pushes back against jammy Zin." },
+      { name: "Estate Cabernet Sauvignon", why: "A savory, restrained Rutherford Cabernet grown organically without irrigation." }
+    ],
+    history: [
+      { y: 1981, t: "John Williams and Larry Turley found Frog's Leap on a former frog farm; the name winks at Stag's Leap, where Williams first made wine." },
+      { y: 1989, t: "Frog's Leap becomes one of the first Napa wineries to earn organic certification (CCOF) for its vineyards." },
+      { y: 1994, t: "The winery relocates to the historic 1884 Red Barn in the heart of Rutherford, where it remains." }
+    ],
+    storyTags: ["site-reuse"],
+    awards: ["Among the first Napa vineyards certified organic (CCOF, 1989)", "Pioneer of dry-farmed, non-irrigated Napa viticulture", "Longtime critical favorite for value and balance"],
+    funFact: "The playful name mashes up Stag's Leap with an actual commercial frog farm that once operated on the early winery site — and the corks read 'Ribbit,' with bottles bearing the motto 'Time's Fun When You're Having Flies.'"
+  },
+
+  {
+    slug: "rombauer", name: "Rombauer Vineyards", valley: "Napa", ava: "St. Helena",
+    founded: 1980, founder: "Koerner & Joan Rombauer",
+    address: "3522 Silverado Trail N, St. Helena, CA 94574", lat: 38.5483, lng: -122.4920,
+    website: "https://www.rombauer.com",
+    owner: "Rombauer family", group: "Independent (Rombauer family)",
+    priceRange: [40, 130], tastingFee: "$25–$40, reservations required",
+    tours: "Yes — seated flights by reservation on the hilltop patio amid gardens and oak-shaded lawns.",
+    vibeTags: ["Scenic", "Casual", "Family-run"],
+    vibe: "A relaxed, welcoming hilltop estate on the Silverado Trail where flower gardens and valley views set an unpretentious, joyful tone. It feels less like a temple to Cabernet and more like a garden party built around Napa's most famous Chardonnay.",
+    wines: [
+      { name: "Carneros Chardonnay", why: "The rich, lush, lightly oaked benchmark that made 'buttery' a compliment and turned Rombauer into a national cult favorite." },
+      { name: "Zinfandel", why: "A jammy, generous California Zin sourced largely from Sierra Foothills and Napa fruit that fans buy by the case." },
+      { name: "Cabernet Sauvignon", why: "A plush, approachable Napa Valley Cab that rounds out the estate's crowd-pleasing house style." }
+    ],
+    history: [
+      { y: 1972, t: "Koerner and Joan Rombauer moved to St. Helena, later selling their stake in Conn Creek to strike out on their own." },
+      { y: 1980, t: "The Rombauers founded Rombauer Vineyards, producing early vintages at Shafer and even in Koerner's garage." },
+      { y: 1982, t: "They broke ground on their St. Helena hilltop winery and crushed their first estate Chardonnay." }
+    ],
+    storyTags: [],
+    awards: ["One of the best-selling luxury Chardonnays in the United States", "Carneros Chardonnay a perennial Wine Spectator and retail favorite", "Family-owned across three generations"],
+    funFact: "Koerner Rombauer was a grandnephew of Irma S. Rombauer, author of the classic American cookbook 'The Joy of Cooking.'"
+  },
+
+  {
+    slug: "pestoni", name: "Pestoni Family Estate Winery", valley: "Napa", ava: "Rutherford",
+    founded: 1994, founder: "Bob & Sylvia Pestoni",
+    address: "1673 St. Helena Hwy S, St. Helena, CA 94574", lat: 38.4715, lng: -122.4357,
+    website: "https://www.pestonifamily.com",
+    owner: "Pestoni family", group: "Independent (Pestoni family)",
+    priceRange: [28, 90], tastingFee: "$40–$60, reservations recommended",
+    tours: "Yes — relaxed daily tastings, with picnic grounds and a bocce court open to guests.",
+    vibeTags: ["Family-run", "Historic", "Casual"],
+    vibe: "An unhurried, genuinely family-run stop on Highway 29 where five generations of Swiss-Italian winemaking history sit lightly on a friendly tasting room. Bocce, picnic tables, and estate vineyards make it a welcome antidote to Napa's grander showpieces.",
+    wines: [
+      { name: "Estate Sauvignon Blanc", why: "Grown on the family's historic Whitehall Lane ranch, it is the crisp, bright cornerstone of the estate lineup." },
+      { name: "Barbera", why: "A nod to the family's Italian-Swiss roots and one of the varietal specialties that sets Pestoni apart from its Cabernet-only neighbors." },
+      { name: "Cabernet Sauvignon", why: "A classic Rutherford-district red that anchors the small, handcrafted estate portfolio." }
+    ],
+    history: [
+      { y: 1892, t: "Swiss immigrant Albino Pestoni and his family established Bonded Winery No. 935 in Napa's Bell Canyon." },
+      { y: 1923, t: "Henry and Lena Pestoni acquired the Whitehall Lane ranch that still supplies the estate Sauvignon Blanc." },
+      { y: 1994, t: "Bob and Sylvia Pestoni opened Rutherford Grove Winery on the family's Rutherford property, taking over the former Rutherford Vintners facility." },
+      { y: 2017, t: "The winery was renamed Pestoni Family Estate Winery to mark 125 years of family winemaking." }
+    ],
+    storyTags: ["site-reuse"],
+    awards: ["One of Napa Valley's oldest continuously operating winemaking families (since 1892)", "Bob Pestoni featured in National Geographic for pioneering composting in Napa Valley", "Five generations of Napa winegrowing"],
+    funFact: "The Pestonis trace their Napa roots to 1882, when 24-year-old Albino Pestoni arrived from a Swiss village near the Italian border and began selling wine to fellow Swiss-Italian immigrants."
+  },
+
+  {
+    slug: "axr", name: "AXR Napa Valley", valley: "Napa", ava: "St. Helena",
+    founded: 2017, founder: "Jean Hoefliger & partners (the 'FAB 4')",
+    address: "3199 St. Helena Hwy N, St. Helena, CA 94574", lat: 38.5308, lng: -122.5048,
+    website: "https://www.axrnapavalley.com",
+    owner: "AXR partnership (Hoefliger, Van Laeken, Trevethan & Schratz)", group: "Independent (AXR partnership)",
+    priceRange: [90, 225], tastingFee: "By appointment only; seated tasting fee applies",
+    tours: "By appointment only, not open to the public; unhurried seated tastings in the historic 1883 estate and cellar.",
+    vibeTags: ["Historic", "Intimate", "Luxe"],
+    vibe: "A tree-shaded estate two miles north of St. Helena where a beautifully restored 1883 home and stone cellar host intimate, conversation-driven tastings. Renowned winemaker Jean Hoefliger crafts polished, expressive Cabernet in a setting that feels private and unrushed.",
+    wines: [
+      { name: "AXR Cabernet Sauvignon", why: "The flagship — a refined, layered Napa Valley Cabernet that showcases Hoefliger's precise, European-inflected hand." },
+      { name: "Single-vineyard Cabernets ('spices')", why: "Small-lot bottlings from prestigious Napa sites that express distinct terroirs alongside the estate blend." },
+      { name: "Chardonnay", why: "An elegant, balanced white that rounds out the portfolio beyond the estate's Cabernet focus." }
+    ],
+    history: [
+      { y: 1883, t: "German immigrants August and Frederika Hirsch built the estate home and a 20,000-gallon cellar on the site." },
+      { y: 2015, t: "Four friends and winemaker Jean Hoefliger conceived the venture over breakfast in Yountville." },
+      { y: 2017, t: "The partnership purchased the V Madrone property, returning the historic site to full-time winemaking as AXR Napa Valley." }
+    ],
+    storyTags: ["resurrected"],
+    awards: ["Wines crafted by acclaimed winemaker Jean Hoefliger (formerly of Newton and Alpha Omega)", "Cabernets consistently earn 90+ point critical scores", "Restoration of a 138-year-old historic Napa estate"],
+    funFact: "The name honors the AxR1 rootstock (Aramon x Rupestris) — once dominant in Napa until it succumbed to phylloxera in the 1980s and forced the valley to replant nearly everything."
+  },
+
+  {
+    slug: "caldwell", name: "Caldwell Vineyard", valley: "Napa", ava: "Coombsville",
+    founded: 1997, founder: "John Caldwell",
+    address: "270 Kreuzer Lane, Napa, CA 94559", lat: 38.2872, lng: -122.2361,
+    website: "https://www.caldwellvineyard.com",
+    owner: "Caldwell family (John Caldwell)", group: "Independent (Caldwell family)",
+    priceRange: [50, 225], tastingFee: "$130–$145, by reservation (book at least a week ahead)",
+    tours: "Yes — reservation required; tastings are held deep inside the estate's 20,000-square-foot cave carved from volcanic rock.",
+    vibeTags: ["Cult", "Intimate", "Scenic"],
+    vibe: "A cult Coombsville estate where tastings unfold underground in a dramatic cave blasted from an ancient volcanic caldera. Founder John Caldwell — self-described 'vintner, smuggler, and legend' — infuses the experience with maverick storytelling and small-lot, terroir-driven reds.",
+    wines: [
+      { name: "'Rocket Science' Proprietary Red", why: "The signature Bordeaux-style blend and playful flagship that put Caldwell's cult reputation on the map." },
+      { name: "Estate Cabernet Sauvignon", why: "A powerful, structured Coombsville Cabernet grown from the prized French clones Caldwell championed." },
+      { name: "Estate Syrah", why: "An award-winning cool-district Syrah that shows the range of the volcanic Coombsville site." }
+    ],
+    history: [
+      { y: 1974, t: "John Caldwell bought the 123-acre property, pivoting to farming after county rules blocked his plan to subdivide it." },
+      { y: 1980, t: "Caldwell began planting vineyards using French Bordeaux clones he had famously smuggled across the Canadian border." },
+      { y: 1997, t: "The first Caldwell wine was produced with winemaker Philippe Melka." },
+      { y: 2002, t: "Caldwell completed the 20,000-square-foot cave now used for tastings." }
+    ],
+    storyTags: [],
+    awards: ["'Best Tasting Room in Napa County' — 2023 Best of the North Bay awards", "'Best Wine Cave' recognition from Bohemian Magazine", "Debut vintages crafted by star winemaker Philippe Melka"],
+    funFact: "In the 1980s John Caldwell smuggled prized French Bordeaux clones into California and was caught by customs with 1,500 vines — clones that later became an industry standard he held North American licensing rights to."
+  },
+
+  {
+    slug: "reverie", name: "Reverie Winery Estate", valley: "Napa", ava: "Napa Valley",
+    founded: 1996, founder: "Norm & Evelyn Kiken",
+    address: "264 N Fork Crystal Springs Rd, St. Helena, CA 94574", lat: 38.5613, lng: -122.4967,
+    website: "https://www.reveriewinery.com",
+    owner: "Grant & Megan Long", group: "Independent (Long family)",
+    priceRange: [45, 95], tastingFee: "$85 per person, by appointment",
+    tours: "By appointment only; intimate, unscripted private tastings that include ATV rides up to panoramic hilltop viewpoints. (The brand relocated from Diamond Mountain in 2017 to this St. Helena-area estate at the base of Howell Mountain.)",
+    vibeTags: ["Intimate", "Scenic", "Family-run"],
+    vibe: "A small, personal hillside estate near St. Helena where visits are hands-on, unhurried, and often hosted by the owners themselves. Sweeping views toward the Mayacamas and rugged four-wheel-drive tours make it feel more like a friend's mountain vineyard than a commercial tasting room.",
+    wines: [
+      { name: "Cabernet Franc", why: "The variety that built Reverie's early reputation on Diamond Mountain and still anchors its single-varietal Bordeaux program." },
+      { name: "Cabernet Sauvignon", why: "A small-lot, single-vineyard red at the core of the estate's handcrafted, roughly 4,500-case output." },
+      { name: "Barbera", why: "One of the rarer Napa varietals Reverie champions, reflecting its focus on distinctive single-varietal bottlings." }
+    ],
+    history: [
+      { y: 1993, t: "Norm and Evelyn Kiken purchased 40 acres on Diamond Mountain, before it became a designated AVA." },
+      { y: 1996, t: "Reverie released its first vintage, earning a following for its mountain Cabernet Franc." },
+      { y: 2016, t: "The Kikens sold the Diamond Mountain property to a group now developing a Rosewood-managed luxury resort on the site." },
+      { y: 2017, t: "Longtime Reverie employee Grant Long and his wife Megan bought the former G Cook Winery near St. Helena, continuing the brand as 'Reverie II,' renamed Reverie Winery Estate in 2025." }
+    ],
+    storyTags: ["site-reuse"],
+    awards: ["Built a national following for Diamond Mountain Cabernet Franc", "Boutique, small-lot production of roughly 4,500 cases", "Carried forward by a longtime employee-turned-owner"],
+    funFact: "Reverie's original Diamond Mountain vineyard was sold in 2016 and is being turned into a luxury hotel managed by Rosewood — so the brand relocated and now operates from a former winery site near St. Helena."
+  },
+
+
 
   // ───────────────────────── SONOMA COUNTY ─────────────────────────
   {
