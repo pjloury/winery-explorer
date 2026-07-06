@@ -585,7 +585,9 @@ function avaOptions() {
   return [...new Set(WINERIES.map(regionOf))].sort((a, b) => a.localeCompare(b));
 }
 function mapList() {
-  if (state.mapFocus) {
+  // Desktop isolates to the focused pin; phones keep every pin (focus just pans
+  // + shows the overlay preview card, preserving geographic context).
+  if (state.mapFocus && !isSmallScreen()) {
     const w = WINERIES.find((x) => x.slug === state.mapFocus);
     return w ? [w] : [];
   }
@@ -659,9 +661,16 @@ function renderMap() {
     if (state.mapFocus === w.slug) focusMarker = m;
   });
   if (state.mapFocus && focusMarker) {
-    const w = list[0];
-    map.setView([w.lat, w.lng], 13, { animate: false });
-    if (!mobile) focusMarker.openPopup();
+    const fw = WINERIES.find((x) => x.slug === state.mapFocus);
+    if (mobile) {
+      // Keep geographic context: a moderate zoom, and lift the pin above the
+      // bottom-sheet card so it isn't hidden behind it.
+      map.setView([fw.lat, fw.lng], 11, { animate: true });
+      map.panBy([0, 90], { animate: true });
+    } else {
+      map.setView([fw.lat, fw.lng], 13, { animate: false });
+      focusMarker.openPopup();
+    }
   } else if (list.length) {
     map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.15), { animate: false });
     separateMarkers(mapEntries);
@@ -674,27 +683,44 @@ function renderMap() {
   writeHash();
 }
 
-// Phones: full-bleed detail card below the map for the focused winery.
+// Phones: a preview card that slides up over the map when a pin is tapped.
+// Tap it (or swipe up) to open the full detail drawer; "‹ Map" zooms back out.
 function renderMapFocusCard() {
   const el = $("#map-focus-card");
   if (!el) return;
   const w = state.mapFocus ? WINERIES.find((x) => x.slug === state.mapFocus) : null;
   if (!w) { el.innerHTML = ""; el.classList.remove("show"); return; }
   const img = propertyImg(w);
-  const badges = popupBadges(w);
+  const thumb = img
+    ? `<img class="mfc-thumb" src="${img}" alt="">`
+    : `<span class="mfc-thumb placeholder">🍷</span>`;
   el.innerHTML = `
-    <button class="mfc-close" id="mfc-close" aria-label="Close">✕</button>
-    ${img ? `<img class="mfc-img" src="${img}" alt="${w.name}">` : ""}
-    <div class="mfc-body">
-      <b class="mfc-name">${w.name}${archStar(w)}</b>
-      <div class="mfc-meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava} · est. ${w.founded} · ${fmtPrice(w)}</div>
-      <p class="mfc-desc">${popupDesc(w)}</p>
-      ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
-      <button class="mfc-full" onclick="openDrawer('${w.slug}')">Full story →</button>
+    <div class="mfc-handle"></div>
+    <button class="mfc-back" id="mfc-back" aria-label="Back to map">‹ Map</button>
+    <div class="mfc-preview" id="mfc-open" role="button" tabindex="0">
+      ${thumb}
+      <div class="mfc-info">
+        <b class="mfc-name">${w.name}${archStar(w)}</b>
+        <div class="mfc-meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava}</div>
+        <div class="mfc-sub">est. ${w.founded} · ${w.wines[0].name} · ${fmtPrice(w)}</div>
+        <span class="mfc-hint">Tap or swipe up for the full story ↑</span>
+      </div>
     </div>`;
   el.classList.add("show");
-  $("#mfc-close").addEventListener("click", () => { state.mapFocus = null; renderMap(); });
-  if (isSmallScreen()) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  const back = () => { state.mapFocus = null; renderMap(); };
+  const open = () => openDrawer(w.slug);
+  $("#mfc-back").addEventListener("click", (e) => { e.stopPropagation(); back(); });
+  const preview = $("#mfc-open");
+  preview.addEventListener("click", open);
+  // Swipe up on the card → open the full drawer.
+  let startY = null;
+  el.addEventListener("touchstart", (e) => { startY = e.touches[0].clientY; }, { passive: true });
+  el.addEventListener("touchend", (e) => {
+    if (startY == null) return;
+    const dy = e.changedTouches[0].clientY - startY;
+    startY = null;
+    if (dy < -40) open();
+  }, { passive: true });
 }
 
 // Right-side scrollable index: tap a name to isolate that winery on the map.
