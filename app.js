@@ -621,32 +621,39 @@ function renderMap() {
   const list = mapList();
   let focusMarker = null;
   mapEntries = [];
+  const mobile = isSmallScreen();
   list.forEach((w) => {
     const m = L.marker([w.lat, w.lng], { icon: markerIcon(w), riseOnHover: true });
-    const img = propertyImg(w);
-    const badges = popupBadges(w);
-    m.bindPopup(`<div class="popup-card">
-        ${img ? `<img src="${img}" alt="${w.name}">` : ""}
-        <b>${w.name}${archStar(w)}</b>
-        <div class="meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava}<br>est. ${w.founded} · ${w.wines[0].name} · ${fmtPrice(w)}</div>
-        <p class="pc-desc">${popupDesc(w)}</p>
-        ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
-        <button onclick="openDrawer('${w.slug}')">Full story →</button>
-      </div>`, { maxWidth: 288 });
-    // Hover opens the popup; leaving the pin closes it so it never lingers and
-    // blocks the map. A short grace period lets the cursor cross into the popup
-    // (to reach the "Full story" button) without it vanishing.
-    let closeT = null;
-    const cancelClose = () => { if (closeT) { clearTimeout(closeT); closeT = null; } };
-    const scheduleClose = () => { cancelClose(); closeT = setTimeout(() => m.closePopup(), 220); };
-    m.on("mouseover", () => { cancelClose(); m.openPopup(); });
-    m.on("mouseout", scheduleClose);
-    m.on("popupopen", (e) => {
-      const el = e.popup.getElement();
-      if (!el) return;
-      el.addEventListener("mouseenter", cancelClose);
-      el.addEventListener("mouseleave", scheduleClose);
-    });
+    if (mobile) {
+      // Phones: a tap focuses the winery into the bottom detail card — no popup
+      // obscuring the (now dominant) map.
+      m.on("click", () => { state.mapFocus = w.slug; renderMap(); });
+    } else {
+      const img = propertyImg(w);
+      const badges = popupBadges(w);
+      m.bindPopup(`<div class="popup-card">
+          ${img ? `<img src="${img}" alt="${w.name}">` : ""}
+          <b>${w.name}${archStar(w)}</b>
+          <div class="meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava}<br>est. ${w.founded} · ${w.wines[0].name} · ${fmtPrice(w)}</div>
+          <p class="pc-desc">${popupDesc(w)}</p>
+          ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
+          <button onclick="openDrawer('${w.slug}')">Full story →</button>
+        </div>`, { maxWidth: 288 });
+      // Hover opens the popup; leaving the pin closes it so it never lingers and
+      // blocks the map. A short grace period lets the cursor cross into the popup
+      // (to reach the "Full story" button) without it vanishing.
+      let closeT = null;
+      const cancelClose = () => { if (closeT) { clearTimeout(closeT); closeT = null; } };
+      const scheduleClose = () => { cancelClose(); closeT = setTimeout(() => m.closePopup(), 220); };
+      m.on("mouseover", () => { cancelClose(); m.openPopup(); });
+      m.on("mouseout", scheduleClose);
+      m.on("popupopen", (e) => {
+        const el = e.popup.getElement();
+        if (!el) return;
+        el.addEventListener("mouseenter", cancelClose);
+        el.addEventListener("mouseleave", scheduleClose);
+      });
+    }
     markerLayer.addLayer(m);
     mapEntries.push({ marker: m, latlng: L.latLng(w.lat, w.lng) });
     if (state.mapFocus === w.slug) focusMarker = m;
@@ -654,16 +661,40 @@ function renderMap() {
   if (state.mapFocus && focusMarker) {
     const w = list[0];
     map.setView([w.lat, w.lng], 13, { animate: false });
-    focusMarker.openPopup();
+    if (!mobile) focusMarker.openPopup();
   } else if (list.length) {
     map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.15), { animate: false });
     separateMarkers(mapEntries);
   }
   layoutDistrictLabels();
   renderMapFilters();
+  renderMapFocusCard();
   renderMapIndex();
   $(".count").textContent = state.mapFocus ? "1 winery" : `${list.length} winer${list.length === 1 ? "y" : "ies"} shown`;
   writeHash();
+}
+
+// Phones: full-bleed detail card below the map for the focused winery.
+function renderMapFocusCard() {
+  const el = $("#map-focus-card");
+  if (!el) return;
+  const w = state.mapFocus ? WINERIES.find((x) => x.slug === state.mapFocus) : null;
+  if (!w) { el.innerHTML = ""; el.classList.remove("show"); return; }
+  const img = propertyImg(w);
+  const badges = popupBadges(w);
+  el.innerHTML = `
+    <button class="mfc-close" id="mfc-close" aria-label="Close">✕</button>
+    ${img ? `<img class="mfc-img" src="${img}" alt="${w.name}">` : ""}
+    <div class="mfc-body">
+      <b class="mfc-name">${w.name}${archStar(w)}</b>
+      <div class="mfc-meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava} · est. ${w.founded} · ${fmtPrice(w)}</div>
+      <p class="mfc-desc">${popupDesc(w)}</p>
+      ${badges ? `<div class="pc-badges">${badges}</div>` : ""}
+      <button class="mfc-full" onclick="openDrawer('${w.slug}')">Full story →</button>
+    </div>`;
+  el.classList.add("show");
+  $("#mfc-close").addEventListener("click", () => { state.mapFocus = null; renderMap(); });
+  if (isSmallScreen()) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
 // Right-side scrollable index: tap a name to isolate that winery on the map.

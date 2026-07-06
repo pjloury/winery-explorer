@@ -232,9 +232,40 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .mi-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; box-shadow: 0 0 0 1px var(--hairline); }
 .mi-dot.Napa { background: var(--napa); }
 .mi-dot.Sonoma { background: var(--sonoma); }
-@media (max-width: 720px) { .map-stage { flex-direction: column; height: auto; } #map { height: 60vh; } .map-index { width: 100%; height: 220px; } }
 .map-legend {
   display: flex; gap: 18px; align-items: center; padding: 8px 4px 12px; color: var(--ink-2); font-size: 13.5px;
+}
+/* Full-bleed focus card under the map (phones only) */
+.map-focus-card { display: none; }
+
+@media (max-width: 720px) {
+  .map-stage { flex-direction: column; height: auto; min-height: 0; }
+  /* Map dominates the viewport; card + list scroll below it (own height, not flex-filled). */
+  #map { flex: none; height: 72vh; }
+  .map-index { width: 100%; height: 260px; }
+  /* Legend on one line, no horizontal scroll */
+  .map-legend { gap: 14px; padding: 6px 2px 10px; font-size: 12px; flex-wrap: nowrap; overflow: hidden; }
+  .map-legend > span { white-space: nowrap; }
+  .lg-suffix { display: none; }
+  .map-focus-card.show {
+    display: block; position: relative; overflow: hidden; margin-top: 6px;
+    background: var(--card); border: 1px solid var(--hairline);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+  }
+  .mfc-img { width: 100%; height: 150px; object-fit: cover; display: block; }
+  .mfc-body { padding: 12px 14px 14px; }
+  .mfc-name { font-family: var(--serif); font-size: 18px; font-weight: 600; }
+  .mfc-meta { color: var(--muted); font-size: 12.5px; margin: 5px 0 8px; }
+  .mfc-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.45; margin: 0 0 10px; }
+  .mfc-full {
+    border: 0; background: #241d1a; color: #faf7f2; border-radius: 999px;
+    padding: 8px 16px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .mfc-close {
+    position: absolute; top: 8px; right: 8px; z-index: 2; width: 30px; height: 30px;
+    border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.5); color: #fff;
+    font-size: 14px; line-height: 1; cursor: pointer;
+  }
 }
 
 /* Map filter bar */
