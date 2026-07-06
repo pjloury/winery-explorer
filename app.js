@@ -684,8 +684,23 @@ function renderMap() {
   writeHash();
 }
 
+// The wineries in the same order as the index list — used to step the preview
+// card left/right to adjacent pins.
+function mapFocusOrder() {
+  return mapCandidates().slice().sort((a, b) => a.name.localeCompare(b.name)).map((w) => w.slug);
+}
+function focusAdjacent(dir) {
+  const order = mapFocusOrder();
+  if (!order.length) return;
+  let i = order.indexOf(state.mapFocus);
+  if (i === -1) i = 0;
+  state.mapFocus = order[(i + dir + order.length) % order.length]; // wraps around
+  renderMap();
+}
+
 // Phones: a preview card that slides up over the map when a pin is tapped.
-// Tap it (or swipe up) to open the full detail drawer; "‹ Map" zooms back out.
+// Tap/swipe-up → full detail drawer; swipe ← → (or the chevrons) steps to the
+// adjacent winery; "‹ Map" zooms back out.
 function renderMapFocusCard() {
   const el = $("#map-focus-card");
   if (!el) return;
@@ -698,29 +713,36 @@ function renderMapFocusCard() {
   el.innerHTML = `
     <div class="mfc-handle"></div>
     <button class="mfc-back" id="mfc-back" aria-label="Back to map">‹ Map</button>
+    <button class="mfc-nav mfc-prev" id="mfc-prev" aria-label="Previous winery">‹</button>
+    <button class="mfc-nav mfc-next" id="mfc-next" aria-label="Next winery">›</button>
     <div class="mfc-preview" id="mfc-open" role="button" tabindex="0">
       ${thumb}
       <div class="mfc-info">
         <b class="mfc-name">${w.name}${archStar(w)}</b>
         <div class="mfc-meta">${starsHTML(w._stars)} · ${w.valley} · ${w.ava}</div>
         <div class="mfc-sub">est. ${w.founded} · ${w.wines[0].name} · ${fmtPrice(w)}</div>
-        <span class="mfc-hint">Tap or swipe up for the full story ↑</span>
+        <span class="mfc-hint">Tap for the full story · swipe ↔ to browse</span>
       </div>
     </div>`;
   el.classList.add("show");
   const back = () => { state.mapFocus = null; renderMap(); };
   const open = () => openDrawer(w.slug);
   $("#mfc-back").addEventListener("click", (e) => { e.stopPropagation(); back(); });
-  const preview = $("#mfc-open");
-  preview.addEventListener("click", open);
-  // Swipe up on the card → open the full drawer.
-  let startY = null;
-  el.addEventListener("touchstart", (e) => { startY = e.touches[0].clientY; }, { passive: true });
+  $("#mfc-prev").addEventListener("click", (e) => { e.stopPropagation(); focusAdjacent(-1); });
+  $("#mfc-next").addEventListener("click", (e) => { e.stopPropagation(); focusAdjacent(1); });
+  $("#mfc-open").addEventListener("click", open);
+  // Swipe up → open the drawer; swipe left/right → previous/next adjacent winery.
+  let sx = null, sy = null;
+  el.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
   el.addEventListener("touchend", (e) => {
-    if (startY == null) return;
-    const dy = e.changedTouches[0].clientY - startY;
-    startY = null;
-    if (dy < -40) open();
+    if (sx == null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    sx = sy = null;
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (Math.abs(dx) > 40) focusAdjacent(dx < 0 ? 1 : -1); // swipe left → next, right → prev
+    } else if (dy < -40) {
+      open();
+    }
   }, { passive: true });
 }
 
@@ -741,8 +763,11 @@ function renderMapIndex() {
   }));
   const clr = $("#mi-clear");
   if (clr) clr.addEventListener("click", () => { state.mapFocus = null; renderMap(); });
+  // Desktop scrolls the active row into its own list pane; on mobile the list is
+  // part of the page flow, so skip it (else focusing/browsing yanks the page away
+  // from the preview card).
   const active = el.querySelector(".mi-item.active");
-  if (active) active.scrollIntoView({ block: "nearest" });
+  if (active && !isSmallScreen()) active.scrollIntoView({ block: "nearest" });
 }
 
 function renderMapFilters() {
