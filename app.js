@@ -488,6 +488,27 @@ function initMap() {
   map.on("zoomend", () => { separateMarkers(mapEntries); layoutDistrictLabels(); });
   // Re-center: clear any focus and re-fit the map to all shown pins.
   $("#map-recenter")?.addEventListener("click", () => { state.mapFocus = null; renderMap(); });
+  // Legend doubles as filters: click a category to toggle it.
+  document.querySelectorAll(".map-legend .lg-item").forEach((el) => {
+    const apply = () => {
+      state.mapFocus = null;
+      const k = el.dataset.lg;
+      if (k === "top") state.mapTopOnly = !state.mapTopOnly;
+      else toggleSet(state.mapKnown, k);
+      renderMap();
+    };
+    el.addEventListener("click", apply);
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); apply(); } });
+  });
+}
+
+// Reflect the active filters on the clickable legend.
+function syncLegend() {
+  document.querySelectorAll(".map-legend .lg-item").forEach((el) => {
+    const k = el.dataset.lg;
+    const on = k === "top" ? state.mapTopOnly : state.mapKnown.has(k);
+    el.classList.toggle("lg-active", on);
+  });
 }
 
 // Label each Napa/Sonoma district (AVA) at the centroid of its wineries.
@@ -685,6 +706,7 @@ function renderMap() {
   }
   layoutDistrictLabels();
   renderMapFilters();
+  syncLegend();
   renderMapFocusCard();
   renderMapIndex();
   // Phones show the count inside the "Show · N" label instead (saves a line).

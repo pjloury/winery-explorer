@@ -245,6 +245,10 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .map-legend {
   display: flex; gap: 18px; align-items: center; padding: 8px 4px 12px; color: var(--ink-2); font-size: 13.5px;
 }
+/* Legend items double as category filters */
+.map-legend .lg-item { cursor: pointer; user-select: none; white-space: nowrap; }
+.map-legend .lg-item:hover { color: var(--ink); }
+.map-legend .lg-item.lg-active { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 /* Full-bleed focus card under the map (phones only) */
 .map-focus-card { display: none; }
 
