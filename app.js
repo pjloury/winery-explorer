@@ -621,6 +621,10 @@ function markerIcon(w) {
 
 function renderMap() {
   initMap();
+  // Leaflet must know the container's real size before fitBounds, or every pin
+  // lands off-screen (looks like "no pins"). This bites when the map is first
+  // shown from a hidden tab or before layout settles.
+  map.invalidateSize(false);
   markerLayer.clearLayers();
   const list = mapList();
   let focusMarker = null;
@@ -959,7 +963,6 @@ function renderAwards() {
 
   $("#awards").innerHTML = `
     <div class="awards-head">
-      <h2>Wine Spectator Top 100 — Napa & Sonoma wines</h2>
       <p class="section-desc">Members of Wine Spectator's Global Top 100.</p>
       <div class="seg">${yearChips} <span class="seg-sep"></span> ${colorChips}</div>
       ${(() => {
@@ -993,7 +996,10 @@ function renderAwards() {
   document.querySelectorAll("#awards tbody tr[data-slug]").forEach((tr) => {
     tr.addEventListener("click", () => openDrawer(tr.dataset.slug));
   });
-  $(".count").textContent = `${data.length} ranked wines`;
+  // Show the count in the "Top Wines (N)" tab label rather than as its own line.
+  const tab = document.querySelector('.view-toggle button[data-view="awards"]');
+  if (tab) tab.textContent = `Top Wines (${data.length})`;
+  $(".count").textContent = "";
 }
 
 /* ── Detail drawer ── */
@@ -1072,8 +1078,24 @@ window.closeDrawer = closeDrawer;
 function render() {
   document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
   $(`#${state.view}-view`)?.classList.add("active");
+  // The awards tab carries its count ("Top Wines (N)"); reset it off that view.
+  if (state.view !== "awards") {
+    const at = document.querySelector('.view-toggle button[data-view="awards"]');
+    if (at) at.textContent = "Top Wines";
+  }
   if (state.view === "table") renderTable();
-  if (state.view === "map") { $("#map-view").classList.add("active"); renderMap(); map.invalidateSize(); }
+  if (state.view === "map") {
+    $("#map-view").classList.add("active"); renderMap();
+    // Once layout settles, re-measure and re-fit so pins never end up off-screen.
+    requestAnimationFrame(() => {
+      if (!map) return;
+      map.invalidateSize(false);
+      if (!state.mapFocus && mapEntries.length) {
+        map.fitBounds(L.latLngBounds(mapEntries.map((e) => e.latlng)).pad(0.15), { animate: false });
+        separateMarkers(mapEntries);
+      }
+    });
+  }
   if (state.view === "awards") renderAwards();
   if (state.view === "lineage") { $("#lineage-view").classList.add("active"); renderLineage(); }
   writeHash();

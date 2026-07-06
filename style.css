@@ -438,8 +438,15 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 
 /* ── Awards leaderboard ── */
 .awards-head h2 { font-family: var(--serif); font-weight: 600; font-size: 22px; margin: 20px 0 4px; }
-.awards-head .section-desc { color: var(--ink-2); margin: 0 0 12px; max-width: 760px; }
-.awards-head .seg { margin-bottom: 14px; }
+.awards-head .section-desc { color: var(--ink-2); margin: 16px 0 12px; max-width: 760px; }
+.awards-head .seg { margin-bottom: 14px; flex-wrap: wrap; gap: 4px; }
+/* Sleeker, low-profile filter buttons (no distracting pill outline) */
+.awards-head .chip {
+  border: 0; background: transparent; color: var(--muted);
+  padding: 3px 10px; font-size: 13px; border-radius: 7px;
+}
+.awards-head .chip:hover { color: var(--ink); background: color-mix(in srgb, var(--gold-soft) 45%, transparent); }
+.awards-head .chip.active { background: var(--ink); color: var(--surface); font-weight: 600; }
 .ws-meta { color: var(--ink-2); font-size: 13px; margin: 0 0 8px; line-height: 1.5; }
 .ws-meta:last-child { margin-bottom: 0; }
 /* Overall Wine of the Year accordion — collapsed by default to keep focus on our list */
