@@ -103,7 +103,8 @@ h1 {
   border-radius: 999px; height: 38px; min-width: 38px; padding: 0 10px;
   font: inherit; font-weight: 650; font-size: 15px; cursor: pointer; flex: 0 0 auto;
 }
-.hamburger { font-size: 14px; }
+/* Hamburger reads as a plain icon+label, not a pill */
+.hamburger { font-size: 15px; border: 0; background: none; box-shadow: none; padding: 0 4px; gap: 7px; }
 .filter-toggle { display: inline-flex; align-items: center; gap: 5px; }
 /* Collapsible filter panels (table cards + map) */
 .filter-panel, .map-filter-panel {
@@ -218,6 +219,14 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .map-stage { display: flex; gap: 12px; height: calc(100vh - 268px); min-height: 460px; }
 .map-shell { flex: 1; min-width: 0; height: 100%; position: relative; }
 #map { width: 100%; height: 100%; border-radius: var(--radius); border: 1px solid var(--hairline); box-shadow: var(--shadow); }
+.map-recenter {
+  position: absolute; top: 10px; right: 10px; z-index: 500;
+  width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--hairline);
+  background: var(--card); color: var(--ink); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 1px 4px rgba(36, 29, 26, 0.2);
+}
+.map-recenter:hover { color: var(--gold); }
 .map-index {
   width: 240px; flex: none; height: 100%; overflow-y: auto; background: var(--card);
   border: 1px solid var(--hairline); border-radius: var(--radius); box-shadow: var(--shadow);
@@ -348,16 +357,18 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .logo-marker .lm img { width: 100%; height: 100%; object-fit: contain; padding: 15%; box-sizing: border-box; }
 .logo-marker .lm .mono { font-family: var(--serif); font-weight: 700; font-size: 22px; color: var(--ink); letter-spacing: 0.5px; }
 .logo-marker:hover .lm { transform: scale(1.14); }
-/* corner symbol badge (Gardens) */
+/* corner symbol badges (Gardens ✿ top-right, New Architecture 📖 top-left) */
 .pin-badge {
   position: absolute; width: 18px; height: 18px; border-radius: 50%; background: var(--card);
   display: flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1;
   box-shadow: 0 1px 3px rgba(0,0,0,0.35);
 }
 .pin-garden { top: -3px; right: -3px; color: #2f8f4e; font-size: 11px; }
+.pin-book { top: -3px; left: -3px; font-size: 10px; }
 @media (max-width: 560px) {
   .pin-badge { width: 14px; height: 14px; font-size: 9px; }
   .pin-garden { font-size: 8px; }
+  .pin-book { font-size: 8px; }
   .logo-marker .lm.top { box-shadow: 0 0 0 2px #e0a92e, 0 2px 8px rgba(36, 29, 26, 0.45); }
 }
 
@@ -429,7 +440,22 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .awards-head h2 { font-family: var(--serif); font-weight: 600; font-size: 22px; margin: 20px 0 4px; }
 .awards-head .section-desc { color: var(--ink-2); margin: 0 0 12px; max-width: 760px; }
 .awards-head .seg { margin-bottom: 14px; }
-.ws-meta { color: var(--muted); font-size: 13px; margin: 0 0 6px; }
+.ws-meta { color: var(--ink-2); font-size: 13px; margin: 0 0 8px; line-height: 1.5; }
+.ws-meta:last-child { margin-bottom: 0; }
+/* Overall Wine of the Year accordion — collapsed by default to keep focus on our list */
+.ws-overall { margin: 0 0 14px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--card); }
+.ws-overall > summary {
+  list-style: none; cursor: pointer; padding: 10px 14px; font-weight: 650; font-size: 13.5px;
+  color: var(--ink); display: flex; align-items: center; gap: 8px;
+}
+.ws-overall > summary::-webkit-details-marker { display: none; }
+.ws-overall > summary::before { content: "▸"; color: var(--gold); font-size: 12px; }
+.ws-overall[open] > summary::before { content: "▾"; }
+.ws-overall > summary::after { content: "🏆"; margin-left: auto; }
+.ws-overall-body { padding: 0 14px 12px; }
+/* Clickable Top-100 rows */
+.award-row { cursor: pointer; }
+.award-row:hover td { background: color-mix(in srgb, var(--gold-soft) 45%, transparent); }
 .rank-badge {
   display: inline-block; font-variant-numeric: tabular-nums; font-weight: 750;
   border-radius: 6px; padding: 2px 8px; background: var(--hairline); color: var(--ink-2);
@@ -439,7 +465,7 @@ td.year { color: var(--muted); font-variant-numeric: tabular-nums; }
 td.score { font-weight: 750; font-variant-numeric: tabular-nums; }
 td.wine-cell b { font-family: var(--serif); font-weight: 600; }
 td.wine-cell .sub { display: block; color: var(--muted); font-size: 12px; }
-.winery-link { color: var(--ink); font-weight: 650; cursor: pointer; text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+.winery-link { color: var(--ink); font-weight: 400; cursor: pointer; text-decoration: none; white-space: nowrap; }
 .winery-link:hover span:last-child { text-decoration: underline; }
 .wl-logo {
   width: 24px; height: 24px; border-radius: 50%; flex: none; overflow: hidden; background: var(--card);
@@ -467,12 +493,13 @@ td.wine-cell .sub { display: block; color: var(--muted); font-size: 12px; }
 .drawer-close {
   position: sticky; top: 12px; margin: 12px 12px 0 auto; display: block;
   border: 0; background: var(--card); color: var(--ink); width: 34px; height: 34px;
-  border-radius: 50%; font-size: 16px; cursor: pointer; box-shadow: var(--shadow); z-index: 2;
+  border-radius: 50%; font-size: 16px; cursor: pointer; box-shadow: var(--shadow); z-index: 20;
 }
 .dc-back { display: none; }
 .hero { width: 100%; height: 250px; object-fit: cover; display: block; margin-top: -46px; }
 .hero.placeholder { display: flex; align-items: center; justify-content: center; background: var(--hairline); color: var(--muted); font-family: var(--serif); font-size: 20px; }
-.hero-map { background: var(--hairline); }
+/* Own stacking context so the mini-map's Leaflet panes can't paint over the back button. */
+.hero-map { background: var(--hairline); position: relative; z-index: 0; }
 .hero-map.leaflet-container { background: var(--hairline); }
 .drawer-body { padding: 20px 26px 48px; }
 .drawer-body h2 { font-family: var(--serif); font-weight: 600; font-size: 26px; margin: 4px 0 2px; }
@@ -583,7 +610,7 @@ td.wine-cell .sub { display: block; color: var(--muted); font-size: 12px; }
     text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--hairline); font-weight: 600;
   }
   .controls.nav-open .view-toggle button:last-child { border-bottom: 0; }
-  .controls.nav-open #nav-toggle { background: var(--ink); color: var(--surface); }
+  .controls.nav-open #nav-toggle { color: var(--gold); font-weight: 700; }
   /* Search collapses to the 🔍 icon; expands to a full-width row on tap */
   #search { display: none; }
   .controls.search-open .search-toggle { background: var(--ink); color: var(--surface); }

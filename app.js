@@ -36,12 +36,8 @@ function monogram(w) {
     .split(/\s+/).filter((x) => /[A-Za-z]/.test(x)).slice(0, 2)
     .map((x) => x[0].toUpperCase()).join("");
 }
-// Purple star marking wineries featured in "The New Architecture of Wine" (2019).
-function archStar(w) {
-  return w.storyTags.includes("architecture")
-    ? ` <span class="arch-star" title="Featured in ‘The New Architecture of Wine’ (Hebert, 2019)">★</span>`
-    : "";
-}
+// (Book-featured wineries are marked with the 📖 tag / map badge instead of a star.)
+function archStar() { return ""; }
 
 /* ── Prestige rating ──
    Editorial acclaim tier (ACCLAIM, 1–5) is the backbone; a Wine Spectator Top 100
@@ -61,7 +57,7 @@ const WINE_TYPES = [
 ];
 // "Known for" filter categories.
 const KNOWN_FOR = [
-  { key: "arch-modern", label: "Modern architecture" },
+  { key: "arch-modern", label: "📖 New Architecture" },
   { key: "arch-classic", label: "Classic architecture" },
   { key: "history", label: "History & heritage" },
   { key: "gardens", label: "Gardens & grounds" },
@@ -72,12 +68,11 @@ const KNOWN_FOR = [
 const TABLE_CHIPS = [
   { key: "top25", label: "Top 25", test: (w) => w._rank <= MAP_TOP_N },
   { key: "prestige", label: "Prestigious", test: (w) => w._stars >= 4.5 },
-  { key: "modern", label: "Modern arch.", test: (w) => w._knownFor.has("arch-modern") },
+  { key: "modern", label: "📖 New Architecture", test: (w) => w._knownFor.has("arch-modern") },
   { key: "classic", label: "Classic arch.", test: (w) => w._knownFor.has("arch-classic") },
   { key: "gardens", label: "Gardens", test: (w) => w._knownFor.has("gardens") },
   { key: "history", label: "Historic", test: (w) => w._knownFor.has("history") },
   { key: "jop", label: "Judgment of Paris", test: (w) => w.storyTags.includes("judgment-of-paris") },
-  { key: "book", label: "📖 New Architecture", test: (w) => w.storyTags.includes("architecture") },
 ];
 
 function enrichWineries() {
@@ -97,10 +92,13 @@ function enrichWineries() {
 
     // Known-for tags: derive history + book architecture, then merge curated extras
     const kf = new Set();
-    if (w.storyTags.includes("architecture")) kf.add("arch-modern");
     if (w.vibeTags.includes("Historic")
         || w.storyTags.some((t) => ["resurrected", "site-reuse", "judgment-of-paris"].includes(t))) kf.add("history");
     Object.keys(KFX).forEach((cat) => { if (KFX[cat].includes(w.slug)) kf.add(cat); });
+    // "arch-modern" now means one thing: featured in "The New Architecture of Wine"
+    // (the book). Drop any curated modern-arch that isn't actually in the book.
+    if (w.storyTags.includes("architecture")) kf.add("arch-modern");
+    else kf.delete("arch-modern");
     w._knownFor = kf;
 
     // Prestige: editorial acclaim tier is the backbone; then nudge up the wineries
@@ -488,6 +486,8 @@ function initMap() {
   markerLayer = L.layerGroup().addTo(map);
   // Overlaps depend on zoom (pan preserves spacing), so re-lay-out after each zoom.
   map.on("zoomend", () => { separateMarkers(mapEntries); layoutDistrictLabels(); });
+  // Re-center: clear any focus and re-fit the map to all shown pins.
+  $("#map-recenter")?.addEventListener("click", () => { state.mapFocus = null; renderMap(); });
 }
 
 // Label each Napa/Sonoma district (AVA) at the centroid of its wineries.
@@ -604,15 +604,17 @@ function markerIcon(w) {
   const inner = (logo && !isSmallScreen())
     ? `<img src="${logo}" alt="${w.name}">`
     : `<span class="mono" style="font-size:${Math.round(SZ * 0.4)}px">${monogram(w)}</span>`;
-  // border color = architecture; gold outer ring = Top 25; green ✿ badge = gardens
-  // (a winery can be all three — the ring halo sits outside the arch border).
-  const arch = w._knownFor.has("arch-modern") ? "modern" : w._knownFor.has("arch-classic") ? "classic" : "";
+  // gold outer ring = Top 25; sienna border = classic architecture; ✿ badge =
+  // gardens; 📖 badge = featured in The New Architecture of Wine.
+  const arch = w._knownFor.has("arch-classic") ? "classic" : "";
   const top = w._rank <= MAP_TOP_N ? "top" : "";
   const garden = w._knownFor.has("gardens")
     ? `<span class="pin-badge pin-garden" title="Known for gardens & grounds">✿</span>` : "";
+  const book = w._knownFor.has("arch-modern")
+    ? `<span class="pin-badge pin-book" title="Featured in ‘The New Architecture of Wine’">📖</span>` : "";
   return L.divIcon({
     className: "logo-marker",
-    html: `<div class="lm ${arch} ${top}" style="width:${SZ}px;height:${SZ}px" title="${w.name}">${inner}</div>${garden}`,
+    html: `<div class="lm ${arch} ${top}" style="width:${SZ}px;height:${SZ}px" title="${w.name}">${inner}</div>${garden}${book}`,
     iconSize: [SZ, SZ], iconAnchor: [SZ / 2, SZ / 2], popupAnchor: [0, -(SZ / 2 + 3)],
   });
 }
@@ -741,10 +743,15 @@ function renderMapFocusCard() {
     if (Math.abs(dx) > Math.abs(dy)) {
       if (Math.abs(dx) > 40) focusAdjacent(dx < 0 ? 1 : -1); // swipe left → next, right → prev
     } else if (dy < -40) {
-      open();
+      open();          // swipe up → full detail
+    } else if (dy > 40) {
+      scrollToTop();   // swipe down → back to the top / expanded header
     }
   }, { passive: true });
 }
+
+// Smoothly return to the top of the page, re-revealing the expanded header.
+function scrollToTop() { window.scrollTo({ top: 0, behavior: "smooth" }); }
 
 // Right-side scrollable index: tap a name to isolate that winery on the map.
 function renderMapIndex() {
@@ -768,6 +775,18 @@ function renderMapIndex() {
   // from the preview card).
   const active = el.querySelector(".mi-item.active");
   if (active && !isSmallScreen()) active.scrollIntoView({ block: "nearest" });
+  // Mobile: a downward drag anywhere on the index (header or body) snaps the page
+  // back to the top, re-revealing the expanded header.
+  if (isSmallScreen()) {
+    let iy = null;
+    el.addEventListener("touchstart", (e) => { iy = e.touches[0].clientY; }, { passive: true });
+    el.addEventListener("touchend", (e) => {
+      if (iy == null) return;
+      const dy = e.changedTouches[0].clientY - iy;
+      iy = null;
+      if (dy > 60) scrollToTop();
+    }, { passive: true });
+  }
 }
 
 function renderMapFilters() {
@@ -836,20 +855,24 @@ function renderLineage() {
   const link = (w, sub) =>
     `<li><a onclick="openDrawer('${w.slug}')">${w.name}</a> <span class="valley-tag ${w.valley}" style="font-size:10.5px">${w.valley}</span>${sub ? `<span class="sub">${sub}</span>` : ""}</li>`;
 
-  // Corporate families (groups with notes, i.e. non-independent)
+  // Corporate families = any group that isn't flagged "Independent". Every member
+  // is listed so each lineage is exhaustive; groups we haven't written a note for
+  // yet still appear, with their wineries listed by name (no per-winery detail).
+  const isIndependent = (w) => /^independent\b/i.test((w.group || "").trim());
   const groups = {};
-  WINERIES.forEach((w) => {
-    if (GROUP_NOTES[w.group]) (groups[w.group] = groups[w.group] || []).push(w);
-  });
+  WINERIES.forEach((w) => { if (!isIndependent(w)) (groups[w.group] = groups[w.group] || []).push(w); });
   const corpCards = Object.entries(groups)
     .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
-    .map(([g, ws]) => `<div class="lineage-card">
+    .map(([g, ws]) => {
+      const note = GROUP_NOTES[g];
+      return `<div class="lineage-card">
       <h3>${g}</h3>
-      <p class="note">${GROUP_NOTES[g]}</p>
-      <ul>${ws.map((w) => link(w, `est. ${w.founded} · ${w.ava}`)).join("")}</ul>
-    </div>`).join("");
+      ${note ? `<p class="note">${note}</p>` : ""}
+      <ul>${ws.map((w) => link(w, note ? `est. ${w.founded} · ${w.ava}` : "")).join("")}</ul>
+    </div>`;
+    }).join("");
 
-  const independents = WINERIES.filter((w) => !GROUP_NOTES[w.group]);
+  const independents = WINERIES.filter(isIndependent);
   const indieCard = `<div class="lineage-card">
       <h3>Still independent</h3>
       <p class="note">Family- or founder-owned estates that have never been folded into a conglomerate — an increasingly rare club.</p>
@@ -919,13 +942,10 @@ function renderAwards() {
 
   const rows = data.map((e) => {
     const w = WINERIES.find((x) => x.slug === e.winerySlug);
-    const badge = w
-      ? `<span class="wl-logo ${w.valley}">${logoImg(w) ? `<img src="${logoImg(w)}" alt="">` : `<span class="mono">${monogram(w)}</span>`}</span>`
-      : "";
     const wineryCell = w
-      ? `<a class="winery-link" onclick="openDrawer('${w.slug}')">${badge}<span>${w.name}${archStar(w)} →</span></a>`
+      ? `<span class="winery-link">${w.name}${archStar(w)}</span>`
       : `<span style="color:var(--muted)">${e.winery}</span>`;
-    return `<tr>
+    return `<tr class="${w ? "award-row" : ""}"${w ? ` data-slug="${w.slug}"` : ""}>
       <td class="rank"><span class="rank-badge ${e.rank <= 10 ? "top10" : ""}">#${e.rank}</span></td>
       <td class="year">${e.year}</td>
       <td class="wine-cell"><b>${e.wine}</b>${e.note ? `<span class="sub">${e.note}</span>` : ""}</td>
@@ -940,10 +960,16 @@ function renderAwards() {
   $("#awards").innerHTML = `
     <div class="awards-head">
       <h2>Wine Spectator Top 100 — Napa & Sonoma wines</h2>
-      <p class="section-desc">Every Napa and Sonoma county wine on Wine Spectator's most recent Top 100 lists, ranked. Click a winery to open its full story in the explorer.</p>
+      <p class="section-desc">Members of Wine Spectator's Global Top 100.</p>
       <div class="seg">${yearChips} <span class="seg-sep"></span> ${colorChips}</div>
-      ${years.filter((y) => awardYear === "All" || awardYear === y).map((y) =>
-        window.WS_META && window.WS_META[y] ? `<p class="ws-meta"><b>${y}</b> — ${window.WS_META[y]}</p>` : "").join("")}
+      ${(() => {
+        const metas = years.filter((y) => awardYear === "All" || awardYear === y)
+          .filter((y) => window.WS_META && window.WS_META[y]);
+        return metas.length ? `<details class="ws-overall">
+          <summary>Overall Wine of the Year winners</summary>
+          <div class="ws-overall-body">${metas.map((y) => `<p class="ws-meta"><b>${y}</b> — ${window.WS_META[y]}</p>`).join("")}</div>
+        </details>` : "";
+      })()}
     </div>
     ${data.length ? `<div class="table-wrap"><table>
       <thead><tr><th>Rank</th><th>List</th><th>Wine</th><th>Vintage</th><th>Score</th><th>Price</th><th>Valley</th><th>Winery</th></tr></thead>
@@ -963,6 +989,9 @@ function renderAwards() {
       else awardColor.add(col);
       renderAwards();
     });
+  });
+  document.querySelectorAll("#awards tbody tr[data-slug]").forEach((tr) => {
+    tr.addEventListener("click", () => openDrawer(tr.dataset.slug));
   });
   $(".count").textContent = `${data.length} ranked wines`;
 }
