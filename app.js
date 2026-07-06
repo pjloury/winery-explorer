@@ -669,10 +669,12 @@ function renderMap() {
   if (state.mapFocus && focusMarker) {
     const fw = WINERIES.find((x) => x.slug === state.mapFocus);
     if (mobile) {
-      // Keep geographic context: a moderate zoom, and lift the pin above the
-      // bottom-sheet card so it isn't hidden behind it.
-      map.setView([fw.lat, fw.lng], 11, { animate: true });
-      map.panBy([0, 90], { animate: true });
+      // Center on the pin at a context-preserving zoom, offset up ~90px so the
+      // pin sits above the bottom-sheet card. Baked into one setView so swiping
+      // to an adjacent winery always recenters on it (two animations would fight).
+      const Z = 11;
+      const target = map.unproject(map.project([fw.lat, fw.lng], Z).add([0, 90]), Z);
+      map.setView(target, Z, { animate: true });
     } else {
       map.setView([fw.lat, fw.lng], 13, { animate: false });
       focusMarker.openPopup();
