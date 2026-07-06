@@ -153,7 +153,7 @@ const CARD_FIELDS = [
   { key: "ava", label: "AVA", get: (w) => w.ava },
   { key: "founded", label: "Founded", get: (w) => "est. " + w.founded },
   { key: "price", label: "Price", get: (w) => fmtPrice(w) },
-  { key: "wines", label: "Wines", get: (w) => w.wines.map((x) => x.name).slice(0, 2).join(", ") },
+  { key: "wines", label: "Wines", get: (w) => [...w._wineTypes].slice(0, 3).join(", ") || w.wines[0].name },
   { key: "vibe", label: "Vibe", get: (w) => w.vibeTags.join(", ") },
   { key: "group", label: "Group", get: (w) => (GN[w.group] ? w.group : "Independent") },
 ];
@@ -679,7 +679,8 @@ function renderMap() {
   renderMapFilters();
   renderMapFocusCard();
   renderMapIndex();
-  $(".count").textContent = state.mapFocus ? "1 winery" : `${list.length} winer${list.length === 1 ? "y" : "ies"} shown`;
+  // Phones show the count inside the "Show · N" label instead (saves a line).
+  $(".count").textContent = isSmallScreen() ? "" : (state.mapFocus ? "1 winery" : `${list.length} winer${list.length === 1 ? "y" : "ies"} shown`);
   writeHash();
 }
 
@@ -759,7 +760,11 @@ function renderMapFilters() {
     + `<summary class="fchip ${state.mapAva.size ? "active" : ""}">${state.mapAva.size ? `AVA · ${state.mapAva.size}` : "Any AVA"} ▾</summary>`
     + `<div class="ava-menu">${avaMenu}${state.mapAva.size ? `<button class="link-btn" id="ava-clear">Clear regions</button>` : ""}</div>`
     + `</details></span>`;
-  const showChips = `<span class="fgroup"><span class="flabel">Show</span>`
+  // On phones fold the shown-count into the label (Show · N) so we can drop the
+  // separate "N wineries shown" line and give the map more room.
+  const shownCount = mapCandidates().length;
+  const showLabel = isSmallScreen() ? `Show · ${shownCount}` : "Show";
+  const showChips = `<span class="fgroup"><span class="flabel">${showLabel}</span>`
     + `<button class="fchip ${state.mapTopOnly ? "active" : ""}" data-top="1">★ Top ${MAP_TOP_N}</button>`
     + `<button class="fchip ${!state.mapTopOnly ? "active" : ""}" data-top="0">All ${WINERIES.length}</button></span>`;
   const groupsHTML = `
@@ -946,7 +951,7 @@ function openDrawer(slug) {
   const gmaps = `https://maps.google.com/?q=${encodeURIComponent(w.name + " " + w.address)}`;
 
   $("#drawer").innerHTML = `
-    <button class="drawer-close" onclick="closeDrawer()" aria-label="Close">✕</button>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Back"><span class="dc-back">‹ Back</span><span class="dc-x">✕</span></button>
     ${img ? `<img class="hero" src="${img}" alt="${w.name}">` : `<div class="hero hero-map" id="hero-map"></div>`}
     <div class="drawer-body">
       <span class="valley-tag ${w.valley}">${w.valley} · ${w.ava}</span>
