@@ -1,0 +1,9 @@
+{
+  "name": "winery-explorer",
+  "private": true,
+  "type": "module",
+  "description": "Static site + one Vercel serverless function (api/parse-itinerary.js) for the Itinerary Builder's voice/text prompt parsing.",
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest"
+  }
+}

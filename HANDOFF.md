@@ -1,5 +1,63 @@
 # Session handoff — Winery Explorer
 
+## v3 COMPLETE (2026-07-09, session 3) — Gen-AI Itinerary Builder
+Built a new **Itinerary** tab: voice/text trip requests → a routed, timed winery
+itinerary. Key pieces:
+- **Data enrichment**: all 99 wineries in `data.js` gained `hours` (by day),
+  `hoursNote`, `dogFriendly`/`dogNote`, `kidFriendly`/`kidNote`, and
+  `reservationRequired`/`reservationNote`, researched via 10 parallel web-research
+  agents. Fields inferred rather than found from a published source are flagged
+  `(inferred)` in the note text — spot-check before trusting for a real visit.
+- **`itinerary.js`** (new): the route/scheduling engine — filters by open-hours for
+  the chosen date/day, dog/kid requirements, and valley; orders stops via
+  nearest-neighbor from a start point; simulates the day's clock (drive → wait-for-open
+  → visit → drive…), trimming stops that don't fit; totals tasting-fee cost; flags
+  reservation-required stops and anything dropped (closed, policy mismatch, out of
+  time). Prompt parsing tries `/api/parse-itinerary` (Claude API, tool use) first and
+  silently falls back to a local rule-based parser (`itinLocalParse`) if that 501s or
+  errors — so the feature works with zero setup. Drive times try Google's
+  `DistanceMatrixService` (needs `config.js`'s `googleMapsApiKey`) and fall back to a
+  haversine + road-winding-factor estimate. Voice input is the browser's
+  `SpeechRecognition` API, no backend needed.
+  - Uses its own `iq`/`iqa` DOM-query helpers instead of `$` — app.js already declares
+    a top-level `const $` in the shared classic-script global scope, so redeclaring it
+    in itinerary.js would throw a `SyntaxError` and break the whole app. Any new
+    top-level identifiers should keep the `itin`/`ITIN_` prefix convention to avoid
+    colliding with app.js's globals (`state`, `map`, `IMG`, etc.).
+- **`api/parse-itinerary.js`** (new): Vercel serverless function, calls
+  `claude-opus-4-8` via `@anthropic-ai/sdk` with a forced tool call
+  (`extract_trip`) for guaranteed structured JSON. Needs `ANTHROPIC_API_KEY` set as a
+  Vercel env var — **not done by this session**, the user needs to add it (dashboard
+  or `vercel env add`). Added a root `package.json` (`"type": "module"`, one
+  dependency) purely so Vercel's build installs the SDK for this one function; the
+  rest of the site remains build-step-free.
+- **`config.js`** (new, committed): `window.APP_CONFIG.googleMapsApiKey`, empty by
+  default. **Not set by this session** — the user needs to create a browser key in
+  Google Cloud Console restricted by HTTP referrer to the deployed domain(s) and paste
+  it in. Safe to commit (referrer-restricted browser keys are meant to be public,
+  unlike the Anthropic key).
+- app.js/index.html/style.css got minimal additive hooks: an "Itinerary" nav button,
+  an `#itinerary-view` container, `views`/hash-routing arrays extended, and a render()
+  dispatch line — no existing view's code was touched.
+- Verified via headless Chromium (Playwright, already present in this environment) —
+  local-parser pipeline end-to-end (prompt → criteria → routed plan with correct
+  times/costs/badges), the manual edit-and-rebuild path, and a regression pass on
+  Table/Map to confirm nothing broke. `node --check` clean on all new/changed `.js`.
+  **Not verified**: the real LLM endpoint (no `ANTHROPIC_API_KEY` in this sandbox) or
+  real Google Maps drive times (no key set) — both have working, tested fallback
+  paths, but the "upgraded" paths should be smoke-tested once the user adds the keys.
+
+### Next steps for the user
+1. Add `ANTHROPIC_API_KEY` in Vercel project settings to enable real LLM prompt
+   parsing (works without it, via the local parser).
+2. Create a referrer-restricted Google Maps browser key and set it in `config.js` to
+   enable real drive times (works without it, via the haversine estimate).
+3. Spot-check a handful of the `(inferred)` hours/dog/kid/reservation fields in
+   `data.js` before relying on the Itinerary tab for an actual visit.
+4. Deploy: `npx vercel deploy --prod --yes` (per the v1 handoff note below, pushing to
+   git does NOT auto-deploy this project).
+
+---
 ## v2 COMPLETE (2026-07-03, session 2)
 All the in-flight work below was finished and deployed:
 - **87 wineries** total (50 Napa / 37 Sonoma). The 34 Wine Spectator Top 100 leaderboard wineries were researched and added as full entries (verified coords/ownership/prose); every leaderboard row now links into the explorer.

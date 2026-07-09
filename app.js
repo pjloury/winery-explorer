@@ -1120,6 +1120,7 @@ function render() {
       }
     });
   }
+  if (state.view === "itinerary") { $("#itinerary-view").classList.add("active"); window.itinItinerary && window.itinItinerary.render(); }
   if (state.view === "awards") renderAwards();
   if (state.view === "lineage") { $("#lineage-view").classList.add("active"); renderLineage(); }
   writeHash();
@@ -1199,12 +1200,12 @@ function applyHash() {
   const raw = location.hash.slice(1);
   if (!raw) return;
   if (!raw.includes("=")) { // legacy deep link
-    if (["map", "lineage", "awards", "table"].includes(raw)) state.view = raw;
+    if (["map", "lineage", "awards", "table", "itinerary"].includes(raw)) state.view = raw;
     else if (WINERIES.some((w) => w.slug === raw)) pendingDrawer = raw;
     return;
   }
   const p = new URLSearchParams(raw);
-  const views = ["table", "map", "awards", "lineage"];
+  const views = ["table", "map", "awards", "lineage", "itinerary"];
   if (views.includes(p.get("v"))) state.view = p.get("v");
   if (["Napa", "Sonoma"].includes(p.get("valley"))) state.valleys = new Set([p.get("valley")]);
   if (p.has("q")) state.query = p.get("q") || "";
@@ -1225,7 +1226,7 @@ function syncControls() {
   document.querySelectorAll(".chip[data-valley]").forEach((c) => c.classList.toggle("active", state.valleys.has(c.dataset.valley)));
   $("#search").value = state.query;
   const ham = $("#nav-toggle");
-  if (ham) ham.textContent = state.view === "map" ? "☰ Map" : state.view === "awards" ? "☰ Top Wines" : state.view === "lineage" ? "☰ Lineage" : "☰ Table";
+  if (ham) ham.textContent = state.view === "map" ? "☰ Map" : state.view === "awards" ? "☰ Top Wines" : state.view === "lineage" ? "☰ Lineage" : state.view === "itinerary" ? "☰ Itinerary" : "☰ Table";
 }
 function restoreFromHash() {
   applyingHash = true;
