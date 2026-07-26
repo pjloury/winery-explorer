@@ -525,23 +525,28 @@ function startUserLocation() {
       btn?.classList.remove("locating");
       btn?.classList.add("active");
       const latlng = [pos.coords.latitude, pos.coords.longitude];
+      const accuracyLabel = pos.coords.accuracy < 1000
+        ? `±${Math.round(pos.coords.accuracy)} m` : `±${(pos.coords.accuracy / 1000).toFixed(1)} km`;
       if (!userLocationMarker) {
         userLocationMarker = L.marker(latlng, {
           icon: L.divIcon({ className: "user-location-marker", html: '<span class="user-location-dot"></span>', iconSize: [16, 16], iconAnchor: [8, 8] }),
-          zIndexOffset: 1000, keyboard: false, interactive: false,
-        }).addTo(map);
+          zIndexOffset: 1000, keyboard: false, interactive: true,
+        }).addTo(map).bindTooltip(`You are here (${accuracyLabel})`, {
+          direction: "top", offset: [0, -8], permanent: true, className: "user-location-tooltip",
+        });
         userLocationCircle = L.circle(latlng, { radius: pos.coords.accuracy, className: "user-location-accuracy", weight: 0, interactive: false }).addTo(map);
-        map.setView(latlng, Math.max(map.getZoom(), 12));
+        // Zoom in tight enough to actually pinpoint the fix, not just the neighborhood.
+        map.setView(latlng, Math.max(map.getZoom(), 16));
       } else {
-        userLocationMarker.setLatLng(latlng);
+        userLocationMarker.setLatLng(latlng).setTooltipContent(`You are here (${accuracyLabel})`);
         userLocationCircle.setLatLng(latlng).setRadius(pos.coords.accuracy);
       }
     },
     (err) => {
-      alert("Couldn't get your location: " + (err.message || "permission denied"));
+      alert("Couldn't get your precise location: " + (err.message || "permission denied"));
       stopUserLocation();
     },
-    { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }
+    { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
   );
 }
 
