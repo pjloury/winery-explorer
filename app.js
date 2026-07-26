@@ -752,11 +752,11 @@ function renderMap() {
       // Center on the pin at a context-preserving zoom, offset up ~90px so the
       // pin sits above the bottom-sheet card. Baked into one setView so swiping
       // to an adjacent winery always recenters on it (two animations would fight).
-      const Z = 11;
+      const Z = 13;
       const target = map.unproject(map.project([fw.lat, fw.lng], Z).add([0, 90]), Z);
       map.setView(target, Z, { animate: true });
     } else {
-      map.setView([fw.lat, fw.lng], 13, { animate: false });
+      map.setView([fw.lat, fw.lng], 14, { animate: false });
       focusMarker.openPopup();
     }
   } else if (list.length) {

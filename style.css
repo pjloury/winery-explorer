@@ -231,8 +231,11 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .map-locate.active { color: #1a73e8; border-color: #1a73e8; }
 .map-locate.locating { animation: itin-pulse 1s ease-in-out infinite; }
 
-/* "Blue dot" current-location marker, Google-Maps style */
+/* "Blue dot" current-location marker, Google-Maps style. `display` matters here:
+   a bare <span> is inline by default, which ignores width/height entirely —
+   without it this renders as a squashed, unfilled sliver instead of a circle. */
 .user-location-dot {
+  display: block; box-sizing: border-box;
   width: 16px; height: 16px; border-radius: 50%;
   background: #1a73e8; border: 2px solid #fff;
   box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.35), 0 1px 4px rgba(0, 0, 0, 0.35);
