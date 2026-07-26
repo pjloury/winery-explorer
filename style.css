@@ -227,6 +227,17 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
   box-shadow: 0 1px 4px rgba(36, 29, 26, 0.2);
 }
 .map-recenter:hover { color: var(--gold); }
+.map-locate { top: 52px; }
+.map-locate.active { color: #1a73e8; border-color: #1a73e8; }
+.map-locate.locating { animation: itin-pulse 1s ease-in-out infinite; }
+
+/* "Blue dot" current-location marker, Google-Maps style */
+.user-location-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #1a73e8; border: 2px solid #fff;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.35), 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+.user-location-accuracy { border: none !important; background: rgba(26, 115, 232, 0.15) !important; }
 .map-index {
   width: 240px; flex: none; height: 100%; overflow-y: auto; background: var(--card);
   border: 1px solid var(--hairline); border-radius: var(--radius); box-shadow: var(--shadow);

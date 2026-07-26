@@ -488,6 +488,10 @@ function initMap() {
   map.on("zoomend", () => { separateMarkers(mapEntries); layoutDistrictLabels(); });
   // Re-center: clear any focus and re-fit the map to all shown pins.
   $("#map-recenter")?.addEventListener("click", () => { state.mapFocus = null; renderMap(); });
+  // "Show my location": a live blue dot (Google-Maps style), toggled on/off.
+  $("#map-locate")?.addEventListener("click", () => {
+    if (userLocationWatchId != null) stopUserLocation(); else startUserLocation();
+  });
   // Legend doubles as filters: click a category to toggle it.
   document.querySelectorAll(".map-legend .lg-item").forEach((el) => {
     const apply = () => {
@@ -500,6 +504,45 @@ function initMap() {
     el.addEventListener("click", apply);
     el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); apply(); } });
   });
+}
+
+// "Blue dot" current-location tracking (Google-Maps style): a live marker plus
+// an accuracy-radius circle, kept in sync via watchPosition until toggled off.
+let userLocationMarker = null, userLocationCircle = null, userLocationWatchId = null;
+function stopUserLocation() {
+  if (userLocationWatchId != null) { navigator.geolocation.clearWatch(userLocationWatchId); userLocationWatchId = null; }
+  if (userLocationMarker) { userLocationMarker.remove(); userLocationMarker = null; }
+  if (userLocationCircle) { userLocationCircle.remove(); userLocationCircle = null; }
+  $("#map-locate")?.classList.remove("active", "locating");
+}
+function startUserLocation() {
+  if (!navigator.geolocation) { alert("Geolocation isn't supported in this browser."); return; }
+  const btn = $("#map-locate");
+  btn?.classList.add("locating");
+  userLocationWatchId = navigator.geolocation.watchPosition(
+    (pos) => {
+      if (!map) return;
+      btn?.classList.remove("locating");
+      btn?.classList.add("active");
+      const latlng = [pos.coords.latitude, pos.coords.longitude];
+      if (!userLocationMarker) {
+        userLocationMarker = L.marker(latlng, {
+          icon: L.divIcon({ className: "user-location-marker", html: '<span class="user-location-dot"></span>', iconSize: [16, 16], iconAnchor: [8, 8] }),
+          zIndexOffset: 1000, keyboard: false, interactive: false,
+        }).addTo(map);
+        userLocationCircle = L.circle(latlng, { radius: pos.coords.accuracy, className: "user-location-accuracy", weight: 0, interactive: false }).addTo(map);
+        map.setView(latlng, Math.max(map.getZoom(), 12));
+      } else {
+        userLocationMarker.setLatLng(latlng);
+        userLocationCircle.setLatLng(latlng).setRadius(pos.coords.accuracy);
+      }
+    },
+    (err) => {
+      alert("Couldn't get your location: " + (err.message || "permission denied"));
+      stopUserLocation();
+    },
+    { enableHighAccuracy: true, maximumAge: 10000, timeout: 15000 }
+  );
 }
 
 // Reflect the active filters on the clickable legend.
