@@ -1234,6 +1234,14 @@ $("#search-toggle").addEventListener("click", () => {
 $("#search").addEventListener("input", (e) => { state.query = e.target.value; state.mapFocus = null; render(); });
 $("#overlay").addEventListener("click", closeDrawer);
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDrawer(); });
+// AVA picker: tap/click anywhere outside it to dismiss. Registered once here
+// (capture phase, so a Leaflet marker's stopPropagation can't swallow it) rather
+// than inside renderMapFilters(), which reruns on every filter change.
+document.addEventListener("click", (e) => {
+  if (!state.mapAvaOpen) return;
+  const picker = document.querySelector(".ava-picker");
+  if (picker && !picker.contains(e.target)) { state.mapAvaOpen = false; renderMap(); }
+}, true);
 
 /* ── URL state: persist view + filters across refresh ──────────────────────
    The hash holds a compact query string (e.g. #v=map&valley=Napa&wine=Cabernet).
