@@ -645,8 +645,19 @@ function mapCandidates() {
   });
 }
 // Distinct AVA/districts (normalized via regionOf, matching the map labels).
+// Scoped to the currently selected valley chip(s) — an AVA belongs to exactly
+// one valley, so listing every region regardless of valley let you pick a
+// Sonoma AVA while only "Napa" was active and silently get zero pins.
 function avaOptions() {
-  return [...new Set(WINERIES.map(regionOf))].sort((a, b) => a.localeCompare(b));
+  const inScope = WINERIES.filter((w) => state.valleys.has(w.valley));
+  return [...new Set(inScope.map(regionOf))].sort((a, b) => a.localeCompare(b));
+}
+// Drop any selected AVA filters that fall out of scope when the valley
+// selection changes, so a stale filter doesn't keep the map silently empty.
+function pruneMapAva() {
+  if (!state.mapAva.size) return;
+  const valid = new Set(avaOptions());
+  [...state.mapAva].forEach((r) => { if (!valid.has(r)) state.mapAva.delete(r); });
 }
 function mapList() {
   // Desktop isolates to the focused pin; phones keep every pin (focus just pans
@@ -746,6 +757,19 @@ function renderMap() {
   } else if (list.length) {
     map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.15), { animate: false });
     separateMarkers(mapEntries);
+  }
+  // No pins at all (usually an AVA/wine/known-for combo with no overlap): say so,
+  // instead of leaving the map looking frozen/broken with no explanation.
+  const emptyEl = $("#map-empty");
+  if (emptyEl) {
+    emptyEl.classList.toggle("show", !list.length);
+    if (!list.length) {
+      emptyEl.innerHTML = `<span>No wineries match your filters.</span><button class="link-btn" id="map-empty-clear">Clear filters</button>`;
+      $("#map-empty-clear")?.addEventListener("click", () => {
+        state.mapFocus = null; state.mapWine.clear(); state.mapKnown.clear(); state.mapAva.clear();
+        renderMap();
+      });
+    }
   }
   layoutDistrictLabels();
   renderMapFilters();
@@ -1186,6 +1210,7 @@ document.querySelectorAll(".chip[data-valley]").forEach((c) => {
     if (state.valleys.has(v)) { if (state.valleys.size > 1) state.valleys.delete(v); }
     else state.valleys.add(v);
     state.mapFocus = null;
+    pruneMapAva();
     syncControls();
     render();
   });
@@ -1274,6 +1299,7 @@ function syncControls() {
 function restoreFromHash() {
   applyingHash = true;
   applyHash();
+  pruneMapAva(); // a shared/stale link could restore an AVA that doesn't match its valley
   syncControls();
   render();
   applyingHash = false;

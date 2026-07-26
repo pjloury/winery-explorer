@@ -262,6 +262,15 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .map-legend .lg-item.lg-active { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 /* Full-bleed focus card under the map (phones only) */
 .map-focus-card { display: none; }
+/* Shown when the active filter combination matches zero wineries — e.g. an AVA
+   picked while its valley is deselected, or filters with no overlap. */
+.map-empty {
+  display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 400; background: var(--card); border: 1px solid var(--hairline); border-radius: 12px;
+  box-shadow: var(--shadow); padding: 18px 22px; text-align: center; color: var(--ink-2);
+  font-size: 13.5px; max-width: 260px; flex-direction: column; gap: 8px; align-items: center;
+}
+.map-empty.show { display: flex; }
 
 @media (max-width: 720px) {
   .map-stage { flex-direction: column; height: auto; min-height: 0; }
