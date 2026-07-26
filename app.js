@@ -488,6 +488,10 @@ function initMap() {
   map.on("zoomend", () => { separateMarkers(mapEntries); layoutDistrictLabels(); });
   // Re-center: clear any focus and re-fit the map to all shown pins.
   $("#map-recenter")?.addEventListener("click", () => { state.mapFocus = null; renderMap(); });
+  // "Show my location": a live blue dot (Google-Maps style), toggled on/off.
+  $("#map-locate")?.addEventListener("click", () => {
+    if (userLocationWatchId != null) stopUserLocation(); else startUserLocation();
+  });
   // Legend doubles as filters: click a category to toggle it.
   document.querySelectorAll(".map-legend .lg-item").forEach((el) => {
     const apply = () => {
@@ -500,6 +504,50 @@ function initMap() {
     el.addEventListener("click", apply);
     el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); apply(); } });
   });
+}
+
+// "Blue dot" current-location tracking (Google-Maps style): a live marker plus
+// an accuracy-radius circle, kept in sync via watchPosition until toggled off.
+let userLocationMarker = null, userLocationCircle = null, userLocationWatchId = null;
+function stopUserLocation() {
+  if (userLocationWatchId != null) { navigator.geolocation.clearWatch(userLocationWatchId); userLocationWatchId = null; }
+  if (userLocationMarker) { userLocationMarker.remove(); userLocationMarker = null; }
+  if (userLocationCircle) { userLocationCircle.remove(); userLocationCircle = null; }
+  $("#map-locate")?.classList.remove("active", "locating");
+}
+function startUserLocation() {
+  if (!navigator.geolocation) { alert("Geolocation isn't supported in this browser."); return; }
+  const btn = $("#map-locate");
+  btn?.classList.add("locating");
+  userLocationWatchId = navigator.geolocation.watchPosition(
+    (pos) => {
+      if (!map) return;
+      btn?.classList.remove("locating");
+      btn?.classList.add("active");
+      const latlng = [pos.coords.latitude, pos.coords.longitude];
+      const accuracyLabel = pos.coords.accuracy < 1000
+        ? `±${Math.round(pos.coords.accuracy)} m` : `±${(pos.coords.accuracy / 1000).toFixed(1)} km`;
+      if (!userLocationMarker) {
+        userLocationMarker = L.marker(latlng, {
+          icon: L.divIcon({ className: "user-location-marker", html: '<span class="user-location-dot"></span>', iconSize: [16, 16], iconAnchor: [8, 8] }),
+          zIndexOffset: 1000, keyboard: false, interactive: true,
+        }).addTo(map).bindTooltip(`You are here (${accuracyLabel})`, {
+          direction: "top", offset: [0, -8], permanent: true, className: "user-location-tooltip",
+        });
+        userLocationCircle = L.circle(latlng, { radius: pos.coords.accuracy, className: "user-location-accuracy", weight: 0, interactive: false }).addTo(map);
+        // Zoom in tight enough to actually pinpoint the fix, not just the neighborhood.
+        map.setView(latlng, Math.max(map.getZoom(), 16));
+      } else {
+        userLocationMarker.setLatLng(latlng).setTooltipContent(`You are here (${accuracyLabel})`);
+        userLocationCircle.setLatLng(latlng).setRadius(pos.coords.accuracy);
+      }
+    },
+    (err) => {
+      alert("Couldn't get your precise location: " + (err.message || "permission denied"));
+      stopUserLocation();
+    },
+    { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
+  );
 }
 
 // Reflect the active filters on the clickable legend.
@@ -602,8 +650,19 @@ function mapCandidates() {
   });
 }
 // Distinct AVA/districts (normalized via regionOf, matching the map labels).
+// Scoped to the currently selected valley chip(s) — an AVA belongs to exactly
+// one valley, so listing every region regardless of valley let you pick a
+// Sonoma AVA while only "Napa" was active and silently get zero pins.
 function avaOptions() {
-  return [...new Set(WINERIES.map(regionOf))].sort((a, b) => a.localeCompare(b));
+  const inScope = WINERIES.filter((w) => state.valleys.has(w.valley));
+  return [...new Set(inScope.map(regionOf))].sort((a, b) => a.localeCompare(b));
+}
+// Drop any selected AVA filters that fall out of scope when the valley
+// selection changes, so a stale filter doesn't keep the map silently empty.
+function pruneMapAva() {
+  if (!state.mapAva.size) return;
+  const valid = new Set(avaOptions());
+  [...state.mapAva].forEach((r) => { if (!valid.has(r)) state.mapAva.delete(r); });
 }
 function mapList() {
   // Desktop isolates to the focused pin; phones keep every pin (focus just pans
@@ -703,6 +762,19 @@ function renderMap() {
   } else if (list.length) {
     map.fitBounds(L.latLngBounds(list.map((w) => [w.lat, w.lng])).pad(0.15), { animate: false });
     separateMarkers(mapEntries);
+  }
+  // No pins at all (usually an AVA/wine/known-for combo with no overlap): say so,
+  // instead of leaving the map looking frozen/broken with no explanation.
+  const emptyEl = $("#map-empty");
+  if (emptyEl) {
+    emptyEl.classList.toggle("show", !list.length);
+    if (!list.length) {
+      emptyEl.innerHTML = `<span>No wineries match your filters.</span><button class="link-btn" id="map-empty-clear">Clear filters</button>`;
+      $("#map-empty-clear")?.addEventListener("click", () => {
+        state.mapFocus = null; state.mapWine.clear(); state.mapKnown.clear(); state.mapAva.clear();
+        renderMap();
+      });
+    }
   }
   layoutDistrictLabels();
   renderMapFilters();
@@ -1143,6 +1215,7 @@ document.querySelectorAll(".chip[data-valley]").forEach((c) => {
     if (state.valleys.has(v)) { if (state.valleys.size > 1) state.valleys.delete(v); }
     else state.valleys.add(v);
     state.mapFocus = null;
+    pruneMapAva();
     syncControls();
     render();
   });
@@ -1161,6 +1234,14 @@ $("#search-toggle").addEventListener("click", () => {
 $("#search").addEventListener("input", (e) => { state.query = e.target.value; state.mapFocus = null; render(); });
 $("#overlay").addEventListener("click", closeDrawer);
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDrawer(); });
+// AVA picker: tap/click anywhere outside it to dismiss. Registered once here
+// (capture phase, so a Leaflet marker's stopPropagation can't swallow it) rather
+// than inside renderMapFilters(), which reruns on every filter change.
+document.addEventListener("click", (e) => {
+  if (!state.mapAvaOpen) return;
+  const picker = document.querySelector(".ava-picker");
+  if (picker && !picker.contains(e.target)) { state.mapAvaOpen = false; renderMap(); }
+}, true);
 
 /* ── URL state: persist view + filters across refresh ──────────────────────
    The hash holds a compact query string (e.g. #v=map&valley=Napa&wine=Cabernet).
@@ -1231,6 +1312,7 @@ function syncControls() {
 function restoreFromHash() {
   applyingHash = true;
   applyHash();
+  pruneMapAva(); // a shared/stale link could restore an AVA that doesn't match its valley
   syncControls();
   render();
   applyingHash = false;

@@ -227,6 +227,22 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
   box-shadow: 0 1px 4px rgba(36, 29, 26, 0.2);
 }
 .map-recenter:hover { color: var(--gold); }
+.map-locate { top: 52px; }
+.map-locate.active { color: #1a73e8; border-color: #1a73e8; }
+.map-locate.locating { animation: itin-pulse 1s ease-in-out infinite; }
+
+/* "Blue dot" current-location marker, Google-Maps style */
+.user-location-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #1a73e8; border: 2px solid #fff;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.35), 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+.user-location-accuracy { border: none !important; background: rgba(26, 115, 232, 0.15) !important; }
+.user-location-tooltip.leaflet-tooltip {
+  background: var(--card); color: var(--ink); border: 1px solid var(--hairline);
+  font-size: 11.5px; font-weight: 650; padding: 3px 8px; box-shadow: var(--shadow);
+}
+.user-location-tooltip.leaflet-tooltip-top::before { border-top-color: var(--hairline); }
 .map-index {
   width: 240px; flex: none; height: 100%; overflow-y: auto; background: var(--card);
   border: 1px solid var(--hairline); border-radius: var(--radius); box-shadow: var(--shadow);
@@ -251,6 +267,15 @@ tr.region-head .rcount { color: var(--muted); font-size: 12.5px; font-family: va
 .map-legend .lg-item.lg-active { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 /* Full-bleed focus card under the map (phones only) */
 .map-focus-card { display: none; }
+/* Shown when the active filter combination matches zero wineries — e.g. an AVA
+   picked while its valley is deselected, or filters with no overlap. */
+.map-empty {
+  display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 400; background: var(--card); border: 1px solid var(--hairline); border-radius: 12px;
+  box-shadow: var(--shadow); padding: 18px 22px; text-align: center; color: var(--ink-2);
+  font-size: 13.5px; max-width: 260px; flex-direction: column; gap: 8px; align-items: center;
+}
+.map-empty.show { display: flex; }
 
 @media (max-width: 720px) {
   .map-stage { flex-direction: column; height: auto; min-height: 0; }

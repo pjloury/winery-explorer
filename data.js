@@ -1774,7 +1774,7 @@ const WINERIES = [
   },
 
   {
-    slug: "reverie", name: "Reverie Winery Estate", valley: "Napa", ava: "Napa Valley",
+    slug: "reverie", name: "Reverie Winery Estate", valley: "Napa", ava: "Crystal Springs",
     founded: 1996, founder: "Norm & Evelyn Kiken",
     address: "264 N Fork Crystal Springs Rd, St. Helena, CA 94574", lat: 38.5613, lng: -122.4967,
     website: "https://www.reveriewinery.com",
@@ -1801,6 +1801,37 @@ const WINERIES = [
     storyTags: ["site-reuse"],
     awards: ["Built a national following for Diamond Mountain Cabernet Franc", "Boutique, small-lot production of roughly 4,500 cases", "Carried forward by a longtime employee-turned-owner"],
     funFact: "Reverie's original Diamond Mountain vineyard was sold in 2016 and is being turned into a luxury hotel managed by Rosewood — so the brand relocated and now operates from a former winery site near St. Helena."
+  },
+
+  {
+    slug: "bremer-family", name: "Bremer Family Winery", valley: "Napa", ava: "Crystal Springs",
+    founded: 1891, founder: "The Leuenberger family (built the original hillside stone winery)",
+    address: "975 Deer Park Road, St. Helena, CA 94574", lat: 38.5511, lng: -122.4709,
+    website: "https://bremerfamilywinery.com",
+    owner: "John & Laura Bremer", group: "Independent (Bremer family)",
+    priceRange: [45, 85], tastingFee: "$45 per person (up to 6 guests, 5 wines); waived with a 2-bottle purchase per person",
+    hours: {mon:"by appointment", tue:"by appointment", wed:"by appointment", thu:"by appointment", fri:"by appointment", sat:"by appointment", sun:"by appointment"}, hoursNote: "Not open to walk-ins; appointments generally scheduled within 10am-5pm daily.",
+    dogFriendly: "yes", dogNote: "Described by the winery as a pet-friendly estate.",
+    kidFriendly: "yes", kidNote: "Described by the winery as family-friendly; casual outdoor tastings under oak trees suit kids well.",
+    reservationRequired: "required", reservationNote: "Appointment-only — call, email, or use the site's 'Schedule Tasting' link; no walk-ins.",
+    tours: "By appointment only — casual, unscripted tastings in the 1891 stone cellar, under oak trees, or in the hand-drilled wine cave.",
+    vibeTags: ["Historic", "Intimate", "Family-run"],
+    vibe: "A 19th-century stone winery built into the slope of Howell Mountain, dormant for decades before the Bremer family revived it in 2002. Visits are unscripted and personal — the historic cellar, a 17,000-square-foot cave drilled into the mountain, and shaded oak trees stand in for a polished tasting room.",
+    wines: [
+      { name: "Howell Mountain Cabernet Sauvignon", why: "The estate's flagship, sourced from the mountain fruit right outside the cellar door." },
+      { name: "Napa Valley Cabernet Sauvignon", why: "A valley-floor-sourced bottling that's more approachable in its youth than the Howell Mountain version." },
+      { name: "Claret", why: "An old-school Bordeaux-style blend that reflects the estate's unfussy, traditional winemaking." }
+    ],
+    history: [
+      { y: 1891, t: "A small stone winery is built directly into the Howell Mountain hillside near the Deer Park community — its back wall is the mountain itself, keeping the cellar naturally cool." },
+      { y: 1922, t: "John Ballentine buys the dormant property." },
+      { y: 1933, t: "Winemaking resumes after Prohibition's repeal; the site operates for decades as Deer Park Winery." },
+      { y: 2002, t: "John and Laura Bremer buy the long-dormant property, restore the 19th-century stone cellar, and relaunch it as Bremer Family Winery with winemaker Bob Boland." },
+      { y: 2012, t: "A 17,000-square-foot wine cave, hand-drilled into the mountain starting in 2008, is completed." }
+    ],
+    storyTags: ["resurrected"],
+    awards: ["Bob Boland has been winemaker since 2002 — one of Howell Mountain's longest-tenured at a single estate", "One of only a handful of estates sitting inside the newly established (2024) Crystal Springs of Napa Valley AVA"],
+    funFact: "The 1891 stone cellar was built directly into the mountainside — its back wall is the mountain itself, which keeps the cave naturally cool year-round without refrigeration."
   },
 
 
